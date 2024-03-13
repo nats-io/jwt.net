@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.Jwt", "NATS.Jwt\NATS.Jwt.csproj", "{9B613C47-922B-4AA8-82D7-1520A13E0F74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.Jwt.Tests", "NATS.Jwt.Tests\NATS.Jwt.Tests.csproj", "{707139DF-D75B-40F8-9AA7-816C64E98572}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.NKeys", "..\nkeys.net\NATS.NKeys\NATS.NKeys.csproj", "{986C1285-C223-4DFD-9B51-A17AE5B8CAB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".", ".", "{1F24478C-D5CB-4A58-A74E-6371F7F95C01}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		LICENSE = LICENSE
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B613C47-922B-4AA8-82D7-1520A13E0F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B613C47-922B-4AA8-82D7-1520A13E0F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B613C47-922B-4AA8-82D7-1520A13E0F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B613C47-922B-4AA8-82D7-1520A13E0F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{707139DF-D75B-40F8-9AA7-816C64E98572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707139DF-D75B-40F8-9AA7-816C64E98572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707139DF-D75B-40F8-9AA7-816C64E98572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707139DF-D75B-40F8-9AA7-816C64E98572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{986C1285-C223-4DFD-9B51-A17AE5B8CAB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{986C1285-C223-4DFD-9B51-A17AE5B8CAB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{986C1285-C223-4DFD-9B51-A17AE5B8CAB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{986C1285-C223-4DFD-9B51-A17AE5B8CAB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
