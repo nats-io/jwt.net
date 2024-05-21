@@ -11,13 +11,13 @@ namespace NATS.Jwt.Tests
 		[Fact]
 		public void Main_use_case()
 		{
-			NKeyPair userKey = NKeys.NKeys.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY");
-			NKeyPair signingKey = NKeys.NKeys.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU");
+			KeyPair userKey = KeyPair.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY".ToCharArray());
+			KeyPair signingKey = KeyPair.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU".ToCharArray());
 			string accountId = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6";
-			string jwt = JwtUtils.IssueUserJwt(signingKey, accountId, userKey.EncodedPublicKey, null, null, null,
+			string jwt = JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), null, null, null,
 				1633043378, "audience");
 			string claimBody = JwtUtils.GetClaimBody(jwt);
-			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.EncodedSeed);
+			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.GetSeed());
 			/*
 			    Generated JWT:
 			    {
@@ -60,16 +60,16 @@ namespace NATS.Jwt.Tests
 		[Fact]
 		public void With_all_args()
 		{
-			NKeyPair userKey = NKeys.NKeys.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY");
-			NKeyPair signingKey = NKeys.NKeys.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU");
+			KeyPair userKey = KeyPair.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY".ToCharArray());
+			KeyPair signingKey = KeyPair.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU".ToCharArray());
 			string accountId = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6";
-			string jwt = JwtUtils.IssueUserJwt(signingKey, accountId, userKey.EncodedPublicKey, "name",
+			string jwt = JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), "name",
 				TimeSpan.FromSeconds(100), new string[]
 				{
 					"tag1", "tag\\two"
 				}, 1633043378, "audience");
 			string claimBody = JwtUtils.GetClaimBody(jwt);
-			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.EncodedSeed);
+			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.GetSeed());
 			/*
 			    Generated JWT:
 				{
@@ -114,8 +114,8 @@ namespace NATS.Jwt.Tests
 		[Fact]
 		public void Custom_fields()
 		{
-			NKeyPair userKey = NKeys.NKeys.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY");
-			NKeyPair signingKey = NKeys.NKeys.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU");
+			KeyPair userKey = KeyPair.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY".ToCharArray());
+			KeyPair signingKey = KeyPair.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU".ToCharArray());
 			UserClaim userClaim = new UserClaim
 			{
 				IssuerAccount = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6"
@@ -143,10 +143,10 @@ namespace NATS.Jwt.Tests
 				"tag1", "tag\\two"
 			};
 
-			string jwt = JwtUtils.IssueUserJwt(signingKey, userKey.EncodedPublicKey, "custom", null, 1633043378, null,
+			string jwt = JwtUtils.IssueUserJwt(signingKey, userKey.GetPublicKey(), "custom", null, 1633043378, null,
 				userClaim);
 			string claimBody = JwtUtils.GetClaimBody(jwt);
-			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.EncodedSeed);
+			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.GetSeed());
 			/*
 			    Generated JWT:
 				{
@@ -197,8 +197,8 @@ namespace NATS.Jwt.Tests
 		[Fact]
 		public void Custom_limits()
 		{
-			NKeyPair userKey = NKeys.NKeys.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY");
-			NKeyPair signingKey = NKeys.NKeys.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU");
+			KeyPair userKey = KeyPair.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY".ToCharArray());
+			KeyPair signingKey = KeyPair.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU".ToCharArray());
 			UserClaim userClaim = new UserClaim
 			{
 				IssuerAccount = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6"
@@ -207,10 +207,10 @@ namespace NATS.Jwt.Tests
 			userClaim.Data = 2;
 			userClaim.Payload = 3;
 
-			string jwt = JwtUtils.IssueUserJwt(signingKey, userKey.EncodedPublicKey, "custom", null, 1633043378, null,
+			string jwt = JwtUtils.IssueUserJwt(signingKey, userKey.GetPublicKey(), "custom", null, 1633043378, null,
 				userClaim);
 			string claimBody = JwtUtils.GetClaimBody(jwt);
-			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.EncodedSeed);
+			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.GetSeed());
 			/*
 			    Generated JWT:
 				{
@@ -252,39 +252,39 @@ namespace NATS.Jwt.Tests
 		[Fact]
 		public void Bad_signing_key()
 		{
-			NKeyPair userKey = NKeys.NKeys.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY");
+			KeyPair userKey = KeyPair.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY".ToCharArray());
 			// should be account, but this is a user key:
-			NKeyPair signingKey = NKeys.NKeys.FromSeed("SUAIW7IZ2YDQYLTE4FJ64ZBX7UMLCN57V6GHALKMUSMJCU5PJDNUO6BVUI");
+			KeyPair signingKey = KeyPair.FromSeed("SUAIW7IZ2YDQYLTE4FJ64ZBX7UMLCN57V6GHALKMUSMJCU5PJDNUO6BVUI".ToCharArray());
 			string accountId = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6";
 
 			ArgumentException e = Assert.Throws<ArgumentException>(() =>
-				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.EncodedPublicKey, null, null, null, 1633043378));
-			Assert.Equal("IssueUserJWT requires an account key for the signingKey parameter, but got User", e.Message);
+				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
+			Assert.Equal("IssueUserJWT requires an account key for the signingKey parameter, but got U", e.Message);
 		}
 
 		[Fact]
 		public void Bad_account_id()
 		{
-			NKeyPair userKey = NKeys.NKeys.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY");
-			NKeyPair signingKey = NKeys.NKeys.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU");
+			KeyPair userKey = KeyPair.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY".ToCharArray());
+			KeyPair signingKey = KeyPair.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU".ToCharArray());
 			// should be account, but this is a user key:
 			string accountId = "UDN6WZFPYTS4YSUHUD4YFFU5NVKT6BVCY5QXQFYF3I23AER622SBOVUZ";
 
 			ArgumentException e = Assert.Throws<ArgumentException>(() =>
-				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.EncodedPublicKey, null, null, null, 1633043378));
-			Assert.Equal("IssueUserJWT requires an account key for the accountId parameter, but got User", e.Message);
+				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
+			Assert.Equal("IssueUserJWT requires an account key for the accountId parameter, but got U", e.Message);
 		}
 
 		[Fact]
 		public void Bad_public_user_key()
 		{
-			NKeyPair userKey = NKeys.NKeys.FromSeed("SAADFHQTEKYBOCG4CPEPNAJ5FLRX4G4WTCNTAIOKN3LARLHGVKB4BRUHYY");
-			NKeyPair signingKey = NKeys.NKeys.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU");
+			KeyPair userKey = KeyPair.FromSeed("SAADFHQTEKYBOCG4CPEPNAJ5FLRX4G4WTCNTAIOKN3LARLHGVKB4BRUHYY".ToCharArray());
+			KeyPair signingKey = KeyPair.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU".ToCharArray());
 			string accountId = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6";
 
 			ArgumentException e = Assert.Throws<ArgumentException>(() =>
-				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.EncodedPublicKey, null, null, null, 1633043378));
-			Assert.Equal("IssueUserJWT requires a user key for the publicUserKey parameter, but got Account",
+				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
+			Assert.Equal("IssueUserJWT requires a user key for the publicUserKey parameter, but got A",
 				e.Message);
 		}
 

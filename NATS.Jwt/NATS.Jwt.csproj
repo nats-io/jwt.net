@@ -3,6 +3,6 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\nkeys.net\NATS.NKeys\NATS.NKeys.csproj" />
+      <PackageReference Include="NATS.NKeys" Version="1.0.0-preview.1" />
     </ItemGroup>
 </Project>
