@@ -1,7 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+<!--        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+
+        <!-- NuGet Packaging -->
+        <PackageTags>nats;jwt</PackageTags>
+        <Description>NATS JWT for .NET</Description>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="NATS.NKeys" Version="1.0.0-preview.1" />
     </ItemGroup>
