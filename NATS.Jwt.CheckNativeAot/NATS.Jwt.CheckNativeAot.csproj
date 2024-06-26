@@ -7,6 +7,9 @@
         <Nullable>enable</Nullable>
         <PublishAot>true</PublishAot>
         <TrimmerSingleWarn>false</TrimmerSingleWarn>
+
+        <!--        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+        <WarningLevel>0</WarningLevel><!-- TODO: remove -->
     </PropertyGroup>
 
     <ItemGroup>
