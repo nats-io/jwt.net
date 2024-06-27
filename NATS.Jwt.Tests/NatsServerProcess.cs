@@ -161,6 +161,9 @@ public static class ChildProcessTracker
     /// <param name="process"></param>
     public static void AddProcess(Process process)
     {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            return;
+
         if (s_jobHandle != IntPtr.Zero)
         {
             var success = AssignProcessToJobObject(s_jobHandle, process.Handle);
