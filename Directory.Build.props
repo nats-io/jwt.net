@@ -4,7 +4,7 @@
         <Nullable>enable</Nullable>
         <NoWarn>$(NoWarn);CS1591;SA0001</NoWarn>
         <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)sign.snk</AssemblyOriginatorKeyFile>
+        <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)NATS.Jwt.snk</AssemblyOriginatorKeyFile>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
