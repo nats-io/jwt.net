@@ -21,6 +21,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install nats-server
+        shell: bash
+        run: |
+            mkdir tools && cd tools
+
+            gh_api_url="https://api.github.com/repos/nats-io/nats-server/releases"
+            # branch="${{ matrix.config.branch }}"
+            branch="latest"
+            if [[ $branch == "v"* ]]; then
+              branch=$(curl -s $gh_api_url | jq -r '.[].tag_name' | grep $branch | sort -V | tail -1)
+            elif [[ $branch == "latest" ]]; then
+              branch=$(curl -s $gh_api_url/latest | jq -r .tag_name)
+            fi
+            for i in 1 2 3
+            do
+              curl -sf https://binaries.nats.dev/nats-io/nats-server/v2@$branch | PREFIX=. sh && break || sleep 30
+            done
+
+            case "${{ matrix.os }}" in
+                ubuntu-latest|macos-latest)
+                    sudo mv nats-server /usr/local/bin
+                    ;;
+                windows-latest)
+                    mv nats-server nats-server.exe
+                    cygpath -w "$(pwd)" | tee -a "$GITHUB_PATH"
+                    ;;
+            esac
+
+      - name: Check nats-server
+        run: nats-server -v
+
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
