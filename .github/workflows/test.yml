@@ -27,12 +27,19 @@ jobs:
           dotnet-version: |
               6.x
               8.x
+      - name: Restore dependencies
+        run: dotnet restore
 
       - name: Build
-        run: dotnet build -c Debug
+        run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
 
       - name: Test
-        run: dotnet test -c Debug --no-build --logger:"console;verbosity=normal"
+        run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Check Native AOT
         shell: bash
@@ -99,7 +106,3 @@ jobs:
 
             echo ">> Run complete."
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-            token: ${{ secrets.CODECOV_TOKEN }}
