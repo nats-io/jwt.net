@@ -25,40 +25,10 @@ jobs:
         shell: bash
         run: |
             mkdir tools && cd tools
-
-            gh_api_url="https://api.github.com/repos/nats-io/nats-server/releases"
-
-            retry_curl() {
-                local url=$1
-                local max_retries=5
-                local retry_delay=10
-                local attempt=1
-                local response=""
-
-                while [ $attempt -le $max_retries ]; do
-                    response=$(curl -s $url)
-                    if [ $? -eq 0 ]; then
-                        echo "$response"
-                        return 0
-                    else
-                        echo "Attempt $attempt failed, retrying in $retry_delay seconds..."
-                        sleep $retry_delay
-                        attempt=$((attempt + 1))
-                    fi
-                done
-
-                echo "Failed to fetch URL after $max_retries attempts"
-                return 1
-            }
-
-            response=$(retry_curl $gh_api_url/latest)
-            echo "API Response: $response"
-            branch=$(echo $response | jq -r .tag_name)
-            echo "Determined branch: $branch"
-
+            branch="main"
             for i in 1 2 3
             do
-              curl -sf "https://binaries.nats.dev/nats-io/nats-server/v2@$branch" | PREFIX=. sh && break || sleep 30
+              curl -sf https://binaries.nats.dev/nats-io/nats-server/v2@$branch | PREFIX=. sh && break || sleep 30
             done
 
             case "${{ matrix.os }}" in
