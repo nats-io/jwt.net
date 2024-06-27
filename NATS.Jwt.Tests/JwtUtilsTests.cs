@@ -301,7 +301,7 @@ namespace NATS.Jwt.Tests
 
 			ResponsePermission resp = new ResponsePermission();
 			resp.MaxMsgs = 99;
-			//resp.Expires = TimeSpan.FromMilliseconds(999);
+			resp.Expires = TimeSpan.FromMilliseconds(999);
 
 			IList<TimeRange> times = new List<TimeRange>();
 			times.Add(new TimeRange
@@ -333,7 +333,7 @@ namespace NATS.Jwt.Tests
 			"{\"issuer_account\":\"test-issuer-account\",\"type\":\"user\",\"version\":2,\"subs\":-1,\"data\":-1,\"payload\":-1}";
 
 		private const string FullJson =
-			"{\"issuer_account\":\"test-issuer-account\",\"type\":\"user\",\"version\":2,\"resp\":{\"max\":99},\"src\":[\"src1\",\"src2\"],\"times\":[{\"start\":\"01:15:00\",\"end\":\"03:15:00\"}],\"times_location\":\"US/Eastern\",\"subs\":42,\"data\":43,\"payload\":44,\"bearer_token\":true,\"allowed_connection_types\":[\"nats\",\"tls\"]}";
+			"{\"issuer_account\":\"test-issuer-account\",\"type\":\"user\",\"version\":2,\"resp\":{\"max\":99,\"ttl\":999000000},\"src\":[\"src1\",\"src2\"],\"times\":[{\"start\":\"01:15:00\",\"end\":\"03:15:00\"}],\"times_location\":\"US/Eastern\",\"subs\":42,\"data\":43,\"payload\":44,\"bearer_token\":true,\"allowed_connection_types\":[\"nats\",\"tls\"]}";
 
 		/*
 			Basic Json

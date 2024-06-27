@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using NATS.Jwt.Internal;
 
 namespace NATS.Jwt
 {
@@ -11,6 +12,7 @@ namespace NATS.Jwt
 
         [JsonPropertyName("ttl")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonConverter(typeof(NatsJSJsonNanosecondsConverter))]
         public TimeSpan Expires { get; set; }
     }
 }
