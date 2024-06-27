@@ -1,5 +1,7 @@
 # UNDER DEVELOPMENT :warning:
 
+[![codecov](https://codecov.io/github/nats-io/jwt.net/graph/badge.svg?token=zXUTHG6L3Q)](https://codecov.io/github/nats-io/jwt.net)
+
 **IMPORTANT**: Under development at the moment, not ready for use.
 
 # NATS JWT .NET (Developers preview)
