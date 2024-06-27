@@ -13,8 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-        - ubuntu-latest
-        - windows-latest
+        #- ubuntu-latest
+        #- windows-latest
         - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -54,7 +54,7 @@ jobs:
             response=$(retry_curl $gh_api_url/latest)
             # echo "API Response: $response"
             branch=$(echo $response | jq -r .tag_name)
-            # echo "Determined branch: $branch"
+            echo "Determined branch: $branch"
 
             for i in 1 2 3
             do
