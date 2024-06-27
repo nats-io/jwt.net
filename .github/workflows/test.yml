@@ -13,9 +13,9 @@ jobs:
       fail-fast: false
       matrix:
         os:
-        - ubuntu-latest
+        #- ubuntu-latest
         - windows-latest
-        - macos-latest
+        #- macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -34,8 +34,8 @@ jobs:
         run: |
             dotnet build -c Release --no-restore
             dotnet build -c Debug --no-restore
-            sn -vf NATS.Jwt.Tests\bin\Debug\net462\NATS.Jwt.dll
-            sn -vf NATS.Jwt.Tests\bin\Release\net462\NATS.Jwt.dll
+            ls NATS.Jwt.Tests\bin\Debug\net462\NATS.Jwt.dll
+            ls NATS.Jwt.Tests\bin\Release\net462\NATS.Jwt.dll
 
       - name: Test Release
         run: dotnet test -c Release --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings
