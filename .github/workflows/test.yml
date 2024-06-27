@@ -30,7 +30,7 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --no-restore -p:SignAssembly=false
+        run: dotnet build --no-restore -p:SignAssembly=false -p:ContinuousIntegrationBuild=true
 
       - name: Test
         run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings
