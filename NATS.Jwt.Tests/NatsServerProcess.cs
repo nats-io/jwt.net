@@ -47,7 +47,7 @@ public class NatsServerProcess : IAsyncDisposable
 
         var natsServerExe = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "nats-server.exe" : "nats-server";
         var configFlag = config == null ? string.Empty : $"-c \"{config}\"";
-        var portsFileDirEsc = portsFileDir.Replace(@"\", @"\\");
+        var portsFileDirEsc = portsFileDir.Replace(@"\", "/");
         var info = new ProcessStartInfo
         {
             FileName = natsServerExe,
