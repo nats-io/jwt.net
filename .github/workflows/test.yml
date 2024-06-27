@@ -32,10 +32,13 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --no-restore -p:SignAssembly=false -p:ContinuousIntegrationBuild=true
+#        run: dotnet build --no-restore -p:SignAssembly=false -p:ContinuousIntegrationBuild=true
+        run: dotnet build --no-restore -p:ContinuousIntegrationBuild=true
 
       - name: Test
-        run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings
+        # Collect code coverage
+        # https://github.com/MarcoRossignoli/coverlet/blob/master/Documentation/KnownIssues.md#tests-fail-if-assembly-is-strong-named
+        run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings -- RunConfiguration.DisableAppDomain=true
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
