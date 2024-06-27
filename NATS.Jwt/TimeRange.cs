@@ -1,20 +1,15 @@
-using NATS.Jwt.Internal;
+using System.Text.Json.Serialization;
 
 namespace NATS.Jwt
 {
     public class TimeRange
     {
-        internal TimeRangeJson ToTimeRangeJson()
-        {
-            return new TimeRangeJson
-            {
-                Start = Start,
-                End = End,
-            };
-        }
-
-        public string End { get; set; }
-
+        [JsonPropertyName("start")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string Start { get; set; }
+
+        [JsonPropertyName("end")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public string End { get; set; }
     }
 }

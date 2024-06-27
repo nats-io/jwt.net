@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using NATS.Jwt.Internal;
 using NATS.NKeys;
 
@@ -50,10 +52,10 @@ namespace NATS.Jwt
         /// <param name="accountId">a mandatory public account nkey. Will throw error when not set or not account nkey.</param>
         /// <param name="publicUserKey">a mandatory public user nkey. Will throw error when not set or not user nkey.</param>
         /// <returns>a JWT</returns>
-        public static string IssueUserJwt(KeyPair signingKey, string accountId, string publicUserKey)
-        {
-            return IssueUserJwt(signingKey, publicUserKey, null, null, UnixTimeSeconds(), null, new UserClaim { IssuerAccount = accountId });
-        }
+        // public static string IssueUserJwt(KeyPair signingKey, string accountId, string publicUserKey)
+        // {
+        //     return IssueUserJwt(signingKey, publicUserKey, null, null, UnixTimeSeconds(), null, new UserClaim { IssuerAccount = accountId });
+        // }
 
         /// <summary>
         /// Issue a user JWT from a scoped signing key. See <a href="https://docs.nats.io/nats-tools/nsc/signing_keys">Signing Keys</a>
@@ -63,10 +65,10 @@ namespace NATS.Jwt
         /// <param name="publicUserKey">a mandatory public user nkey. Will throw error when not set or not user nkey.</param>
         /// <param name="name">optional human-readable name. When absent, default to publicUserKey.</param>
         /// <returns>a JWT</returns>
-        public static string IssueUserJwt(KeyPair signingKey, string accountId, string publicUserKey, string name)
-        {
-            return IssueUserJwt(signingKey, publicUserKey, name, null, UnixTimeSeconds(), null, new UserClaim { IssuerAccount = accountId });
-        }
+        // public static string IssueUserJwt(KeyPair signingKey, string accountId, string publicUserKey, string name)
+        // {
+        //     return IssueUserJwt(signingKey, publicUserKey, name, null, UnixTimeSeconds(), null, new UserClaim { IssuerAccount = accountId });
+        // }
 
         /// <summary>
         /// Issue a user JWT from a scoped signing key. See <a href="https://docs.nats.io/nats-tools/nsc/signing_keys">Signing Keys</a>
@@ -78,10 +80,10 @@ namespace NATS.Jwt
         /// <param name="expiration">optional but recommended duration, when the generated jwt needs to expire. If not set, JWT will not expire.</param>
         /// <param name="tags">optional list of tags to be included in the JWT.</param>
         /// <returns>a JWT</returns>
-        public static string IssueUserJwt(KeyPair signingKey, string accountId, string publicUserKey, string name, TimeSpan? expiration, params string[] tags)
-        {
-            return IssueUserJwt(signingKey, publicUserKey, name, expiration, UnixTimeSeconds(), null, new UserClaim { IssuerAccount = accountId, Tags = tags });
-        }
+        // public static string IssueUserJwt(KeyPair signingKey, string accountId, string publicUserKey, string name, TimeSpan? expiration, params string[] tags)
+        // {
+        //     return IssueUserJwt(signingKey, publicUserKey, name, expiration, UnixTimeSeconds(), null, new UserClaim { IssuerAccount = accountId, Tags = tags });
+        // }
 
         /// <summary>
         /// Issue a user JWT from a scoped signing key. See <a href="https://docs.nats.io/nats-tools/nsc/signing_keys">Signing Keys</a>
@@ -94,7 +96,7 @@ namespace NATS.Jwt
         /// <param name="tags">optional list of tags to be included in the JWT.</param>
         /// <param name="issuedAt">the current epoch seconds.</param>
         /// <returns>a JWT</returns>
-        public static string IssueUserJwt(KeyPair signingKey, string accountId, string publicUserKey, string name, TimeSpan? expiration, string[] tags, long issuedAt)
+        public static string IssueUserJwtWithAccountId(KeyPair signingKey, string accountId, string publicUserKey, string name, TimeSpan? expiration, string[] tags, long issuedAt)
         {
             return IssueUserJwt(signingKey, publicUserKey, name, expiration, issuedAt, null, new UserClaim {IssuerAccount = accountId, Tags = tags });
         }
@@ -111,7 +113,7 @@ namespace NATS.Jwt
         /// <param name="issuedAt">the current epoch seconds.</param>
         /// <param name="audience">optional audience</param>
         /// <returns>a JWT</returns>
-        public static string IssueUserJwt(KeyPair signingKey, string accountId, string publicUserKey, string name, TimeSpan? expiration, string[] tags, long issuedAt, string audience)
+        public static string IssueUserJwtWithAudience(KeyPair signingKey, string accountId, string publicUserKey, string name, TimeSpan? expiration, string[] tags, long issuedAt, string audience)
         {
             return IssueUserJwt(signingKey, publicUserKey, name, expiration, issuedAt, audience, new UserClaim{IssuerAccount = accountId, Tags = tags});
         }
@@ -136,24 +138,21 @@ namespace NATS.Jwt
             string audience,
             UserClaim userClaim)
         {
-            var durationJson = duration?.ToDurationJson();
-            var userClaimJson = userClaim.ToUserClaimJson();
-            
             // Validate the signingKey:
             if (!signingKey.GetPublicKey().StartsWith("A"))
             {
                 throw new ArgumentException(
                     "IssueUserJWT requires an account key for the signingKey parameter, but got " + signingKey.GetPublicKey()[0]);
             }
-            
+
             // Validate the accountId:
-            KeyPair accountKey = KeyPair.FromPublicKey(userClaimJson.IssuerAccount.ToCharArray());
+            KeyPair accountKey = KeyPair.FromPublicKey(userClaim.IssuerAccount.ToCharArray());
             if (!accountKey.GetPublicKey().StartsWith("A"))
             {
                 throw new ArgumentException(
                     "IssueUserJWT requires an account key for the accountId parameter, but got " + accountKey.GetPublicKey()[0]);
             }
-            
+
             // Validate the publicUserKey:
             KeyPair userKey = KeyPair.FromPublicKey(publicUserKey.ToCharArray());
             // if (userKey.Type != NKeys.NKeys.PrefixByte.User)
@@ -166,7 +165,7 @@ namespace NATS.Jwt
 
             string claimName = string.IsNullOrWhiteSpace(name) ? publicUserKey : name;
 
-            return IssueJwt(signingKey, publicUserKey, claimName, durationJson, issuedAt, accSigningKeyPub, audience, userClaimJson);
+            return IssueJwt(signingKey, publicUserKey, claimName, duration ?? default, issuedAt, accSigningKeyPub, audience, JsonSerializer.SerializeToNode(userClaim));
         }
 
         /// <summary>
@@ -181,8 +180,8 @@ namespace NATS.Jwt
         /// <param name="audience">optional audience</param>
         /// <param name="nats">the generic nats claim</param>
         /// <returns>a JWT</returns>
-        private static string IssueJwt(KeyPair signingKey, string publicUserKey, string name, DurationJson expirationJson,
-            long issuedAt, string accSigningKeyPub, string audience, JsonSerializable nats)
+        private static string IssueJwt(KeyPair signingKey, string publicUserKey, string name, TimeSpan expirationJson,
+            long issuedAt, string accSigningKeyPub, string audience, JsonNode nats)
         {
             var claim = new Claim
             {
@@ -191,12 +190,12 @@ namespace NATS.Jwt
                 Iss = accSigningKeyPub,
                 Name = name,
                 Sub = publicUserKey,
-                Exp = expirationJson,
-                Nats = nats
+                Exp = expirationJson != default ? issuedAt + (long)expirationJson.TotalSeconds : 0,
+                Nats = nats,
             };
 
             // Issue At time is stored in unix seconds
-            string claimJson = claim.ToJsonString();
+            string claimJson = JsonSerializer.Serialize(claim);
 
             // Compute jti, a base32 encoded sha256 hash
             IncrementalHash hasher = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
@@ -205,7 +204,7 @@ namespace NATS.Jwt
             claim.Jti = Base32Encode(hasher.GetHashAndReset());
 
             // all three components (header/body/signature) are base64url encoded
-            string encBody = EncodingUtils.ToBase64UrlEncoded(claim.Serialize());
+            string encBody = EncodingUtils.ToBase64UrlEncoded(Encoding.ASCII.GetBytes(JsonSerializer.Serialize(claim)));
 
             // compute the signature off of header + body (. included on purpose)
             byte[] sig = Encoding.ASCII.GetBytes(EncodedClaimHeader + "." + encBody);

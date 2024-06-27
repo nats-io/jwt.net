@@ -1,21 +1,16 @@
 ﻿using System;
-using NATS.Jwt.Internal;
+using System.Text.Json.Serialization;
 
 namespace NATS.Jwt
 {
     public class ResponsePermission
     {
-        internal ResponsePermissionJson ToResponsePermissionJson()
-        {
-            return new ResponsePermissionJson
-            {
-                Expires = Expires.ToDurationJson(),
-                MaxMsgs = MaxMsgs,
-            };
-        }
-
+        [JsonPropertyName("max")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int MaxMsgs { get; set; }
 
+        [JsonPropertyName("ttl")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public TimeSpan Expires { get; set; }
     }
 }

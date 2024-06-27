@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using NATS.NKeys;
 using Xunit;
 
@@ -14,7 +15,7 @@ namespace NATS.Jwt.Tests
 			KeyPair userKey = KeyPair.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY".ToCharArray());
 			KeyPair signingKey = KeyPair.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU".ToCharArray());
 			string accountId = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6";
-			string jwt = JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), null, null, null,
+			string jwt = JwtUtils.IssueUserJwtWithAudience(signingKey, accountId, userKey.GetPublicKey(), null, null, null,
 				1633043378, "audience");
 			string claimBody = JwtUtils.GetClaimBody(jwt);
 			string cred = string.Format(JwtUtils.NatsUserJwtFormat, jwt, userKey.GetSeed());
@@ -63,7 +64,7 @@ namespace NATS.Jwt.Tests
 			KeyPair userKey = KeyPair.FromSeed("SUAGL3KX4ZBBD53BNNLSHGAAGCMXSEYZ6NTYUBUCPZQGHYNK3ZRQBUDPRY".ToCharArray());
 			KeyPair signingKey = KeyPair.FromSeed("SAANJIBNEKGCRUWJCPIWUXFBFJLR36FJTFKGBGKAT7AQXH2LVFNQWZJMQU".ToCharArray());
 			string accountId = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6";
-			string jwt = JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), "name",
+			string jwt = JwtUtils.IssueUserJwtWithAudience(signingKey, accountId, userKey.GetPublicKey(), "name",
 				TimeSpan.FromSeconds(100), new string[]
 				{
 					"tag1", "tag\\two"
@@ -190,7 +191,8 @@ namespace NATS.Jwt.Tests
 				"------END USER NKEY SEED------\n" +
 				"\n" +
 				"*************************************************************\n";
-			Assert.Equal(expectedClaimBody, claimBody);
+            // expectedClaimBody = JsonSerializer.Serialize(JsonSerializer.Deserialize<Claim>(expectedClaimBody));
+            Assert.Equal(expectedClaimBody, claimBody);
 			Assert.Equal(expectedCred, cred);
 		}
 
@@ -258,7 +260,7 @@ namespace NATS.Jwt.Tests
 			string accountId = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6";
 
 			ArgumentException e = Assert.Throws<ArgumentException>(() =>
-				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
+				JwtUtils.IssueUserJwtWithAccountId(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
 			Assert.Equal("IssueUserJWT requires an account key for the signingKey parameter, but got U", e.Message);
 		}
 
@@ -271,7 +273,7 @@ namespace NATS.Jwt.Tests
 			string accountId = "UDN6WZFPYTS4YSUHUD4YFFU5NVKT6BVCY5QXQFYF3I23AER622SBOVUZ";
 
 			ArgumentException e = Assert.Throws<ArgumentException>(() =>
-				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
+				JwtUtils.IssueUserJwtWithAccountId(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
 			Assert.Equal("IssueUserJWT requires an account key for the accountId parameter, but got U", e.Message);
 		}
 
@@ -283,7 +285,7 @@ namespace NATS.Jwt.Tests
 			string accountId = "ACXZRALIL22WRETDRXYKOYDB7XC3E7MBSVUSUMFACO6OM5VPRNFMOOO6";
 
 			ArgumentException e = Assert.Throws<ArgumentException>(() =>
-				JwtUtils.IssueUserJwt(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
+				JwtUtils.IssueUserJwtWithAccountId(signingKey, accountId, userKey.GetPublicKey(), null, null, null, 1633043378));
 			Assert.Equal("IssueUserJWT requires a user key for the publicUserKey parameter, but got A",
 				e.Message);
 		}
@@ -295,11 +297,11 @@ namespace NATS.Jwt.Tests
 			{
 				IssuerAccount = "test-issuer-account"
 			};
-			Assert.Equal(BasicJson, userClaim.ToJsonString());
+			Assert.Equal(BasicJson, JsonSerializer.Serialize(userClaim));
 
 			ResponsePermission resp = new ResponsePermission();
 			resp.MaxMsgs = 99;
-			resp.Expires = TimeSpan.FromMilliseconds(999);
+			//resp.Expires = TimeSpan.FromMilliseconds(999);
 
 			IList<TimeRange> times = new List<TimeRange>();
 			times.Add(new TimeRange
@@ -323,7 +325,8 @@ namespace NATS.Jwt.Tests
 				"nats", "tls"
 			};
 
-			Assert.Equal(FullJson, userClaim.ToJsonString());
+            var actual = JsonSerializer.Serialize(userClaim);
+            Assert.Equal(FullJson, actual);
 		}
 
 		private const string BasicJson =

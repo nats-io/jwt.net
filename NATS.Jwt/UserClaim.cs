@@ -1,65 +1,68 @@
-﻿using System.Linq;
-using NATS.Jwt.Internal;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace NATS.Jwt
 {
     public class UserClaim
     {
-        internal UserClaimJson ToUserClaimJson()
-        {
-            return new UserClaimJson
-            {
-                Data = Data,
-                Payload = Payload,
-                Subs = Subs,
-                Locale = Locale,
-                Pub = Pub?.ToPermissionJson(),
-                Resp = Resp?.ToResponsePermissionJson(),
-                Src = Src,
-                BearerToken = BearerToken,
-                IssuerAccount = IssuerAccount,
-                AllowedConnectionTypes = AllowedConnectionTypes,
-                Sub = Sub?.ToPermissionJson(),
-                Tags = Tags,
-                Times = Times?.Select(t => t.ToTimeRangeJson()).ToArray(),
-                Type = Type,
-                Version = Version,
-            };
-        }
-
-        public int Version { get; set; } = 2;
-
-        public string Type { get; set; } = "user";
-
-        public TimeRange[] Times { get; set; }
-
-        public string[] Tags { get; set; }
-
-        public Permission Sub { get; set; }
-
-        public string[] AllowedConnectionTypes { get; set; }
-
+        [JsonPropertyName("issuer_account")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string IssuerAccount { get; set; }
 
-        public bool BearerToken { get; set; }
+        [JsonPropertyName("tags")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public string[] Tags { get; set; }
 
-        public string[] Src { get; set; }
+        [JsonPropertyName("type")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public string Type { get; set; } = "user";
 
-        public ResponsePermission Resp { get; set; }
+        [JsonPropertyName("version")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public int Version { get; set; } = 2;
 
+        [JsonPropertyName("pub")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public Permission Pub { get; set; }
 
+        [JsonPropertyName("sub")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public Permission Sub { get; set; }
+
+        [JsonPropertyName("resp")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public ResponsePermission Resp { get; set; }
+
+        [JsonPropertyName("src")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public string[] Src { get; set; }
+
+        [JsonPropertyName("times")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public TimeRange[] Times { get; set; }
+
+        [JsonPropertyName("times_location")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string Locale { get; set; }
 
+        [JsonPropertyName("subs")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public long Subs { get; set; } = -1;
 
-        public long Payload { get; set; } = -1;
-
+        [JsonPropertyName("data")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public long Data { get; set; } = -1;
 
-        public string ToJsonString()
-        {
-            return ToUserClaimJson().ToJsonString();
-        }
+        [JsonPropertyName("payload")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public long Payload { get; set; } = -1;
+
+        [JsonPropertyName("bearer_token")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public bool BearerToken { get; set; }
+
+        [JsonPropertyName("allowed_connection_types")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public string[] AllowedConnectionTypes { get; set; }
     }
 }
