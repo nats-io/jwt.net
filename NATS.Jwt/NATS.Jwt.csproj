@@ -4,7 +4,6 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
 <!--        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
         <WarningLevel>0</WarningLevel><!-- TODO: remove -->
 
