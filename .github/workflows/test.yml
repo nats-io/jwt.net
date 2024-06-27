@@ -31,7 +31,14 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --no-restore
+        run: |
+            dotnet build -c Release --no-restore
+            dotnet build -c Debug --no-restore
+            sn -vf NATS.Jwt.Tests\bin\Debug\net462\NATS.Jwt.dll
+            sn -vf NATS.Jwt.Tests\bin\Release\net462\NATS.Jwt.dll
+
+      - name: Test Release
+        run: dotnet test -c Release --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings
 
       - name: Test
         run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings
