@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.Jwt", "NATS.Jwt\NATS.Jwt.csproj", "{9B613C47-922B-4AA8-82D7-1520A13E0F74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.Jwt.Tests", "NATS.Jwt.Tests\NATS.Jwt.Tests.csproj", "{707139DF-D75B-40F8-9AA7-816C64E98572}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".", ".", "{1F24478C-D5CB-4A58-A74E-6371F7F95C01}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		LICENSE = LICENSE
+		Directory.Build.props = Directory.Build.props
+		Icon.png = Icon.png
+		version.txt = version.txt
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Default.runsettings = Default.runsettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{03E5999C-5D20-4EA2-B8C8-53ACE65B221F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{1EB01F81-8857-4646-B8BF-16024F357506}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\config.yml = .github\ISSUE_TEMPLATE\config.yml
+		.github\ISSUE_TEMPLATE\defect.yml = .github\ISSUE_TEMPLATE\defect.yml
+		.github\ISSUE_TEMPLATE\proposal.yml = .github\ISSUE_TEMPLATE\proposal.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{9C98B59B-D0C0-4F2B-8333-2242ED1B5F70}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\format.yml = .github\workflows\format.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\test.yml = .github\workflows\test.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.Jwt.CheckNativeAot", "NATS.Jwt.CheckNativeAot\NATS.Jwt.CheckNativeAot.csproj", "{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B613C47-922B-4AA8-82D7-1520A13E0F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B613C47-922B-4AA8-82D7-1520A13E0F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B613C47-922B-4AA8-82D7-1520A13E0F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B613C47-922B-4AA8-82D7-1520A13E0F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{707139DF-D75B-40F8-9AA7-816C64E98572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707139DF-D75B-40F8-9AA7-816C64E98572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707139DF-D75B-40F8-9AA7-816C64E98572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707139DF-D75B-40F8-9AA7-816C64E98572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1EB01F81-8857-4646-B8BF-16024F357506} = {03E5999C-5D20-4EA2-B8C8-53ACE65B221F}
+		{9C98B59B-D0C0-4F2B-8333-2242ED1B5F70} = {03E5999C-5D20-4EA2-B8C8-53ACE65B221F}
+	EndGlobalSection
+EndGlobal
