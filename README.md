@@ -2,9 +2,18 @@
 
 [![codecov](https://codecov.io/github/nats-io/jwt.net/graph/badge.svg?token=zXUTHG6L3Q)](https://codecov.io/github/nats-io/jwt.net)
 
-**IMPORTANT**: Under development at the moment, not ready for use.
+**IMPORTANT**: This is a pre-release version of the library. The API is subject to change.
 
 This is a .NET implementation of the JWT library for the NATS ecosystem.
+
+## TODO
+
+- [ ] Add public API documentation
+- [ ] Add more tests
+- [ ] Enable code coverage
+- [ ] Add more examples
+- [ ] Add more documentation
+- [ ] Remove No-warnings from build
 
 ## Installation
 
