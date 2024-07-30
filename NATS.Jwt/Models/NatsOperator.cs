@@ -22,7 +22,7 @@ public record NatsOperator : NatsGenericFields
     /// </summary>
     [JsonPropertyName("account_server_url")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public string AccountServerURL { get; set; }
+    public string AccountServerUrl { get; set; }
 
     /// <summary>
     /// A list of NATS urls (tls://host:port) where tools can connect to the server
@@ -30,7 +30,7 @@ public record NatsOperator : NatsGenericFields
     /// </summary>
     [JsonPropertyName("operator_service_urls")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public List<string> OperatorServiceURLs { get; set; }
+    public List<string> OperatorServiceUrLs { get; set; }
 
     /// <summary>
     /// Identity of the system account

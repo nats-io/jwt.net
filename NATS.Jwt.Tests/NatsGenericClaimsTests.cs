@@ -37,15 +37,10 @@ public class NatsGenericClaimsTests
                 },
             },
         };
-        var writer = new SimpleBufferWriter(1024);
-        var jsonWriter = new Utf8JsonWriter(writer);
-        JsonSerializer.Serialize(jsonWriter, claims, JsonContext.Default.NatsGenericClaims);
-        var json = Encoding.ASCII.GetString(writer.WrittenMemory.ToArray());
-
+        var json = JsonSerializer.Serialize(claims);
         _output.WriteLine($"json: {json}");
 
-        var jsonReader = new Utf8JsonReader(writer.WrittenMemory.Span);
-        var claims2 = JsonSerializer.Deserialize(ref jsonReader, JsonContext.Default.NatsGenericClaims);
+        var claims2 = JsonSerializer.Deserialize<NatsGenericClaims>(json);
         _output.WriteLine($"claims2: {claims2}");
 
         var json2 = JsonSerializer.Serialize(claims2);

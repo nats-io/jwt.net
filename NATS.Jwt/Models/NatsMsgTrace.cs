@@ -17,7 +17,7 @@ public record NatsMsgTrace
     /// Sampling is used to set the probability sampling, that is, the
     /// server will get a random number between 1 and 100 and trigger
     /// the trace if the number is lower than this Sampling value.
-    /// The valid range is [1..100]. If the value is not set Validate()
+    /// The valid range is [1..100]. If the value is not set, Validate()
     /// will set the value to 100.
     /// </summary>
     [JsonPropertyName("sampling")]

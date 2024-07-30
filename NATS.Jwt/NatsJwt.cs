@@ -1,6 +1,4 @@
 using System;
-using System.Buffers;
-using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
@@ -109,42 +107,42 @@ public class NatsJwt
 
     /********************************************************************************************/
 
-    public string Encode(NatsActivationClaims activationClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public string EncodeActivationClaims(NatsActivationClaims activationClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(activationClaims.Activation, ActivationClaim);
         return DoEncode(NatsJwtHeader, keyPair, activationClaims, JsonContext.Default.NatsActivationClaims, issuedAt);
     }
 
-    public string Encode(NatsAuthorizationRequestClaims authorizationRequestClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public string EncodeAuthorizationRequestClaims(NatsAuthorizationRequestClaims authorizationRequestClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(authorizationRequestClaims.AuthorizationRequest, AuthorizationRequestClaim);
         return DoEncode(NatsJwtHeader, keyPair, authorizationRequestClaims, JsonContext.Default.NatsAuthorizationRequestClaims, issuedAt);
     }
 
-    public string Encode(NatsAuthorizationResponseClaims authorizationResponseClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public string EncodeAuthorizationResponseClaims(NatsAuthorizationResponseClaims authorizationResponseClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(authorizationResponseClaims.AuthorizationResponse, AuthorizationRequestClaim);
         return DoEncode(NatsJwtHeader, keyPair, authorizationResponseClaims, JsonContext.Default.NatsAuthorizationResponseClaims, issuedAt);
     }
 
-    public string Encode(NatsGenericClaims genericClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public string EncodeGenericClaims(NatsGenericClaims genericClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         return DoEncode(NatsJwtHeader, keyPair, genericClaims, JsonContext.Default.NatsGenericClaims, issuedAt);
     }
 
-    public string Encode(NatsOperatorClaims operatorClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public string EncodeOperatorClaims(NatsOperatorClaims operatorClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(operatorClaims.Operator, OperatorClaim);
         return DoEncode(NatsJwtHeader, keyPair, operatorClaims, JsonContext.Default.NatsOperatorClaims, issuedAt);
     }
 
-    public string Encode(NatsUserClaims userClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public string EncodeUserClaims(NatsUserClaims userClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(userClaims.User, UserClaim);
         return DoEncode(NatsJwtHeader, keyPair, userClaims, JsonContext.Default.NatsUserClaims, issuedAt);
     }
 
-    public string Encode(NatsAccountClaims accountClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public string EncodeAccountClaims(NatsAccountClaims accountClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(accountClaims.Account, AccountClaim);
         accountClaims.Account.Imports?.Sort();

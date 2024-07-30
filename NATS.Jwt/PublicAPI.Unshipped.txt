@@ -1,0 +1,385 @@
+#nullable enable
+const NATS.Jwt.NatsJwt.AccountClaim = "account" -> string!
+const NATS.Jwt.NatsJwt.ActivationClaim = "activation" -> string!
+const NATS.Jwt.NatsJwt.AlgorithmNkey = "ed25519-nkey" -> string!
+const NATS.Jwt.NatsJwt.AnyAccount = "*" -> string!
+const NATS.Jwt.NatsJwt.AuthorizationRequestClaim = "authorization_request" -> string!
+const NATS.Jwt.NatsJwt.AuthorizationResponseClaim = "authorization_response" -> string!
+const NATS.Jwt.NatsJwt.GenericClaim = "generic" -> string!
+const NATS.Jwt.NatsJwt.NoLimit = -1 -> long
+const NATS.Jwt.NatsJwt.OperatorClaim = "operator" -> string!
+const NATS.Jwt.NatsJwt.TokenTypeJwt = "JWT" -> string!
+const NATS.Jwt.NatsJwt.UserClaim = "user" -> string!
+NATS.Jwt.Models.JetStreamLimits
+NATS.Jwt.Models.JetStreamLimits.Consumer.get -> long
+NATS.Jwt.Models.JetStreamLimits.Consumer.set -> void
+NATS.Jwt.Models.JetStreamLimits.DiskMaxStreamBytes.get -> long
+NATS.Jwt.Models.JetStreamLimits.DiskMaxStreamBytes.set -> void
+NATS.Jwt.Models.JetStreamLimits.DiskStorage.get -> long
+NATS.Jwt.Models.JetStreamLimits.DiskStorage.set -> void
+NATS.Jwt.Models.JetStreamLimits.MaxAckPending.get -> long
+NATS.Jwt.Models.JetStreamLimits.MaxAckPending.set -> void
+NATS.Jwt.Models.JetStreamLimits.MaxBytesRequired.get -> bool
+NATS.Jwt.Models.JetStreamLimits.MaxBytesRequired.set -> void
+NATS.Jwt.Models.JetStreamLimits.MemoryMaxStreamBytes.get -> long
+NATS.Jwt.Models.JetStreamLimits.MemoryMaxStreamBytes.set -> void
+NATS.Jwt.Models.JetStreamLimits.MemoryStorage.get -> long
+NATS.Jwt.Models.JetStreamLimits.MemoryStorage.set -> void
+NATS.Jwt.Models.JetStreamLimits.Streams.get -> long
+NATS.Jwt.Models.JetStreamLimits.Streams.set -> void
+NATS.Jwt.Models.JwtClaimsData
+NATS.Jwt.Models.JwtClaimsData.Audience.get -> string!
+NATS.Jwt.Models.JwtClaimsData.Audience.set -> void
+NATS.Jwt.Models.JwtClaimsData.Expires.get -> long
+NATS.Jwt.Models.JwtClaimsData.Expires.set -> void
+NATS.Jwt.Models.JwtClaimsData.Id.get -> string!
+NATS.Jwt.Models.JwtClaimsData.Id.set -> void
+NATS.Jwt.Models.JwtClaimsData.IssuedAt.get -> long
+NATS.Jwt.Models.JwtClaimsData.IssuedAt.set -> void
+NATS.Jwt.Models.JwtClaimsData.Issuer.get -> string!
+NATS.Jwt.Models.JwtClaimsData.Issuer.set -> void
+NATS.Jwt.Models.JwtClaimsData.Name.get -> string!
+NATS.Jwt.Models.JwtClaimsData.Name.set -> void
+NATS.Jwt.Models.JwtClaimsData.NotBefore.get -> long
+NATS.Jwt.Models.JwtClaimsData.NotBefore.set -> void
+NATS.Jwt.Models.JwtClaimsData.Subject.get -> string!
+NATS.Jwt.Models.JwtClaimsData.Subject.set -> void
+NATS.Jwt.Models.JwtHeader
+NATS.Jwt.Models.JwtHeader.Algorithm.get -> string!
+NATS.Jwt.Models.JwtHeader.Algorithm.set -> void
+NATS.Jwt.Models.JwtHeader.Type.get -> string!
+NATS.Jwt.Models.JwtHeader.Type.set -> void
+NATS.Jwt.Models.NatsAccount
+NATS.Jwt.Models.NatsAccount.Authorization.get -> NATS.Jwt.Models.NatsExternalAuthorization!
+NATS.Jwt.Models.NatsAccount.Authorization.set -> void
+NATS.Jwt.Models.NatsAccount.DefaultPermissions.get -> NATS.Jwt.Models.NatsPermissions!
+NATS.Jwt.Models.NatsAccount.DefaultPermissions.set -> void
+NATS.Jwt.Models.NatsAccount.Description.get -> string!
+NATS.Jwt.Models.NatsAccount.Description.set -> void
+NATS.Jwt.Models.NatsAccount.Exports.get -> System.Collections.Generic.List<NATS.Jwt.Models.NatsExport!>?
+NATS.Jwt.Models.NatsAccount.Exports.set -> void
+NATS.Jwt.Models.NatsAccount.Imports.get -> System.Collections.Generic.List<NATS.Jwt.Models.NatsImport!>?
+NATS.Jwt.Models.NatsAccount.Imports.set -> void
+NATS.Jwt.Models.NatsAccount.InfoUrl.get -> string!
+NATS.Jwt.Models.NatsAccount.InfoUrl.set -> void
+NATS.Jwt.Models.NatsAccount.Limits.get -> NATS.Jwt.Models.NatsOperatorLimits!
+NATS.Jwt.Models.NatsAccount.Limits.set -> void
+NATS.Jwt.Models.NatsAccount.Mappings.get -> System.Collections.Generic.Dictionary<string!, NATS.Jwt.Models.NatsWeightedMapping!>!
+NATS.Jwt.Models.NatsAccount.Mappings.set -> void
+NATS.Jwt.Models.NatsAccount.Revocations.get -> System.Collections.Generic.Dictionary<string!, long>!
+NATS.Jwt.Models.NatsAccount.Revocations.set -> void
+NATS.Jwt.Models.NatsAccount.SigningKeys.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsAccount.SigningKeys.set -> void
+NATS.Jwt.Models.NatsAccount.Trace.get -> NATS.Jwt.Models.NatsMsgTrace!
+NATS.Jwt.Models.NatsAccount.Trace.set -> void
+NATS.Jwt.Models.NatsAccountClaims
+NATS.Jwt.Models.NatsAccountClaims.Account.get -> NATS.Jwt.Models.NatsAccount!
+NATS.Jwt.Models.NatsAccountClaims.Account.set -> void
+NATS.Jwt.Models.NatsActivation
+NATS.Jwt.Models.NatsActivation.ImportSubject.get -> string!
+NATS.Jwt.Models.NatsActivation.ImportSubject.set -> void
+NATS.Jwt.Models.NatsActivation.ImportType.get -> int
+NATS.Jwt.Models.NatsActivation.ImportType.set -> void
+NATS.Jwt.Models.NatsActivation.IssuerAccount.get -> string!
+NATS.Jwt.Models.NatsActivation.IssuerAccount.set -> void
+NATS.Jwt.Models.NatsActivationClaims
+NATS.Jwt.Models.NatsActivationClaims.Activation.get -> NATS.Jwt.Models.NatsActivation!
+NATS.Jwt.Models.NatsActivationClaims.Activation.set -> void
+NATS.Jwt.Models.NatsAuthorizationRequest
+NATS.Jwt.Models.NatsAuthorizationRequest.NatsClientInformation.get -> NATS.Jwt.Models.NatsClientInformation!
+NATS.Jwt.Models.NatsAuthorizationRequest.NatsClientInformation.set -> void
+NATS.Jwt.Models.NatsAuthorizationRequest.NatsConnectOptions.get -> NATS.Jwt.Models.NatsConnectOptions!
+NATS.Jwt.Models.NatsAuthorizationRequest.NatsConnectOptions.set -> void
+NATS.Jwt.Models.NatsAuthorizationRequest.NatsServer.get -> NATS.Jwt.Models.NatsServerId!
+NATS.Jwt.Models.NatsAuthorizationRequest.NatsServer.set -> void
+NATS.Jwt.Models.NatsAuthorizationRequest.RequestNonce.get -> string!
+NATS.Jwt.Models.NatsAuthorizationRequest.RequestNonce.set -> void
+NATS.Jwt.Models.NatsAuthorizationRequest.Tls.get -> NATS.Jwt.Models.NatsClientTls!
+NATS.Jwt.Models.NatsAuthorizationRequest.Tls.set -> void
+NATS.Jwt.Models.NatsAuthorizationRequest.UserNKey.get -> string!
+NATS.Jwt.Models.NatsAuthorizationRequest.UserNKey.set -> void
+NATS.Jwt.Models.NatsAuthorizationRequestClaims
+NATS.Jwt.Models.NatsAuthorizationRequestClaims.AuthorizationRequest.get -> NATS.Jwt.Models.NatsAuthorizationRequest!
+NATS.Jwt.Models.NatsAuthorizationRequestClaims.AuthorizationRequest.set -> void
+NATS.Jwt.Models.NatsAuthorizationResponse
+NATS.Jwt.Models.NatsAuthorizationResponse.Error.get -> string!
+NATS.Jwt.Models.NatsAuthorizationResponse.Error.set -> void
+NATS.Jwt.Models.NatsAuthorizationResponse.IssuerAccount.get -> string!
+NATS.Jwt.Models.NatsAuthorizationResponse.IssuerAccount.set -> void
+NATS.Jwt.Models.NatsAuthorizationResponse.Jwt.get -> string!
+NATS.Jwt.Models.NatsAuthorizationResponse.Jwt.set -> void
+NATS.Jwt.Models.NatsAuthorizationResponseClaims
+NATS.Jwt.Models.NatsAuthorizationResponseClaims.AuthorizationResponse.get -> NATS.Jwt.Models.NatsAuthorizationResponse!
+NATS.Jwt.Models.NatsAuthorizationResponseClaims.AuthorizationResponse.set -> void
+NATS.Jwt.Models.NatsClientInformation
+NATS.Jwt.Models.NatsClientInformation.Host.get -> string!
+NATS.Jwt.Models.NatsClientInformation.Host.set -> void
+NATS.Jwt.Models.NatsClientInformation.Id.get -> string!
+NATS.Jwt.Models.NatsClientInformation.Id.set -> void
+NATS.Jwt.Models.NatsClientInformation.Kind.get -> string!
+NATS.Jwt.Models.NatsClientInformation.Kind.set -> void
+NATS.Jwt.Models.NatsClientInformation.Mqtt.get -> string!
+NATS.Jwt.Models.NatsClientInformation.Mqtt.set -> void
+NATS.Jwt.Models.NatsClientInformation.Name.get -> string!
+NATS.Jwt.Models.NatsClientInformation.Name.set -> void
+NATS.Jwt.Models.NatsClientInformation.NameTag.get -> string!
+NATS.Jwt.Models.NatsClientInformation.NameTag.set -> void
+NATS.Jwt.Models.NatsClientInformation.Nonce.get -> string!
+NATS.Jwt.Models.NatsClientInformation.Nonce.set -> void
+NATS.Jwt.Models.NatsClientInformation.Tags.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsClientInformation.Tags.set -> void
+NATS.Jwt.Models.NatsClientInformation.Type.get -> string!
+NATS.Jwt.Models.NatsClientInformation.Type.set -> void
+NATS.Jwt.Models.NatsClientInformation.User.get -> string!
+NATS.Jwt.Models.NatsClientInformation.User.set -> void
+NATS.Jwt.Models.NatsClientTls
+NATS.Jwt.Models.NatsClientTls.Certs.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsClientTls.Certs.set -> void
+NATS.Jwt.Models.NatsClientTls.Cipher.get -> string!
+NATS.Jwt.Models.NatsClientTls.Cipher.set -> void
+NATS.Jwt.Models.NatsClientTls.VerifiedChains.get -> System.Collections.Generic.List<System.Collections.Generic.List<string!>!>!
+NATS.Jwt.Models.NatsClientTls.VerifiedChains.set -> void
+NATS.Jwt.Models.NatsClientTls.Version.get -> string!
+NATS.Jwt.Models.NatsClientTls.Version.set -> void
+NATS.Jwt.Models.NatsConnectOptions
+NATS.Jwt.Models.NatsConnectOptions.Jwt.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.Jwt.set -> void
+NATS.Jwt.Models.NatsConnectOptions.Lang.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.Lang.set -> void
+NATS.Jwt.Models.NatsConnectOptions.Name.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.Name.set -> void
+NATS.Jwt.Models.NatsConnectOptions.NKey.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.NKey.set -> void
+NATS.Jwt.Models.NatsConnectOptions.Password.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.Password.set -> void
+NATS.Jwt.Models.NatsConnectOptions.Protocol.get -> int
+NATS.Jwt.Models.NatsConnectOptions.Protocol.set -> void
+NATS.Jwt.Models.NatsConnectOptions.SignedNonce.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.SignedNonce.set -> void
+NATS.Jwt.Models.NatsConnectOptions.Token.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.Token.set -> void
+NATS.Jwt.Models.NatsConnectOptions.Username.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.Username.set -> void
+NATS.Jwt.Models.NatsConnectOptions.Version.get -> string!
+NATS.Jwt.Models.NatsConnectOptions.Version.set -> void
+NATS.Jwt.Models.NatsExport
+NATS.Jwt.Models.NatsExport.AccountTokenPosition.get -> uint
+NATS.Jwt.Models.NatsExport.AccountTokenPosition.set -> void
+NATS.Jwt.Models.NatsExport.Advertise.get -> bool
+NATS.Jwt.Models.NatsExport.Advertise.set -> void
+NATS.Jwt.Models.NatsExport.AllowTrace.get -> bool
+NATS.Jwt.Models.NatsExport.AllowTrace.set -> void
+NATS.Jwt.Models.NatsExport.Description.get -> string!
+NATS.Jwt.Models.NatsExport.Description.set -> void
+NATS.Jwt.Models.NatsExport.InfoUrl.get -> string!
+NATS.Jwt.Models.NatsExport.InfoUrl.set -> void
+NATS.Jwt.Models.NatsExport.Latency.get -> NATS.Jwt.Models.NatsServiceLatency!
+NATS.Jwt.Models.NatsExport.Latency.set -> void
+NATS.Jwt.Models.NatsExport.Name.get -> string!
+NATS.Jwt.Models.NatsExport.Name.set -> void
+NATS.Jwt.Models.NatsExport.ResponseThreshold.get -> System.TimeSpan
+NATS.Jwt.Models.NatsExport.ResponseThreshold.set -> void
+NATS.Jwt.Models.NatsExport.ResponseType.get -> string!
+NATS.Jwt.Models.NatsExport.ResponseType.set -> void
+NATS.Jwt.Models.NatsExport.Revocations.get -> System.Collections.Generic.Dictionary<string!, long>!
+NATS.Jwt.Models.NatsExport.Revocations.set -> void
+NATS.Jwt.Models.NatsExport.Subject.get -> string!
+NATS.Jwt.Models.NatsExport.Subject.set -> void
+NATS.Jwt.Models.NatsExport.TokenReq.get -> bool
+NATS.Jwt.Models.NatsExport.TokenReq.set -> void
+NATS.Jwt.Models.NatsExport.Type.get -> int
+NATS.Jwt.Models.NatsExport.Type.set -> void
+NATS.Jwt.Models.NatsExternalAuthorization
+NATS.Jwt.Models.NatsExternalAuthorization.AllowedAccounts.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsExternalAuthorization.AllowedAccounts.set -> void
+NATS.Jwt.Models.NatsExternalAuthorization.AuthUsers.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsExternalAuthorization.AuthUsers.set -> void
+NATS.Jwt.Models.NatsExternalAuthorization.XKey.get -> string!
+NATS.Jwt.Models.NatsExternalAuthorization.XKey.set -> void
+NATS.Jwt.Models.NatsGenericClaims
+NATS.Jwt.Models.NatsGenericClaims.Data.get -> System.Collections.Generic.Dictionary<string!, System.Text.Json.Nodes.JsonObject!>!
+NATS.Jwt.Models.NatsGenericClaims.Data.set -> void
+NATS.Jwt.Models.NatsGenericFields
+NATS.Jwt.Models.NatsGenericFields.Tags.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsGenericFields.Tags.set -> void
+NATS.Jwt.Models.NatsGenericFields.Type.get -> string!
+NATS.Jwt.Models.NatsGenericFields.Type.set -> void
+NATS.Jwt.Models.NatsGenericFields.Version.get -> int
+NATS.Jwt.Models.NatsGenericFields.Version.set -> void
+NATS.Jwt.Models.NatsGenericFieldsClaims
+NATS.Jwt.Models.NatsGenericFieldsClaims.GenericFields.get -> NATS.Jwt.Models.NatsGenericFields!
+NATS.Jwt.Models.NatsGenericFieldsClaims.GenericFields.set -> void
+NATS.Jwt.Models.NatsImport
+NATS.Jwt.Models.NatsImport.Account.get -> string!
+NATS.Jwt.Models.NatsImport.Account.set -> void
+NATS.Jwt.Models.NatsImport.AllowTrace.get -> bool
+NATS.Jwt.Models.NatsImport.AllowTrace.set -> void
+NATS.Jwt.Models.NatsImport.LocalSubject.get -> string!
+NATS.Jwt.Models.NatsImport.LocalSubject.set -> void
+NATS.Jwt.Models.NatsImport.Name.get -> string!
+NATS.Jwt.Models.NatsImport.Name.set -> void
+NATS.Jwt.Models.NatsImport.Share.get -> bool
+NATS.Jwt.Models.NatsImport.Share.set -> void
+NATS.Jwt.Models.NatsImport.Subject.get -> string!
+NATS.Jwt.Models.NatsImport.Subject.set -> void
+NATS.Jwt.Models.NatsImport.To.get -> string!
+NATS.Jwt.Models.NatsImport.To.set -> void
+NATS.Jwt.Models.NatsImport.Token.get -> string!
+NATS.Jwt.Models.NatsImport.Token.set -> void
+NATS.Jwt.Models.NatsImport.Type.get -> int
+NATS.Jwt.Models.NatsImport.Type.set -> void
+NATS.Jwt.Models.NatsMsgTrace
+NATS.Jwt.Models.NatsMsgTrace.Destination.get -> string!
+NATS.Jwt.Models.NatsMsgTrace.Destination.set -> void
+NATS.Jwt.Models.NatsMsgTrace.Sampling.get -> string!
+NATS.Jwt.Models.NatsMsgTrace.Sampling.set -> void
+NATS.Jwt.Models.NatsOperator
+NATS.Jwt.Models.NatsOperator.AccountServerUrl.get -> string!
+NATS.Jwt.Models.NatsOperator.AccountServerUrl.set -> void
+NATS.Jwt.Models.NatsOperator.AssertServerVersion.get -> string!
+NATS.Jwt.Models.NatsOperator.AssertServerVersion.set -> void
+NATS.Jwt.Models.NatsOperator.OperatorServiceUrLs.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsOperator.OperatorServiceUrLs.set -> void
+NATS.Jwt.Models.NatsOperator.SigningKeys.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsOperator.SigningKeys.set -> void
+NATS.Jwt.Models.NatsOperator.StrictSigningKeyUsage.get -> bool
+NATS.Jwt.Models.NatsOperator.StrictSigningKeyUsage.set -> void
+NATS.Jwt.Models.NatsOperator.SystemAccount.get -> string!
+NATS.Jwt.Models.NatsOperator.SystemAccount.set -> void
+NATS.Jwt.Models.NatsOperatorClaims
+NATS.Jwt.Models.NatsOperatorClaims.Operator.get -> NATS.Jwt.Models.NatsOperator!
+NATS.Jwt.Models.NatsOperatorClaims.Operator.set -> void
+NATS.Jwt.Models.NatsOperatorLimits
+NATS.Jwt.Models.NatsOperatorLimits.Conn.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.Conn.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.Consumer.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.Consumer.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.Data.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.Data.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.DisallowBearer.get -> bool
+NATS.Jwt.Models.NatsOperatorLimits.DisallowBearer.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.DiskMaxStreamBytes.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.DiskMaxStreamBytes.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.DiskStorage.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.DiskStorage.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.Exports.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.Exports.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.Imports.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.Imports.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.JetStreamTieredLimits.get -> System.Collections.Generic.Dictionary<string!, NATS.Jwt.Models.JetStreamLimits!>!
+NATS.Jwt.Models.NatsOperatorLimits.JetStreamTieredLimits.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.LeafNodeConn.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.LeafNodeConn.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.MaxAckPending.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.MaxAckPending.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.MaxBytesRequired.get -> bool
+NATS.Jwt.Models.NatsOperatorLimits.MaxBytesRequired.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.MemoryMaxStreamBytes.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.MemoryMaxStreamBytes.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.MemoryStorage.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.MemoryStorage.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.Payload.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.Payload.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.Streams.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.Streams.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.Subs.get -> long
+NATS.Jwt.Models.NatsOperatorLimits.Subs.set -> void
+NATS.Jwt.Models.NatsOperatorLimits.WildcardExports.get -> bool
+NATS.Jwt.Models.NatsOperatorLimits.WildcardExports.set -> void
+NATS.Jwt.Models.NatsPermission
+NATS.Jwt.Models.NatsPermission.Allow.get -> string![]!
+NATS.Jwt.Models.NatsPermission.Allow.set -> void
+NATS.Jwt.Models.NatsPermission.Deny.get -> string![]!
+NATS.Jwt.Models.NatsPermission.Deny.set -> void
+NATS.Jwt.Models.NatsPermissions
+NATS.Jwt.Models.NatsPermissions.Pub.get -> NATS.Jwt.Models.NatsPermission!
+NATS.Jwt.Models.NatsPermissions.Pub.set -> void
+NATS.Jwt.Models.NatsPermissions.Resp.get -> NATS.Jwt.Models.NatsResponsePermission!
+NATS.Jwt.Models.NatsPermissions.Resp.set -> void
+NATS.Jwt.Models.NatsPermissions.Sub.get -> NATS.Jwt.Models.NatsPermission!
+NATS.Jwt.Models.NatsPermissions.Sub.set -> void
+NATS.Jwt.Models.NatsResponsePermission
+NATS.Jwt.Models.NatsResponsePermission.Expires.get -> System.TimeSpan
+NATS.Jwt.Models.NatsResponsePermission.Expires.set -> void
+NATS.Jwt.Models.NatsResponsePermission.MaxMsgs.get -> int
+NATS.Jwt.Models.NatsResponsePermission.MaxMsgs.set -> void
+NATS.Jwt.Models.NatsServerId
+NATS.Jwt.Models.NatsServerId.Cluster.get -> string!
+NATS.Jwt.Models.NatsServerId.Cluster.set -> void
+NATS.Jwt.Models.NatsServerId.Host.get -> string!
+NATS.Jwt.Models.NatsServerId.Host.set -> void
+NATS.Jwt.Models.NatsServerId.Id.get -> string!
+NATS.Jwt.Models.NatsServerId.Id.set -> void
+NATS.Jwt.Models.NatsServerId.Name.get -> string!
+NATS.Jwt.Models.NatsServerId.Name.set -> void
+NATS.Jwt.Models.NatsServerId.Tags.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsServerId.Tags.set -> void
+NATS.Jwt.Models.NatsServerId.Version.get -> string!
+NATS.Jwt.Models.NatsServerId.Version.set -> void
+NATS.Jwt.Models.NatsServerId.XKey.get -> string!
+NATS.Jwt.Models.NatsServerId.XKey.set -> void
+NATS.Jwt.Models.NatsServiceLatency
+NATS.Jwt.Models.NatsServiceLatency.Results.get -> string!
+NATS.Jwt.Models.NatsServiceLatency.Results.set -> void
+NATS.Jwt.Models.NatsServiceLatency.Sampling.get -> int
+NATS.Jwt.Models.NatsServiceLatency.Sampling.set -> void
+NATS.Jwt.Models.NatsUser
+NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.get -> string![]!
+NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.set -> void
+NATS.Jwt.Models.NatsUser.BearerToken.get -> bool
+NATS.Jwt.Models.NatsUser.BearerToken.set -> void
+NATS.Jwt.Models.NatsUser.Data.get -> long
+NATS.Jwt.Models.NatsUser.Data.set -> void
+NATS.Jwt.Models.NatsUser.IssuerAccount.get -> string!
+NATS.Jwt.Models.NatsUser.IssuerAccount.set -> void
+NATS.Jwt.Models.NatsUser.Locale.get -> string!
+NATS.Jwt.Models.NatsUser.Locale.set -> void
+NATS.Jwt.Models.NatsUser.Payload.get -> long
+NATS.Jwt.Models.NatsUser.Payload.set -> void
+NATS.Jwt.Models.NatsUser.Pub.get -> NATS.Jwt.Models.NatsPermission!
+NATS.Jwt.Models.NatsUser.Pub.set -> void
+NATS.Jwt.Models.NatsUser.Resp.get -> NATS.Jwt.Models.NatsResponsePermission!
+NATS.Jwt.Models.NatsUser.Resp.set -> void
+NATS.Jwt.Models.NatsUser.Src.get -> string![]!
+NATS.Jwt.Models.NatsUser.Src.set -> void
+NATS.Jwt.Models.NatsUser.Sub.get -> NATS.Jwt.Models.NatsPermission!
+NATS.Jwt.Models.NatsUser.Sub.set -> void
+NATS.Jwt.Models.NatsUser.Subs.get -> long
+NATS.Jwt.Models.NatsUser.Subs.set -> void
+NATS.Jwt.Models.NatsUser.Times.get -> NATS.Jwt.Models.TimeRange![]!
+NATS.Jwt.Models.NatsUser.Times.set -> void
+NATS.Jwt.Models.NatsUserClaims
+NATS.Jwt.Models.NatsUserClaims.User.get -> NATS.Jwt.Models.NatsUser!
+NATS.Jwt.Models.NatsUserClaims.User.set -> void
+NATS.Jwt.Models.NatsWeightedMapping
+NATS.Jwt.Models.NatsWeightedMapping.Cluster.get -> string!
+NATS.Jwt.Models.NatsWeightedMapping.Cluster.set -> void
+NATS.Jwt.Models.NatsWeightedMapping.Subject.get -> string!
+NATS.Jwt.Models.NatsWeightedMapping.Subject.set -> void
+NATS.Jwt.Models.NatsWeightedMapping.Weight.get -> byte
+NATS.Jwt.Models.NatsWeightedMapping.Weight.set -> void
+NATS.Jwt.Models.TimeRange
+NATS.Jwt.Models.TimeRange.End.get -> string!
+NATS.Jwt.Models.TimeRange.End.set -> void
+NATS.Jwt.Models.TimeRange.Start.get -> string!
+NATS.Jwt.Models.TimeRange.Start.set -> void
+NATS.Jwt.NatsJwt
+NATS.Jwt.NatsJwt.EncodeAccountClaims(NATS.Jwt.Models.NatsAccountClaims! accountClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+NATS.Jwt.NatsJwt.EncodeActivationClaims(NATS.Jwt.Models.NatsActivationClaims! activationClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+NATS.Jwt.NatsJwt.EncodeAuthorizationRequestClaims(NATS.Jwt.Models.NatsAuthorizationRequestClaims! authorizationRequestClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+NATS.Jwt.NatsJwt.EncodeAuthorizationResponseClaims(NATS.Jwt.Models.NatsAuthorizationResponseClaims! authorizationResponseClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+NATS.Jwt.NatsJwt.EncodeGenericClaims(NATS.Jwt.Models.NatsGenericClaims! genericClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+NATS.Jwt.NatsJwt.EncodeOperatorClaims(NATS.Jwt.Models.NatsOperatorClaims! operatorClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+NATS.Jwt.NatsJwt.EncodeUserClaims(NATS.Jwt.Models.NatsUserClaims! userClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+NATS.Jwt.NatsJwt.FormatUserConfig(string! jwt, string! seed) -> string!
+NATS.Jwt.NatsJwt.NatsJwt() -> void
+NATS.Jwt.NatsJwt.NewAccountClaims(string! subject) -> NATS.Jwt.Models.NatsAccountClaims!
+NATS.Jwt.NatsJwt.NewActivationClaims(string! subject) -> NATS.Jwt.Models.NatsActivationClaims!
+NATS.Jwt.NatsJwt.NewAuthorizationRequestClaims(string! subject) -> NATS.Jwt.Models.NatsAuthorizationRequestClaims!
+NATS.Jwt.NatsJwt.NewAuthorizationResponseClaims(string! subject) -> NATS.Jwt.Models.NatsAuthorizationResponseClaims!
+NATS.Jwt.NatsJwt.NewGenericClaims(string! subject) -> NATS.Jwt.Models.NatsGenericClaims!
+NATS.Jwt.NatsJwt.NewOperatorClaims(string! subject) -> NATS.Jwt.Models.NatsOperatorClaims!
+NATS.Jwt.NatsJwt.NewUserClaims(string! subject) -> NATS.Jwt.Models.NatsUserClaims!
+NATS.Jwt.NatsJwtException
+NATS.Jwt.NatsJwtException.NatsJwtException(string! message) -> void
+static readonly NATS.Jwt.NatsJwt.NatsJwtHeader -> NATS.Jwt.Models.JwtHeader!
