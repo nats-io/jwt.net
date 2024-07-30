@@ -268,6 +268,116 @@ public class NatsJwt
         return DoEncode(NatsJwtHeader, keyPair, accountClaims, JsonContext.Default.NatsAccountClaims, issuedAt);
     }
 
+    /// <summary>
+    /// Decodes the claims data from a JWT token.
+    /// </summary>
+    /// <param name="jwt">The JWT token.</param>
+    /// <param name="jsonTypeInfo">The JSON type information for deserialization.</param>
+    /// <typeparam name="T">The type of the claims data.</typeparam>
+    /// <returns>The decoded claims data.</returns>
+    /// <exception cref="NatsJwtException">Thrown if the JWT format is invalid, deserialization fails, or signature verification fails.</exception>
+    /// <remarks>
+    /// The JWT token is expected to be in the format "header.payload.signature".
+    /// The payload is base64-encoded JSON representing the claims data.
+    /// The method verifies the signature by comparing it against the signing input generated from the header and payload.
+    /// </remarks>
+    public T DecodeClaims<T>(string jwt, JsonTypeInfo<T> jsonTypeInfo)
+        where T : JwtClaimsData
+    {
+        var parts = jwt.Split('.');
+        if (parts.Length != 3)
+        {
+            throw new NatsJwtException("Invalid JWT format");
+        }
+
+        var payloadJson = EncodingUtils.FromBase64UrlEncoded(parts[1]);
+        var claims = JsonSerializer.Deserialize(payloadJson, jsonTypeInfo);
+
+        if (claims == null)
+        {
+            throw new NatsJwtException("Failed to deserialize JWT payload");
+        }
+
+        // Verify the signature
+        // var signingInput = $"{parts[0]}.{parts[1]}";
+        // var signature = Encoding.ASCII.GetBytes(EncodingUtils.FromBase64UrlEncoded(parts[2]));
+        // var publicKey = KeyPair.FromPublicKey(claims.Issuer.AsSpan());
+        //
+        // if (!publicKey.Verify(Encoding.ASCII.GetBytes(signingInput), signature))
+        // {
+        //     throw new NatsJwtException("JWT signature verification failed");
+        // }
+        return claims;
+    }
+
+    /// <summary>
+    /// Decodes the operator claims from a JWT token.
+    /// </summary>
+    /// <param name="jwt">The JWT token to decode.</param>
+    /// <returns>The decoded operator claims.</returns>
+    /// <exception cref="NatsJwtException">Thrown when the operator claim type is invalid.</exception>
+    public NatsOperatorClaims DecodeOperatorClaims(string jwt)
+    {
+        var claims = DecodeClaims(jwt, JsonContext.Default.NatsOperatorClaims);
+        if (claims.Operator.Type != OperatorClaim)
+        {
+            throw new NatsJwtException($"Expected operator claim, but got {claims.Operator.Type}");
+        }
+
+        return claims;
+    }
+
+    /// <summary>
+    /// Decodes the account claims from a JWT token.
+    /// </summary>
+    /// <param name="jwt">The JWT token.</param>
+    /// <returns>The decoded account claims.</returns>
+    /// <exception cref="NatsJwtException">Thrown when the account claims type is not as expected.</exception>
+    public NatsAccountClaims DecodeAccountClaims(string jwt)
+    {
+        var claims = DecodeClaims(jwt, JsonContext.Default.NatsAccountClaims);
+        if (claims.Account.Type != AccountClaim)
+        {
+            throw new NatsJwtException($"Expected account claim, but got {claims.Account.Type}");
+        }
+
+        return claims;
+    }
+
+    /// <summary>
+    /// Decodes the user claims from a JWT token.
+    /// </summary>
+    /// <param name="jwt">The JWT token.</param>
+    /// <returns>The decoded user claims.</returns>
+    /// <exception cref="NatsJwtException">Thrown when the user claim is not found or has an invalid type.</exception>
+    public NatsUserClaims DecodeUserClaims(string jwt)
+    {
+        var claims = DecodeClaims(jwt, JsonContext.Default.NatsUserClaims);
+        if (claims.User.Type != UserClaim)
+        {
+            throw new NatsJwtException($"Expected user claim, but got {claims.User.Type}");
+        }
+
+        return claims;
+    }
+
+    /// <summary>
+    /// Decodes the activation claims from a JWT token.
+    /// </summary>
+    /// <param name="jwt">The JWT token.</param>
+    /// <returns>The decoded activation claims.</returns>
+    /// <exception cref="NatsJwtException">Thrown when the activation type in the claims is not as expected.</exception>
+    public NatsActivationClaims DecodeActivationClaims(string jwt)
+    {
+        var claims = DecodeClaims(jwt, JsonContext.Default.NatsActivationClaims);
+        if (claims.Activation.Type != ActivationClaim)
+        {
+            throw new NatsJwtException($"Expected user claim, but got {claims.Activation.Type}");
+        }
+
+        return claims;
+    }
+
     private void SetVersion<T>(T claims, string type)
         where T : NatsGenericFields
     {

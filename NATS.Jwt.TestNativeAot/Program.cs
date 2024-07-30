@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0.
 
 using NATS.Jwt;
-using NATS.Jwt.CheckNativeAot;
+using NATS.Jwt.TestNativeAot;
 using NATS.NKeys;
 
 var jwt = new NatsJwt();

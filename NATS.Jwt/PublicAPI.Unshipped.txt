@@ -10,6 +10,7 @@ const NATS.Jwt.NatsJwt.NoLimit = -1 -> long
 const NATS.Jwt.NatsJwt.OperatorClaim = "operator" -> string!
 const NATS.Jwt.NatsJwt.TokenTypeJwt = "JWT" -> string!
 const NATS.Jwt.NatsJwt.UserClaim = "user" -> string!
+NATS.Jwt.EncodingUtils
 NATS.Jwt.Models.JetStreamLimits
 NATS.Jwt.Models.JetStreamLimits.Consumer.get -> long
 NATS.Jwt.Models.JetStreamLimits.Consumer.set -> void
@@ -364,6 +365,11 @@ NATS.Jwt.Models.TimeRange.End.set -> void
 NATS.Jwt.Models.TimeRange.Start.get -> string!
 NATS.Jwt.Models.TimeRange.Start.set -> void
 NATS.Jwt.NatsJwt
+NATS.Jwt.NatsJwt.DecodeAccountClaims(string! jwt) -> NATS.Jwt.Models.NatsAccountClaims!
+NATS.Jwt.NatsJwt.DecodeActivationClaims(string! jwt) -> NATS.Jwt.Models.NatsActivationClaims!
+NATS.Jwt.NatsJwt.DecodeClaims<T>(string! jwt, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T!>! jsonTypeInfo) -> T!
+NATS.Jwt.NatsJwt.DecodeOperatorClaims(string! jwt) -> NATS.Jwt.Models.NatsOperatorClaims!
+NATS.Jwt.NatsJwt.DecodeUserClaims(string! jwt) -> NATS.Jwt.Models.NatsUserClaims!
 NATS.Jwt.NatsJwt.EncodeAccountClaims(NATS.Jwt.Models.NatsAccountClaims! accountClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
 NATS.Jwt.NatsJwt.EncodeActivationClaims(NATS.Jwt.Models.NatsActivationClaims! activationClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
 NATS.Jwt.NatsJwt.EncodeAuthorizationRequestClaims(NATS.Jwt.Models.NatsAuthorizationRequestClaims! authorizationRequestClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
@@ -382,4 +388,6 @@ NATS.Jwt.NatsJwt.NewOperatorClaims(string! subject) -> NATS.Jwt.Models.NatsOpera
 NATS.Jwt.NatsJwt.NewUserClaims(string! subject) -> NATS.Jwt.Models.NatsUserClaims!
 NATS.Jwt.NatsJwtException
 NATS.Jwt.NatsJwtException.NatsJwtException(string! message) -> void
+static NATS.Jwt.EncodingUtils.FromBase64UrlEncoded(string! encodedString) -> string!
+static NATS.Jwt.EncodingUtils.ToBase64UrlEncoded(byte[]! bytes) -> string!
 static readonly NATS.Jwt.NatsJwt.NatsJwtHeader -> NATS.Jwt.Models.JwtHeader!

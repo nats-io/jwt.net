@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\test.yml = .github\workflows\test.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.Jwt.CheckNativeAot", "NATS.Jwt.CheckNativeAot\NATS.Jwt.CheckNativeAot.csproj", "{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.Jwt.TestNativeAot", "NATS.Jwt.TestNativeAot\NATS.Jwt.TestNativeAot.csproj", "{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
