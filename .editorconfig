@@ -153,7 +153,15 @@ csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
 
 # License header
-file_header_template = Licensed to the .NET Foundation under one or more agreements.\nThe .NET Foundation licenses this file to you under the MIT license.
+file_header_template = Copyright (c) The NATS Authors.\nLicensed under the Apache License, Version 2.0.
+stylecop.documentation.xmlHeader = false
+
+dotnet_diagnostic.SA1101.severity = none     # Prefix local calls with this
+dotnet_diagnostic.SA1309.severity = none     # Field names must not begin with underscore
+
+[**/Models/*.cs]
+dotnet_diagnostic.CS8618.severity = none     # Non-nullable property must contain a non-null value when exiting constructor
+
 
 # C++ Files
 [*.{cpp,h,in}]

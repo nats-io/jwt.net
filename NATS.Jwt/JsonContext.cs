@@ -1,8 +1,15 @@
+// Copyright (c) The NATS Authors.
+// Licensed under the Apache License, Version 2.0.
+
 using System.Text.Json.Serialization;
 using NATS.Jwt.Models;
 
 namespace NATS.Jwt;
 
+/// <summary>
+/// Represents a JSON context for serializing and deserializing objects
+/// to and from JSON using the System.Text.Json library.
+/// </summary>
 [JsonSerializable(typeof(JwtClaimsData))]
 [JsonSerializable(typeof(JwtHeader))]
 [JsonSerializable(typeof(JetStreamLimits))]
@@ -36,6 +43,6 @@ namespace NATS.Jwt;
 [JsonSerializable(typeof(NatsAuthorizationResponseClaims))]
 [JsonSerializable(typeof(NatsAuthorizationResponse))]
 [JsonSerializable(typeof(NatsGenericFieldsClaims))]
-public sealed partial class JsonContext : JsonSerializerContext
+internal sealed partial class JsonContext : JsonSerializerContext
 {
 }

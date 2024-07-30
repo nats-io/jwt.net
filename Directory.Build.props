@@ -2,13 +2,9 @@
     <PropertyGroup>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
-        <NoWarn>$(NoWarn);CS1591;SA0001</NoWarn>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)NATS.Jwt.snk</AssemblyOriginatorKeyFile>
         <IsPackable>false</IsPackable>
-
-      <!-- TODO: remove no-warn -->
-      <NoWarn>$(NoWarn),CS8618,SA1600,SA1633,SA1101,SA1402,SA1629,SA1623,SA1309,SA1601,SA1633,SA1649,SA1503</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

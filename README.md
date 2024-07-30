@@ -8,12 +8,12 @@ This is a .NET implementation of the JWT library for the NATS ecosystem.
 
 ## TODO
 
-- [ ] Add public API documentation
-- [ ] Add more tests
-- [ ] Enable code coverage
+- [x] Add public API analyzer
+- [x] Remove No-warnings from build
+- [x] Add more tests
+- [x] Enable code coverage
 - [ ] Add more examples
 - [ ] Add more documentation
-- [ ] Remove No-warnings from build
 
 ## Installation
 

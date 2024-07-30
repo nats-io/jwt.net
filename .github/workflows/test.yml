@@ -62,26 +62,25 @@ jobs:
         # https://github.com/MarcoRossignoli/coverlet/blob/master/Documentation/KnownIssues.md#tests-fail-if-assembly-is-strong-named
         run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings -- RunConfiguration.DisableAppDomain=true
 
-# TODO: Enable code coverage upload
-#      - name: Upload coverage reports to Codecov
-#        # PRs from external contributors fail: https://github.com/codecov/feedback/issues/301
-#        # Only upload coverage reports for PRs from the same repo (not forks)
-#        if: github.event.pull_request.head.repo.full_name == github.repository || github.ref == 'refs/heads/main'
-#        uses: codecov/codecov-action@v4.0.1
-#        with:
-#            token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage reports to Codecov
+        # PRs from external contributors fail: https://github.com/codecov/feedback/issues/301
+        # Only upload coverage reports for PRs from the same repo (not forks)
+        if: github.event.pull_request.head.repo.full_name == github.repository || github.ref == 'refs/heads/main'
+        uses: codecov/codecov-action@v4.0.1
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Check Native AOT
+      - name: Test Native AOT
         shell: bash
         run: |
             echo ">> Set up for AOT compilation..."
-            export exe_file=NATS.Jwt.CheckNativeAot
+            export exe_file=NATS.Jwt.TestNativeAot
             export exe_type=ELF
             export dotnet_runtime_id=linux-x64
 
             echo ">> Checking OS..."
             if [ "${{ matrix.os }}" = "windows-latest" ]; then
-              export exe_file=NATS.Jwt.CheckNativeAot.exe
+              export exe_file=NATS.Jwt.TestNativeAot.exe
               export exe_type=PE32
               export dotnet_runtime_id=win-x64
             elif [ "${{ matrix.os }}" = "macos-latest" ]; then
@@ -90,7 +89,7 @@ jobs:
             fi
 
             echo ">> Publishing..."
-            cd NATS.Jwt.CheckNativeAot
+            cd NATS.Jwt.TestNativeAot
             rm -rf bin obj
             dotnet publish -r $dotnet_runtime_id -c Release -o dist | tee output.txt
 

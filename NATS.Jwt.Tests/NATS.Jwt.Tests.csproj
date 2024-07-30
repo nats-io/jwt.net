@@ -5,7 +5,7 @@
         <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">net6.0;net8.0</TargetFrameworks>
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
-        <NoWarn>$(NoWarn);VSTHRD111;VSTHRD200</NoWarn>
+        <NoWarn>$(NoWarn),VSTHRD111,VSTHRD200,SA1600</NoWarn>
         <WarningLevel>0</WarningLevel><!-- TODO: remove -->
 
     </PropertyGroup>
