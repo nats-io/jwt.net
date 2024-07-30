@@ -1,10 +1,8 @@
 using System;
 using System.Buffers;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using JsonDiffPatchDotNet;
-using NATS.Jwt.Internal;
 using NATS.Jwt.Models;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -71,7 +69,9 @@ public class SimpleBufferWriter : IBufferWriter<byte>
     public void Advance(int count)
     {
         if (count < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(count));
+        }
 
         _index += count;
     }
@@ -91,12 +91,17 @@ public class SimpleBufferWriter : IBufferWriter<byte>
     private void EnsureCapacity(int sizeHint)
     {
         if (sizeHint < 0)
+        {
             sizeHint = 0;
+        }
 
         var availableSpace = _buffer.Length - _index;
 
         if (sizeHint <= availableSpace)
+        {
             return;
+        }
+
         var growBy = Math.Max(sizeHint, _buffer.Length);
         Array.Resize(ref _buffer, checked(_buffer.Length + growBy));
     }

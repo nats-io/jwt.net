@@ -287,9 +287,9 @@ NATS.Jwt.Models.NatsOperatorLimits.Subs.set -> void
 NATS.Jwt.Models.NatsOperatorLimits.WildcardExports.get -> bool
 NATS.Jwt.Models.NatsOperatorLimits.WildcardExports.set -> void
 NATS.Jwt.Models.NatsPermission
-NATS.Jwt.Models.NatsPermission.Allow.get -> string![]!
+NATS.Jwt.Models.NatsPermission.Allow.get -> System.Collections.Generic.List<string!>!
 NATS.Jwt.Models.NatsPermission.Allow.set -> void
-NATS.Jwt.Models.NatsPermission.Deny.get -> string![]!
+NATS.Jwt.Models.NatsPermission.Deny.get -> System.Collections.Generic.List<string!>!
 NATS.Jwt.Models.NatsPermission.Deny.set -> void
 NATS.Jwt.Models.NatsPermissions
 NATS.Jwt.Models.NatsPermissions.Pub.get -> NATS.Jwt.Models.NatsPermission!
@@ -324,7 +324,7 @@ NATS.Jwt.Models.NatsServiceLatency.Results.set -> void
 NATS.Jwt.Models.NatsServiceLatency.Sampling.get -> int
 NATS.Jwt.Models.NatsServiceLatency.Sampling.set -> void
 NATS.Jwt.Models.NatsUser
-NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.get -> string![]!
+NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.get -> System.Collections.Generic.List<string!>!
 NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.set -> void
 NATS.Jwt.Models.NatsUser.BearerToken.get -> bool
 NATS.Jwt.Models.NatsUser.BearerToken.set -> void
@@ -340,13 +340,13 @@ NATS.Jwt.Models.NatsUser.Pub.get -> NATS.Jwt.Models.NatsPermission!
 NATS.Jwt.Models.NatsUser.Pub.set -> void
 NATS.Jwt.Models.NatsUser.Resp.get -> NATS.Jwt.Models.NatsResponsePermission!
 NATS.Jwt.Models.NatsUser.Resp.set -> void
-NATS.Jwt.Models.NatsUser.Src.get -> string![]!
+NATS.Jwt.Models.NatsUser.Src.get -> System.Collections.Generic.List<string!>!
 NATS.Jwt.Models.NatsUser.Src.set -> void
 NATS.Jwt.Models.NatsUser.Sub.get -> NATS.Jwt.Models.NatsPermission!
 NATS.Jwt.Models.NatsUser.Sub.set -> void
 NATS.Jwt.Models.NatsUser.Subs.get -> long
 NATS.Jwt.Models.NatsUser.Subs.set -> void
-NATS.Jwt.Models.NatsUser.Times.get -> NATS.Jwt.Models.TimeRange![]!
+NATS.Jwt.Models.NatsUser.Times.get -> System.Collections.Generic.List<NATS.Jwt.Models.TimeRange!>!
 NATS.Jwt.Models.NatsUser.Times.set -> void
 NATS.Jwt.Models.NatsUserClaims
 NATS.Jwt.Models.NatsUserClaims.User.get -> NATS.Jwt.Models.NatsUser!

@@ -1,3 +1,6 @@
+// Copyright (c) The NATS Authors.
+// Licensed under the Apache License, Version 2.0.
+
 // ReSharper disable all
 #pragma warning disable
 

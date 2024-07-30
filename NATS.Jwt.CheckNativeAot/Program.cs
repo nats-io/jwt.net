@@ -1,4 +1,8 @@
+// Copyright (c) The NATS Authors.
+// Licensed under the Apache License, Version 2.0.
+
 using NATS.Jwt;
+using NATS.Jwt.CheckNativeAot;
 using NATS.NKeys;
 
 var jwt = new NatsJwt();
@@ -46,14 +50,3 @@ const string userSeed1 = "SUAOT7W25IDZJYUCOMTNXZORZZCQM6HNYMCPYRAIP7JXAMWJT72IUR
 Assert.Equal(userSeed1, ukp.GetSeed(), "userSeed");
 
 Console.WriteLine("PASS");
-
-public static class Assert
-{
-    public static void Equal(string expected, string actual, string name)
-    {
-        if (!string.Equals(expected, actual))
-            throw new Exception($"Strings are not equal ({name}).\n---\nExpected:\n{expected}\nActual:\n{actual}\n---");
-
-        Console.WriteLine($"OK {name}");
-    }
-}
