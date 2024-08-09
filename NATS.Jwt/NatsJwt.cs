@@ -211,7 +211,7 @@ public class NatsJwt
     /// <returns>The encoded string representation of the authorization response claims.</returns>
     public string EncodeAuthorizationResponseClaims(NatsAuthorizationResponseClaims authorizationResponseClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
-        SetVersion(authorizationResponseClaims.AuthorizationResponse, AuthorizationRequestClaim);
+        SetVersion(authorizationResponseClaims.AuthorizationResponse, AuthorizationResponseClaim);
         return DoEncode(NatsJwtHeader, keyPair, authorizationResponseClaims, JsonContext.Default.NatsAuthorizationResponseClaims, issuedAt);
     }
 
