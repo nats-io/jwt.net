@@ -23,7 +23,7 @@ public record NatsClientInformation
     /// </summary>
     [JsonPropertyName("id")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public long Id { get; set; }
+    public ulong Id { get; set; }
 
     /// <summary>
     /// Gets or sets the value representing the user property of the <see cref="NatsClientInformation"/> class.

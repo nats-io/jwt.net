@@ -115,7 +115,7 @@ NATS.Jwt.Models.NatsAuthorizationResponseClaims.AuthorizationResponse.set -> voi
 NATS.Jwt.Models.NatsClientInformation
 NATS.Jwt.Models.NatsClientInformation.Host.get -> string!
 NATS.Jwt.Models.NatsClientInformation.Host.set -> void
-NATS.Jwt.Models.NatsClientInformation.Id.get -> long
+NATS.Jwt.Models.NatsClientInformation.Id.get -> ulong
 NATS.Jwt.Models.NatsClientInformation.Id.set -> void
 NATS.Jwt.Models.NatsClientInformation.Kind.get -> string!
 NATS.Jwt.Models.NatsClientInformation.Kind.set -> void
