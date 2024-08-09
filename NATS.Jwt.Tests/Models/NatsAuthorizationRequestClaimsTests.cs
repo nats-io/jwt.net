@@ -38,7 +38,7 @@ public class NatsAuthorizationRequestClaimsTests
                 NatsClientInformation = new NatsClientInformation
                 {
                     Host = "client.example.com",
-                    Id = "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    Id = 123,
                     User = "test_user",
                     Name = "Test Client",
                     Tags = new List<string> { "client_tag1", "client_tag2", },
