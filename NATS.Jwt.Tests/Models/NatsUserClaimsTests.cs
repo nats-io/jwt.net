@@ -146,9 +146,6 @@ public class NatsUserClaimsTests
         Assert.DoesNotContain("\"src\"", json);
         Assert.DoesNotContain("\"times\"", json);
         Assert.DoesNotContain("\"times_location\"", json);
-        Assert.Contains("\"subs\":-1", json);
-        Assert.Contains("\"data\":-1", json);
-        Assert.Contains("\"payload\":-1", json);
         Assert.DoesNotContain("\"bearer_token\"", json);
         Assert.DoesNotContain("\"allowed_connection_types\"", json);
         Assert.DoesNotContain("\"issuer_account\"", json);

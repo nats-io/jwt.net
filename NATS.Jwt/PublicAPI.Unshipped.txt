@@ -329,13 +329,13 @@ NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.get -> System.Collections.Generi
 NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.set -> void
 NATS.Jwt.Models.NatsUser.BearerToken.get -> bool
 NATS.Jwt.Models.NatsUser.BearerToken.set -> void
-NATS.Jwt.Models.NatsUser.Data.get -> long
+NATS.Jwt.Models.NatsUser.Data.get -> long?
 NATS.Jwt.Models.NatsUser.Data.set -> void
 NATS.Jwt.Models.NatsUser.IssuerAccount.get -> string!
 NATS.Jwt.Models.NatsUser.IssuerAccount.set -> void
 NATS.Jwt.Models.NatsUser.Locale.get -> string!
 NATS.Jwt.Models.NatsUser.Locale.set -> void
-NATS.Jwt.Models.NatsUser.Payload.get -> long
+NATS.Jwt.Models.NatsUser.Payload.get -> long?
 NATS.Jwt.Models.NatsUser.Payload.set -> void
 NATS.Jwt.Models.NatsUser.Pub.get -> NATS.Jwt.Models.NatsPermission!
 NATS.Jwt.Models.NatsUser.Pub.set -> void
@@ -345,7 +345,7 @@ NATS.Jwt.Models.NatsUser.Src.get -> System.Collections.Generic.List<string!>!
 NATS.Jwt.Models.NatsUser.Src.set -> void
 NATS.Jwt.Models.NatsUser.Sub.get -> NATS.Jwt.Models.NatsPermission!
 NATS.Jwt.Models.NatsUser.Sub.set -> void
-NATS.Jwt.Models.NatsUser.Subs.get -> long
+NATS.Jwt.Models.NatsUser.Subs.get -> long?
 NATS.Jwt.Models.NatsUser.Subs.set -> void
 NATS.Jwt.Models.NatsUser.Times.get -> System.Collections.Generic.List<NATS.Jwt.Models.TimeRange!>!
 NATS.Jwt.Models.NatsUser.Times.set -> void

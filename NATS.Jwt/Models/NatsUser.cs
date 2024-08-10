@@ -62,21 +62,21 @@ public record NatsUser : NatsGenericFields
     /// </summary>
     [JsonPropertyName("subs")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public long Subs { get; set; } = NatsJwt.NoLimit;
+    public long? Subs { get; set; }
 
     /// <summary>
     /// Gets or sets the max number of bytes.
     /// </summary>
     [JsonPropertyName("data")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public long Data { get; set; } = NatsJwt.NoLimit;
+    public long? Data { get; set; }
 
     /// <summary>
     /// Gets or sets max message payload.
     /// </summary>
     [JsonPropertyName("payload")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public long Payload { get; set; } = NatsJwt.NoLimit;
+    public long? Payload { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether a bearer token is used for the NATS user.
