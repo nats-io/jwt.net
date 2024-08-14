@@ -352,6 +352,7 @@ NATS.Jwt.Models.NatsUser.Times.set -> void
 NATS.Jwt.Models.NatsUserClaims
 NATS.Jwt.Models.NatsUserClaims.User.get -> NATS.Jwt.Models.NatsUser!
 NATS.Jwt.Models.NatsUserClaims.User.set -> void
+NATS.Jwt.Models.NatsUserClaims.SetScoped(bool scoped) -> void
 NATS.Jwt.Models.NatsWeightedMapping
 NATS.Jwt.Models.NatsWeightedMapping.Cluster.get -> string!
 NATS.Jwt.Models.NatsWeightedMapping.Cluster.set -> void

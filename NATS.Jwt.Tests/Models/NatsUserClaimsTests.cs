@@ -208,4 +208,69 @@ public class NatsUserClaimsTests
 
         Assert.Null(deserialized.User);
     }
+
+    [Fact]
+    public void TestSetScoped()
+    {
+        var initUser = (NatsUser user) =>
+        {
+            user.Pub = new NatsPermission { Allow = ["allowed.>"], Deny = ["denied.>"], };
+            user.Sub = new NatsPermission { Allow = ["allowed.>"], Deny = ["denied.>"], };
+            user.Resp = new NatsResponsePermission { MaxMsgs = 100, Expires = TimeSpan.FromSeconds(60), };
+            user.Src = ["192.168.1.0/24"];
+            user.Times = [new TimeRange { Start = "09:00:00", End = "17:00:00", }];
+            user.Locale = "America/New_York";
+            user.Subs = 1000;
+            user.Data = 10_000_000;
+            user.Payload = 1024;
+            user.BearerToken = true;
+            user.AllowedConnectionTypes = ["STANDARD", "WEBSOCKET"];
+        };
+
+        var claims = new NatsUserClaims();
+        initUser(claims.User);
+        claims.SetScoped(true);
+
+        Assert.Equal(claims.User.Pub, new NatsPermission());
+        Assert.Equal(claims.User.Sub, new NatsPermission());
+        Assert.Equal(claims.User.Resp, default);
+        Assert.Equal(claims.User.Src, default);
+        Assert.Equal(claims.User.Times, default);
+        Assert.Equal(claims.User.Locale, default);
+        Assert.Equal(claims.User.Subs, 0);
+        Assert.Equal(claims.User.Data, 0);
+        Assert.Equal(claims.User.Payload, 0);
+        Assert.Equal(claims.User.BearerToken, default);
+        Assert.Equal(claims.User.AllowedConnectionTypes, default);
+
+        initUser(claims.User);
+        claims.SetScoped(false);
+
+        Assert.NotNull(claims.User.Pub);
+        Assert.NotNull(claims.User.Pub.Allow);
+        Assert.Equal(claims.User.Pub.Allow.Count, 1);
+        Assert.Equal(claims.User.Pub.Allow[0], "allowed.>");
+        Assert.NotNull(claims.User.Pub.Deny);
+        Assert.Equal(claims.User.Pub.Deny.Count, 1);
+        Assert.Equal(claims.User.Pub.Deny[0], "denied.>");
+        Assert.NotNull(claims.User.Sub);
+        Assert.NotNull(claims.User.Sub.Allow);
+        Assert.Equal(claims.User.Sub.Allow.Count, 1);
+        Assert.Equal(claims.User.Sub.Allow[0], "allowed.>");
+        Assert.NotNull(claims.User.Sub.Deny);
+        Assert.Equal(claims.User.Sub.Deny.Count, 1);
+        Assert.Equal(claims.User.Sub.Deny[0], "denied.>");
+        Assert.Equal(claims.User.Resp, new NatsResponsePermission { MaxMsgs = 100, Expires = TimeSpan.FromSeconds(60), });
+        Assert.Equal(claims.User.Src, default);
+        Assert.Equal(claims.User.Times, default);
+        Assert.Equal(claims.User.Locale, default);
+        Assert.Equal(claims.User.Subs, NatsJwt.NoLimit);
+        Assert.Equal(claims.User.Data, NatsJwt.NoLimit);
+        Assert.Equal(claims.User.Payload, NatsJwt.NoLimit);
+        Assert.Equal(claims.User.BearerToken, true);
+        Assert.NotNull(claims.User.AllowedConnectionTypes);
+        Assert.Equal(claims.User.AllowedConnectionTypes.Count, 2);
+        Assert.Equal(claims.User.AllowedConnectionTypes[0], "STANDARD");
+        Assert.Equal(claims.User.AllowedConnectionTypes[1], "WEBSOCKET");
+    }
 }
