@@ -17,7 +17,7 @@ public class NatsExportTests
         {
             Name = "TestExport",
             Subject = "test.subject",
-            Type = 1,
+            Type = NatsExportType.Service,
             TokenReq = true,
             Revocations = new() { { "key1", 123456789L }, { "key2", 987654321L }, },
             ResponseType = "Stream",
@@ -32,7 +32,7 @@ public class NatsExportTests
 
         string json = JsonSerializer.Serialize(natsExport);
 
-        string expectedJson = "{\"name\":\"TestExport\",\"subject\":\"test.subject\",\"type\":1,\"token_req\":true,\"revocations\":{\"key1\":123456789,\"key2\":987654321},\"response_type\":\"Stream\",\"response_threshold\":\"00:00:05\",\"service_latency\":{\"sampling\":50,\"results\":\"results.subject\"},\"account_token_position\":2,\"advertise\":true,\"allow_trace\":true,\"description\":\"Test Description\",\"info_url\":\"https://example.com/info\"}";
+        string expectedJson = "{\"name\":\"TestExport\",\"subject\":\"test.subject\",\"type\":\"service\",\"token_req\":true,\"revocations\":{\"key1\":123456789,\"key2\":987654321},\"response_type\":\"Stream\",\"response_threshold\":\"00:00:05\",\"service_latency\":{\"sampling\":50,\"results\":\"results.subject\"},\"account_token_position\":2,\"advertise\":true,\"allow_trace\":true,\"description\":\"Test Description\",\"info_url\":\"https://example.com/info\"}";
 
         Assert.Equal(expectedJson, json);
 

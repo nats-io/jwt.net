@@ -84,6 +84,10 @@ public class NatsJwt
     /// </summary>
     public const string AlgorithmNkey = "ed25519-nkey";
 
+    private static readonly NatsExportComparer ExportComparer = new();
+
+    private static readonly NatsImportComparer ImportComparer = new();
+
     /// <summary>
     /// Formats the user configuration.
     /// </summary>
@@ -263,8 +267,8 @@ public class NatsJwt
     public string EncodeAccountClaims(NatsAccountClaims accountClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(accountClaims.Account, AccountClaim);
-        accountClaims.Account.Imports?.Sort();
-        accountClaims.Account.Exports?.Sort();
+        accountClaims.Account.Imports?.Sort(ImportComparer);
+        accountClaims.Account.Exports?.Sort(ExportComparer);
         return DoEncode(NatsJwtHeader, keyPair, accountClaims, JsonContext.Default.NatsAccountClaims, issuedAt);
     }
 

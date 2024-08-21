@@ -64,7 +64,7 @@ public class NatsAccountClaimsTests
                         Subject = "import.>",
                         Account = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
                         LocalSubject = "local.import.>",
-                        Type = 1,
+                        Type = NatsExportType.Service,
                         Share = true,
                         AllowTrace = true,
                     },
@@ -75,7 +75,7 @@ public class NatsAccountClaimsTests
                     {
                         Name = "TestExport",
                         Subject = "export.>",
-                        Type = 1,
+                        Type = NatsExportType.Service,
                         TokenReq = true,
                         Revocations =
                             new Dictionary<string, long>

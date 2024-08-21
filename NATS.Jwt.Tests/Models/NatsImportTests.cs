@@ -19,7 +19,7 @@ public class NatsImportTests
             Account = "ACC123",
             Token = "TOKEN456",
             LocalSubject = "local.subject",
-            Type = 1,
+            Type = NatsExportType.Service,
             Share = true,
             AllowTrace = true,
             To = "to.subject",
@@ -27,7 +27,7 @@ public class NatsImportTests
 
         string json = JsonSerializer.Serialize(natsImport);
 
-        string expectedJson = "{\"name\":\"TestImport\",\"subject\":\"test.subject\",\"account\":\"ACC123\",\"token\":\"TOKEN456\",\"to\":\"to.subject\",\"local_subject\":\"local.subject\",\"type\":1,\"share\":true,\"allow_trace\":true}";
+        string expectedJson = "{\"name\":\"TestImport\",\"subject\":\"test.subject\",\"account\":\"ACC123\",\"token\":\"TOKEN456\",\"to\":\"to.subject\",\"local_subject\":\"local.subject\",\"type\":\"service\",\"share\":true,\"allow_trace\":true}";
 
         Assert.Equal(expectedJson, json);
 
