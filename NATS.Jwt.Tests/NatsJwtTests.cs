@@ -314,7 +314,15 @@ public class NatsJwtTests(ITestOutputHelper output)
                 Account = systemAccountKeyPair.GetPublicKey(),
                 Type = NatsExportType.Service,
                 LocalSubject = "account-monitoring",
-            }
+            },
+            new NatsImport
+            {
+                Name = "account-monitoring2",
+                Subject = "$SYS.ACCOUNT.*.>",
+                Account = systemAccountKeyPair.GetPublicKey(),
+                Type = NatsExportType.Service,
+                LocalSubject = "account-monitoring2",
+            },
         ];
 
         var jwt = jwtUtils.EncodeAccountClaims(systemAccountClaims, operatorSigningKey);

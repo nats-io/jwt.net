@@ -82,5 +82,12 @@ public class NatsExportTests
 
         string json = "{\"type\":\"not-a-valid-value\"}";
         Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize<NatsExport>(json));
+
+        string json2 = "{\"type\":\"unknown\"}";
+        var deserializedNatsExportType = JsonSerializer.Deserialize<NatsExport>(json2);
+        Assert.Equal(NatsExportType.Unknown, deserializedNatsExportType.Type);
+
+        string json3 = "{\"type\":1}";
+        Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize<NatsExport>(json3));
     }
 }
