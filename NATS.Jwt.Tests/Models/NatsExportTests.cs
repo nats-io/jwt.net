@@ -54,4 +54,33 @@ public class NatsExportTests
         Assert.Equal(natsExport.Description, deserializedNatsExport.Description);
         Assert.Equal(natsExport.InfoUrl, deserializedNatsExport.InfoUrl);
     }
+
+    [Theory]
+    [InlineData(NatsExportType.Unknown, "unknown")]
+    [InlineData(NatsExportType.Stream, "stream")]
+    [InlineData(NatsExportType.Service, "service")]
+    public void TestExportTypeSerializationDeserialization(NatsExportType type, string jsonString)
+    {
+        var export = new NatsExport { Type = type };
+
+        string json = JsonSerializer.Serialize(export);
+
+        string expectedJson = type == NatsExportType.Unknown ? "{}" : $"{{\"type\":\"{jsonString}\"}}";
+
+        Assert.Equal(expectedJson, json);
+
+        var deserializedNatsExportType = JsonSerializer.Deserialize<NatsExport>(json);
+
+        Assert.Equal(type, deserializedNatsExportType.Type);
+    }
+
+    [Fact]
+    public void TestExportTypeExceptionsInSerializationDeserialization()
+    {
+        var export = new NatsExport { Type = (NatsExportType)42 };
+        Assert.Throws<InvalidOperationException>(() => JsonSerializer.Serialize(export));
+
+        string json = "{\"type\":\"not-a-valid-value\"}";
+        Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize<NatsExport>(json));
+    }
 }

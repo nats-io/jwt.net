@@ -283,7 +283,8 @@ public class NatsJwtTests(ITestOutputHelper output)
         // Create System Account
         var systemAccountClaims = jwtUtils.NewAccountClaims(systemAccountKeyPair.GetPublicKey());
         systemAccountClaims.Name = "SYS";
-        systemAccountClaims.Account.Exports = [
+        systemAccountClaims.Account.Exports =
+        [
             new()
             {
                 Name = "account-monitoring-services",
@@ -303,6 +304,17 @@ public class NatsJwtTests(ITestOutputHelper output)
                 Description = "Account specific monitoring stream",
                 InfoUrl = "https://docs.nats.io/nats-server/configuration/sys_accounts",
             },
+        ];
+        systemAccountClaims.Account.Imports =
+        [
+            new NatsImport
+            {
+                Name = "account-monitoring",
+                Subject = "$SYS.ACCOUNT.*.*",
+                Account = systemAccountKeyPair.GetPublicKey(),
+                Type = NatsExportType.Service,
+                LocalSubject = "account-monitoring",
+            }
         ];
 
         var jwt = jwtUtils.EncodeAccountClaims(systemAccountClaims, operatorSigningKey);
