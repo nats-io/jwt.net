@@ -1,11 +1,13 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using NATS.Jwt.Models;
 using NATS.NKeys;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NATS.Jwt.Tests;
 
-public class NatsJwtTests
+public class NatsJwtTests(ITestOutputHelper output)
 {
     private readonly NatsJwt _natsJwt = new();
 
@@ -268,5 +270,70 @@ public class NatsJwtTests
         Assert.NotNull(claims);
         Assert.Equal(subject, claims.Subject);
         Assert.NotNull(claims.Account);
+    }
+
+    [Fact]
+    public void TestMultipleExports()
+    {
+        var jwtUtils = new NatsJwt();
+
+        var operatorSigningKey = KeyPair.CreatePair(PrefixByte.Operator);
+        var systemAccountKeyPair = KeyPair.CreatePair(PrefixByte.Account);
+
+        // Create System Account
+        var systemAccountClaims = jwtUtils.NewAccountClaims(systemAccountKeyPair.GetPublicKey());
+        systemAccountClaims.Name = "SYS";
+        systemAccountClaims.Account.Exports =
+        [
+            new()
+            {
+                Name = "account-monitoring-services",
+                Subject = "$SYS.REQ.ACCOUNT.*.*",
+                AccountTokenPosition = 4,
+                Type = NatsExportType.Service,
+                ResponseType = "Stream",
+                Description = "Request account specific monitoring services for: SUBSZ, CONNZ, LEAFZ, JSZ and INFO",
+                InfoUrl = "https://docs.nats.io/nats-server/configuration/sys_accounts",
+            },
+            new()
+            {
+                Name = "account-monitoring-streams",
+                Subject = "$SYS.ACCOUNT.*.>",
+                AccountTokenPosition = 3,
+                Type = NatsExportType.Service,
+                Description = "Account specific monitoring stream",
+                InfoUrl = "https://docs.nats.io/nats-server/configuration/sys_accounts",
+            },
+        ];
+        systemAccountClaims.Account.Imports =
+        [
+            new NatsImport
+            {
+                Name = "account-monitoring",
+                Subject = "$SYS.ACCOUNT.*.*",
+                Account = systemAccountKeyPair.GetPublicKey(),
+                Type = NatsExportType.Service,
+                LocalSubject = "account-monitoring",
+            },
+            new NatsImport
+            {
+                Name = "account-monitoring2",
+                Subject = "$SYS.ACCOUNT.*.>",
+                Account = systemAccountKeyPair.GetPublicKey(),
+                Type = NatsExportType.Service,
+                LocalSubject = "account-monitoring2",
+            },
+        ];
+
+        var jwt = jwtUtils.EncodeAccountClaims(systemAccountClaims, operatorSigningKey);
+        var payload = EncodingUtils.FromBase64UrlEncoded(jwt.Split('.')[1]);
+        var json = JsonSerializer.Deserialize<JsonNode>(payload);
+
+        // Verify the exports are sorted by name
+        Assert.Equal("account-monitoring-streams", json["nats"]["exports"][0]["name"].GetValue<string>());
+        Assert.Equal("account-monitoring-services", json["nats"]["exports"][1]["name"].GetValue<string>());
+
+        string jsonStr = JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
+        output.WriteLine(jsonStr);
     }
 }

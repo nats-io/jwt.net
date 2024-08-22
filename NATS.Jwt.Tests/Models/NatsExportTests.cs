@@ -17,7 +17,7 @@ public class NatsExportTests
         {
             Name = "TestExport",
             Subject = "test.subject",
-            Type = 1,
+            Type = NatsExportType.Service,
             TokenReq = true,
             Revocations = new() { { "key1", 123456789L }, { "key2", 987654321L }, },
             ResponseType = "Stream",
@@ -32,7 +32,7 @@ public class NatsExportTests
 
         string json = JsonSerializer.Serialize(natsExport);
 
-        string expectedJson = "{\"name\":\"TestExport\",\"subject\":\"test.subject\",\"type\":1,\"token_req\":true,\"revocations\":{\"key1\":123456789,\"key2\":987654321},\"response_type\":\"Stream\",\"response_threshold\":\"00:00:05\",\"service_latency\":{\"sampling\":50,\"results\":\"results.subject\"},\"account_token_position\":2,\"advertise\":true,\"allow_trace\":true,\"description\":\"Test Description\",\"info_url\":\"https://example.com/info\"}";
+        string expectedJson = "{\"name\":\"TestExport\",\"subject\":\"test.subject\",\"type\":\"service\",\"token_req\":true,\"revocations\":{\"key1\":123456789,\"key2\":987654321},\"response_type\":\"Stream\",\"response_threshold\":\"00:00:05\",\"service_latency\":{\"sampling\":50,\"results\":\"results.subject\"},\"account_token_position\":2,\"advertise\":true,\"allow_trace\":true,\"description\":\"Test Description\",\"info_url\":\"https://example.com/info\"}";
 
         Assert.Equal(expectedJson, json);
 
@@ -53,5 +53,41 @@ public class NatsExportTests
         Assert.Equal(natsExport.AllowTrace, deserializedNatsExport.AllowTrace);
         Assert.Equal(natsExport.Description, deserializedNatsExport.Description);
         Assert.Equal(natsExport.InfoUrl, deserializedNatsExport.InfoUrl);
+    }
+
+    [Theory]
+    [InlineData(NatsExportType.Unknown, "unknown")]
+    [InlineData(NatsExportType.Stream, "stream")]
+    [InlineData(NatsExportType.Service, "service")]
+    public void TestExportTypeSerializationDeserialization(NatsExportType type, string jsonString)
+    {
+        var export = new NatsExport { Type = type };
+
+        string json = JsonSerializer.Serialize(export);
+
+        string expectedJson = type == NatsExportType.Unknown ? "{}" : $"{{\"type\":\"{jsonString}\"}}";
+
+        Assert.Equal(expectedJson, json);
+
+        var deserializedNatsExportType = JsonSerializer.Deserialize<NatsExport>(json);
+
+        Assert.Equal(type, deserializedNatsExportType.Type);
+    }
+
+    [Fact]
+    public void TestExportTypeExceptionsInSerializationDeserialization()
+    {
+        var export = new NatsExport { Type = (NatsExportType)42 };
+        Assert.Throws<InvalidOperationException>(() => JsonSerializer.Serialize(export));
+
+        string json = "{\"type\":\"not-a-valid-value\"}";
+        Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize<NatsExport>(json));
+
+        string json2 = "{\"type\":\"unknown\"}";
+        var deserializedNatsExportType = JsonSerializer.Deserialize<NatsExport>(json2);
+        Assert.Equal(NatsExportType.Unknown, deserializedNatsExportType.Type);
+
+        string json3 = "{\"type\":1}";
+        Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize<NatsExport>(json3));
     }
 }

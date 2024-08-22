@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json.Serialization;
+using NATS.Jwt.Internal;
 
 namespace NATS.Jwt.Models;
 
@@ -70,7 +71,8 @@ public record NatsImport
     /// </summary>
     [JsonPropertyName("type")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public int Type { get; set; }
+    [JsonConverter(typeof(NatsJsonStringEnumConverter<NatsExportType>))]
+    public NatsExportType Type { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the import is shared.

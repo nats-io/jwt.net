@@ -188,8 +188,12 @@ NATS.Jwt.Models.NatsExport.Subject.get -> string!
 NATS.Jwt.Models.NatsExport.Subject.set -> void
 NATS.Jwt.Models.NatsExport.TokenReq.get -> bool
 NATS.Jwt.Models.NatsExport.TokenReq.set -> void
-NATS.Jwt.Models.NatsExport.Type.get -> int
+NATS.Jwt.Models.NatsExport.Type.get -> NATS.Jwt.Models.NatsExportType
 NATS.Jwt.Models.NatsExport.Type.set -> void
+NATS.Jwt.Models.NatsExportType
+NATS.Jwt.Models.NatsExportType.Service = 2 -> NATS.Jwt.Models.NatsExportType
+NATS.Jwt.Models.NatsExportType.Stream = 1 -> NATS.Jwt.Models.NatsExportType
+NATS.Jwt.Models.NatsExportType.Unknown = 0 -> NATS.Jwt.Models.NatsExportType
 NATS.Jwt.Models.NatsExternalAuthorization
 NATS.Jwt.Models.NatsExternalAuthorization.AllowedAccounts.get -> System.Collections.Generic.List<string!>!
 NATS.Jwt.Models.NatsExternalAuthorization.AllowedAccounts.set -> void
@@ -227,7 +231,7 @@ NATS.Jwt.Models.NatsImport.To.get -> string!
 NATS.Jwt.Models.NatsImport.To.set -> void
 NATS.Jwt.Models.NatsImport.Token.get -> string!
 NATS.Jwt.Models.NatsImport.Token.set -> void
-NATS.Jwt.Models.NatsImport.Type.get -> int
+NATS.Jwt.Models.NatsImport.Type.get -> NATS.Jwt.Models.NatsExportType
 NATS.Jwt.Models.NatsImport.Type.set -> void
 NATS.Jwt.Models.NatsMsgTrace
 NATS.Jwt.Models.NatsMsgTrace.Destination.get -> string!
