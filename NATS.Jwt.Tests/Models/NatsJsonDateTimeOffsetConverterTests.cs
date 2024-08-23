@@ -44,6 +44,23 @@ public class NatsJsonDateTimeOffsetConverterTests
         Assert.Equal("1609459200", json);
     }
 
+    [Fact]
+    public void Write_NullValue_ShouldWriteCorrectly()
+    {
+        // Arrange
+        var converter = new TestConverter();
+        MemoryStream memoryStream = new();
+        var writer = new Utf8JsonWriter(memoryStream);
+
+        // Act
+        converter.Write(writer, null, new JsonSerializerOptions());
+        writer.Flush();
+
+        // Assert
+        var json = System.Text.Encoding.UTF8.GetString(memoryStream.ToArray());
+        Assert.Equal("null", json);
+    }
+
     private class TestConverter : NatsJsonDateTimeOffsetConverter
     {
         public new void Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
