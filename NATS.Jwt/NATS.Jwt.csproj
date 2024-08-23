@@ -37,4 +37,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.4" ExcludeAssets="Compile" PrivateAssets="All"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="NATS.Jwt.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100a56954898c64f94b3785de8ff48cf4b9cf7ce5398602da1680f15e3dccc398e8bca151641158df6542afc9623805c0f6ac513a4bcf1b3289f45a27c5eb927711854ebc8a42afce2cbbe7deebde1a431ee53d2bdf64418ff964fc3a2c561e344ba79b30704d916a879afac5e7aea531198afa8a3a1979a4232a9c590f6ee5cfc2"/>
+  </ItemGroup>
+
 </Project>

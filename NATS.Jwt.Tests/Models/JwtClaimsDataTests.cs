@@ -3,6 +3,8 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using NATS.Jwt.Internal;
 using NATS.Jwt.Models;
 using Xunit;
 
@@ -110,5 +112,151 @@ public class JwtClaimsDataTests
         string invalidJson = "{\"sub\": \"test_subject\", \"iss\": }";
 
         Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<JwtClaimsData>(invalidJson));
+    }
+
+    [Fact]
+    public void Deserialize_WithNullValues_ShouldSetPropertiesToNull()
+    {
+        // Arrange
+        var json = "{}";
+
+        // Act
+        var claims = JsonSerializer.Deserialize<JwtClaimsData>(json);
+
+        // Assert
+        Assert.Null(claims.Audience);
+        Assert.Null(claims.Id);
+        Assert.Null(claims.IssuedAt);
+        Assert.Null(claims.Issuer);
+        Assert.Null(claims.Name);
+        Assert.Null(claims.Subject);
+        Assert.Null(claims.Expires);
+        Assert.Null(claims.NotBefore);
+    }
+
+    [Fact]
+    public void Serialize_WithNullValues_ShouldOmitNullProperties()
+    {
+        // Arrange
+        var claims = new JwtClaimsData();
+
+        // Act
+        var json = JsonSerializer.Serialize(claims);
+
+        // Assert
+        Assert.Equal("{}", json);
+    }
+
+    [Fact]
+    public void Deserialize_WithUnixTimestamps_ShouldConvertCorrectly()
+    {
+        // Arrange
+        var json = @"{
+                ""iat"": 1609459200,
+                ""exp"": 1609545600,
+                ""nbf"": 1609372800
+            }";
+
+        // Act
+        var claims = JsonSerializer.Deserialize<JwtClaimsData>(json);
+
+        // Assert
+        Assert.Equal(new DateTimeOffset(2021, 1, 1, 0, 0, 0, TimeSpan.Zero), claims.IssuedAt);
+        Assert.Equal(new DateTimeOffset(2021, 1, 2, 0, 0, 0, TimeSpan.Zero), claims.Expires);
+        Assert.Equal(new DateTimeOffset(2020, 12, 31, 0, 0, 0, TimeSpan.Zero), claims.NotBefore);
+    }
+
+    [Fact]
+    public void NatsJsonDateTimeOffsetConverter_Read_ValidNumber_ShouldConvertCorrectly()
+    {
+        // Arrange
+        var json = @"{""Timestamp"": 1609459200}";
+        var options = new JsonSerializerOptions
+        {
+            Converters = { new NatsJsonDateTimeOffsetConverter() }
+        };
+
+        // Act
+        var result = JsonSerializer.Deserialize<TestClass>(json, options);
+
+        // Assert
+        Assert.Equal(new DateTimeOffset(2021, 1, 1, 0, 0, 0, TimeSpan.Zero), result.Timestamp);
+    }
+
+    [Fact]
+    public void NatsJsonDateTimeOffsetConverter_Read_NullValue_ShouldReturnNull()
+    {
+        // Arrange
+        var json = @"{""Timestamp"": null}";
+        var options = new JsonSerializerOptions
+        {
+            Converters = { new NatsJsonDateTimeOffsetConverter() }
+        };
+
+        // Act
+        var result = JsonSerializer.Deserialize<TestClass>(json, options);
+
+        // Assert
+        Assert.Null(result.Timestamp);
+    }
+
+    [Fact]
+    public void NatsJsonDateTimeOffsetConverter_Read_InvalidTokenType_ShouldThrowException()
+    {
+        // Arrange
+        var json = @"{""Timestamp"": ""not a number""}";
+        var options = new JsonSerializerOptions
+        {
+            Converters = { new NatsJsonDateTimeOffsetConverter() },
+        };
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize<TestClass>(json, options));
+    }
+
+    [Fact]
+    public void NatsJsonDateTimeOffsetConverter_Write_ValidValue_ShouldWriteNumber()
+    {
+        // Arrange
+        var testObject = new TestClass
+        {
+            Timestamp = new DateTimeOffset(2021, 1, 1, 0, 0, 0, TimeSpan.Zero)
+        };
+        var options = new JsonSerializerOptions
+        {
+            Converters = { new NatsJsonDateTimeOffsetConverter() }
+        };
+
+        // Act
+        var json = JsonSerializer.Serialize(testObject, options);
+
+        // Assert
+        Assert.Equal(@"{""Timestamp"":1609459200}", json);
+    }
+
+    [Fact]
+    public void NatsJsonDateTimeOffsetConverter_Write_NullValue_ShouldWriteNull()
+    {
+        // Arrange
+        var testObject = new TestClass
+        {
+            Timestamp = null
+        };
+        var options = new JsonSerializerOptions
+        {
+            Converters = { new NatsJsonDateTimeOffsetConverter() }
+        };
+
+        // Act
+        var json = JsonSerializer.Serialize(testObject, options);
+
+        // Assert
+        Assert.Equal(@"{""Timestamp"":null}", json);
+    }
+
+    private class TestClass
+    {
+        [JsonConverter(typeof(NatsJsonDateTimeOffsetConverter))]
+        public DateTimeOffset? Timestamp { get; set; }
     }
 }
