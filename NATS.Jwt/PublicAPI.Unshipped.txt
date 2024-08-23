@@ -31,17 +31,17 @@ NATS.Jwt.Models.JetStreamLimits.Streams.set -> void
 NATS.Jwt.Models.JwtClaimsData
 NATS.Jwt.Models.JwtClaimsData.Audience.get -> string!
 NATS.Jwt.Models.JwtClaimsData.Audience.set -> void
-NATS.Jwt.Models.JwtClaimsData.Expires.get -> long
+NATS.Jwt.Models.JwtClaimsData.Expires.get -> System.DateTimeOffset?
 NATS.Jwt.Models.JwtClaimsData.Expires.set -> void
 NATS.Jwt.Models.JwtClaimsData.Id.get -> string!
 NATS.Jwt.Models.JwtClaimsData.Id.set -> void
-NATS.Jwt.Models.JwtClaimsData.IssuedAt.get -> long
+NATS.Jwt.Models.JwtClaimsData.IssuedAt.get -> System.DateTimeOffset?
 NATS.Jwt.Models.JwtClaimsData.IssuedAt.set -> void
 NATS.Jwt.Models.JwtClaimsData.Issuer.get -> string!
 NATS.Jwt.Models.JwtClaimsData.Issuer.set -> void
 NATS.Jwt.Models.JwtClaimsData.Name.get -> string!
 NATS.Jwt.Models.JwtClaimsData.Name.set -> void
-NATS.Jwt.Models.JwtClaimsData.NotBefore.get -> long
+NATS.Jwt.Models.JwtClaimsData.NotBefore.get -> System.DateTimeOffset?
 NATS.Jwt.Models.JwtClaimsData.NotBefore.set -> void
 NATS.Jwt.Models.JwtClaimsData.Subject.get -> string!
 NATS.Jwt.Models.JwtClaimsData.Subject.set -> void

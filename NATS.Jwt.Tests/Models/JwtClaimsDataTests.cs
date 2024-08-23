@@ -1,6 +1,7 @@
 ﻿// Copyright (c) The NATS Authors.
 // Licensed under the Apache License, Version 2.0.
 
+using System;
 using System.Text.Json;
 using NATS.Jwt.Models;
 using Xunit;
@@ -16,12 +17,12 @@ public class JwtClaimsDataTests
         {
             Audience = "test_audience",
             Id = "test_id",
-            IssuedAt = 1609459200, // 2021-01-01
+            IssuedAt = DateTimeOffset.FromUnixTimeSeconds(1609459200), // 2021-01-01
             Issuer = "test_issuer",
             Name = "Test JWT",
             Subject = "test_subject",
-            Expires = 1735689600, // 2025-01-01
-            NotBefore = 1609459200, // 2021-01-01
+            Expires = DateTimeOffset.FromUnixTimeSeconds(1735689600), // 2025-01-01
+            NotBefore = DateTimeOffset.FromUnixTimeSeconds(1609459200), // 2021-01-01
         };
 
         string json = JsonSerializer.Serialize(claims);
@@ -53,10 +54,10 @@ public class JwtClaimsDataTests
         Assert.Equal(claims.Issuer, deserialized.Issuer);
         Assert.Null(deserialized.Audience);
         Assert.Null(deserialized.Id);
-        Assert.Equal(0, deserialized.IssuedAt);
+        Assert.Null(deserialized.IssuedAt);
         Assert.Null(deserialized.Name);
-        Assert.Equal(0, deserialized.Expires);
-        Assert.Equal(0, deserialized.NotBefore);
+        Assert.Null(deserialized.Expires);
+        Assert.Null(deserialized.NotBefore);
     }
 
     [Fact]
@@ -76,10 +77,10 @@ public class JwtClaimsDataTests
         Assert.Equal("test_issuer", deserialized.Issuer);
         Assert.Null(deserialized.Audience);
         Assert.Null(deserialized.Id);
-        Assert.Equal(0, deserialized.IssuedAt);
+        Assert.Null(deserialized.IssuedAt);
         Assert.Null(deserialized.Name);
-        Assert.Equal(0, deserialized.Expires);
-        Assert.Equal(0, deserialized.NotBefore);
+        Assert.Null(deserialized.Expires);
+        Assert.Null(deserialized.NotBefore);
     }
 
     [Fact]

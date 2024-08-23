@@ -1,6 +1,7 @@
 ﻿// Copyright (c) The NATS Authors.
 // Licensed under the Apache License, Version 2.0.
 
+using System;
 using System.Text.Json;
 using NATS.Jwt.Models;
 using Xunit;
@@ -18,9 +19,9 @@ public class NatsActivationClaimsTests
             Issuer = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
             Name = "Full Test Activation",
             Audience = "test_audience",
-            Expires = 1735689600, // 2025-01-01
-            IssuedAt = 1609459200, // 2021-01-01
-            NotBefore = 1609459200, // 2021-01-01
+            Expires = DateTimeOffset.FromUnixTimeSeconds(1735689600), // 2025-01-01
+            IssuedAt = DateTimeOffset.FromUnixTimeSeconds(1609459200), // 2021-01-01
+            NotBefore = DateTimeOffset.FromUnixTimeSeconds(1609459200), // 2021-01-01
             Id = "jti_test",
             Activation = new NatsActivation
             {

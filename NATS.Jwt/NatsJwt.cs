@@ -403,7 +403,7 @@ public class NatsJwt
         var c = claim;
 
         c.Issuer = issuerBytes;
-        c.IssuedAt = issuedAt.ToUnixTimeSeconds();
+        c.IssuedAt = issuedAt;
 
         // TODO: ID generation same as Go implementation
         // c.Id = Hash(c, typeInfo);

@@ -19,9 +19,9 @@ public class NatsUserClaimsTests
             Issuer = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
             Name = "Full Test User",
             Audience = "test_audience",
-            Expires = 1735689600,
-            IssuedAt = 1609459200,
-            NotBefore = 1609459200,
+            Expires = DateTimeOffset.FromUnixTimeSeconds(1735689600),
+            IssuedAt = DateTimeOffset.FromUnixTimeSeconds(1609459200),
+            NotBefore = DateTimeOffset.FromUnixTimeSeconds(1609459200),
             Id = "jti_test",
             User = new NatsUser
             {

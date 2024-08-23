@@ -1,6 +1,7 @@
 ﻿// Copyright (c) The NATS Authors.
 // Licensed under the Apache License, Version 2.0.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using NATS.Jwt.Models;
@@ -19,9 +20,9 @@ public class NatsAuthorizationRequestClaimsTests
             Issuer = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
             Name = "Full Test Authorization Request",
             Audience = "test_audience",
-            Expires = 1735689600,
-            IssuedAt = 1609459200,
-            NotBefore = 1609459200,
+            Expires = DateTimeOffset.FromUnixTimeSeconds(1735689600),
+            IssuedAt = DateTimeOffset.FromUnixTimeSeconds(1609459200),
+            NotBefore = DateTimeOffset.FromUnixTimeSeconds(1609459200),
             Id = "jti_test",
             AuthorizationRequest = new NatsAuthorizationRequest
             {
