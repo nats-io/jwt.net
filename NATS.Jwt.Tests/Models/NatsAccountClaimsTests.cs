@@ -102,7 +102,8 @@ public class NatsAccountClaimsTests
                     {
                         Pub = new NatsPermission
                         {
-                            Allow = new List<string> { "allowed.>", }, Deny = new List<string> { "denied.>", },
+                            Allow = new List<string> { "allowed.>", },
+                            Deny = new List<string> { "denied.>", },
                         },
                         Sub =
                             new NatsPermission
