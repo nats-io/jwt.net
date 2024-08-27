@@ -20,9 +20,9 @@ public class NatsAccountClaimsTests
             Issuer = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
             Name = "Full Test Account",
             Audience = "test_audience",
-            Expires = 1735689600, // 2025-01-01
-            IssuedAt = 1609459200, // 2021-01-01
-            NotBefore = 1609459200, // 2021-01-01
+            Expires = DateTimeOffset.FromUnixTimeSeconds(1735689600), // 2025-01-01
+            IssuedAt = DateTimeOffset.FromUnixTimeSeconds(1609459200), // 2021-01-01
+            NotBefore = DateTimeOffset.FromUnixTimeSeconds(1609459200), // 2021-01-01
             Id = "jti_test",
             Account = new NatsAccount
             {
@@ -102,7 +102,8 @@ public class NatsAccountClaimsTests
                     {
                         Pub = new NatsPermission
                         {
-                            Allow = new List<string> { "allowed.>", }, Deny = new List<string> { "denied.>", },
+                            Allow = new List<string> { "allowed.>", },
+                            Deny = new List<string> { "denied.>", },
                         },
                         Sub =
                             new NatsPermission

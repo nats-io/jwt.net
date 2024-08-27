@@ -1,6 +1,7 @@
 ﻿// Copyright (c) The NATS Authors.
 // Licensed under the Apache License, Version 2.0.
 
+using System;
 using System.Text.Json;
 using NATS.Jwt.Models;
 using Xunit;
@@ -18,9 +19,9 @@ public class NatsAuthorizationResponseClaimsTests
             Issuer = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
             Name = "Full Test Authorization Response",
             Audience = "test_audience",
-            Expires = 1735689600,
-            IssuedAt = 1609459200,
-            NotBefore = 1609459200,
+            Expires = DateTimeOffset.FromUnixTimeSeconds(1735689600),
+            IssuedAt = DateTimeOffset.FromUnixTimeSeconds(1609459200),
+            NotBefore = DateTimeOffset.FromUnixTimeSeconds(1609459200),
             Id = "jti_test",
             AuthorizationResponse = new NatsAuthorizationResponse
             {

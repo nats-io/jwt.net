@@ -1,7 +1,9 @@
 // Copyright (c) The NATS Authors.
 // Licensed under the Apache License, Version 2.0.
 
+using System;
 using System.Text.Json.Serialization;
+using NATS.Jwt.Internal;
 
 namespace NATS.Jwt.Models;
 
@@ -33,7 +35,8 @@ public record JwtClaimsData
     /// </remarks>
     [JsonPropertyName("iat")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public long IssuedAt { get; set; }
+    [JsonConverter(typeof(NatsJsonDateTimeOffsetConverter))]
+    public DateTimeOffset? IssuedAt { get; set; }
 
     /// <summary>
     /// Gets or sets the issuer claim in a JWT token.
@@ -66,7 +69,8 @@ public record JwtClaimsData
     /// </summary>
     [JsonPropertyName("exp")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public long Expires { get; set; }
+    [JsonConverter(typeof(NatsJsonDateTimeOffsetConverter))]
+    public DateTimeOffset? Expires { get; set; }
 
     /// <summary>
     /// Gets or sets the "nbf" claim in a JWT token.
@@ -75,5 +79,6 @@ public record JwtClaimsData
     /// </summary>
     [JsonPropertyName("nbf")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public long NotBefore { get; set; }
+    [JsonConverter(typeof(NatsJsonDateTimeOffsetConverter))]
+    public DateTimeOffset? NotBefore { get; set; }
 }
