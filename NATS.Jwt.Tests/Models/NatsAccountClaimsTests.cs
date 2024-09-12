@@ -11,6 +11,8 @@ namespace NATS.Jwt.Tests.Models;
 
 public class NatsAccountClaimsTests
 {
+   
+
     [Fact]
     public void SerializeDeserialize_FullNatsAccountClaims_ShouldSucceed()
     {
@@ -51,7 +53,7 @@ public class NatsAccountClaimsTests
                     MaxBytesRequired = true,
                 },
                 SigningKeys =
-                    new List<string>
+                    new List<NatsAccountSigningKey>
                     {
                         "SKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         "SKBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
@@ -264,5 +266,43 @@ public class NatsAccountClaimsTests
         Assert.DoesNotContain("\"iat\"", json);
         Assert.DoesNotContain("\"nbf\"", json);
         Assert.DoesNotContain("\"jti\"", json);
+    }
+
+    [Fact]
+    // Test just the SigningKeys part of json serialization/deserialization
+    public void SerializeDeserialize_NatsAccountSigningClaims_ShouldSucceed()
+    {
+        var claims = new NatsAccountClaims
+        {
+            Account = new NatsAccount
+            {
+                SigningKeys =
+                    new List<NatsAccountSigningKey>
+                    {
+                        "SKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "SKBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+                        new NatsAccountScopedSigningKey
+                        {
+                             Key = "AC***SIGNINGKEY",
+                             Role = "chat_user",
+                             Template = new NatsUser
+                             {
+                             }
+                        }
+                    }
+            }
+        };
+
+        string json = JsonSerializer.Serialize(claims);
+        var deserialized = JsonSerializer.Deserialize<NatsAccountClaims>(json);
+
+        Assert.Equal(claims.Account.SigningKeys[0], deserialized.Account.SigningKeys[0]);
+        Assert.Equal(claims.Account.SigningKeys[1], deserialized.Account.SigningKeys[1]);
+
+        var claimsScopedKey = (NatsAccountScopedSigningKey)claims.Account.SigningKeys[2];
+        var deserializedScopedKey = (NatsAccountScopedSigningKey)deserialized.Account.SigningKeys[2];
+
+        Assert.Equal(claimsScopedKey.Key, deserializedScopedKey.Key);
+        Assert.Equal(claimsScopedKey.Role, deserializedScopedKey.Role);
     }
 }
