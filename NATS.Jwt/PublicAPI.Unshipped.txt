@@ -202,7 +202,7 @@ NATS.Jwt.Models.NatsExternalAuthorization.AuthUsers.set -> void
 NATS.Jwt.Models.NatsExternalAuthorization.XKey.get -> string!
 NATS.Jwt.Models.NatsExternalAuthorization.XKey.set -> void
 NATS.Jwt.Models.NatsGenericClaims
-NATS.Jwt.Models.NatsGenericClaims.Data.get -> System.Collections.Generic.Dictionary<string!, System.Text.Json.Nodes.JsonObject!>!
+NATS.Jwt.Models.NatsGenericClaims.Data.get -> System.Collections.Generic.Dictionary<string!, System.Text.Json.Nodes.JsonNode!>!
 NATS.Jwt.Models.NatsGenericClaims.Data.set -> void
 NATS.Jwt.Models.NatsGenericFields
 NATS.Jwt.Models.NatsGenericFields.Tags.get -> System.Collections.Generic.List<string!>!

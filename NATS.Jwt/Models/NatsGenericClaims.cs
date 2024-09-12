@@ -18,5 +18,5 @@ public record NatsGenericClaims : JwtClaimsData
     [JsonPropertyName("nats")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     [JsonPropertyOrder(1)]
-    public Dictionary<string, JsonObject> Data { get; set; } = new();
+    public Dictionary<string, JsonNode> Data { get; set; } = new();
 }
