@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using NATS.Jwt.Internal;
 
 namespace NATS.Jwt.Models;
 
@@ -49,7 +50,8 @@ public record NatsAccount : NatsGenericFields
     /// </value>
     [JsonPropertyName("signing_keys")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public List<string> SigningKeys { get; set; }
+    [JsonConverter(typeof(NatsAccountSigningKeyConverter))]
+    public List<NatsAccountSigningKey> SigningKeys { get; set; }
 
     /// <summary>
     /// Gets or sets the dictionary of revocations for the account.

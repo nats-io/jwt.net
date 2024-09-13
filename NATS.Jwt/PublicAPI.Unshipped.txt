@@ -69,13 +69,23 @@ NATS.Jwt.Models.NatsAccount.Mappings.get -> System.Collections.Generic.Dictionar
 NATS.Jwt.Models.NatsAccount.Mappings.set -> void
 NATS.Jwt.Models.NatsAccount.Revocations.get -> System.Collections.Generic.Dictionary<string!, long>!
 NATS.Jwt.Models.NatsAccount.Revocations.set -> void
-NATS.Jwt.Models.NatsAccount.SigningKeys.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsAccount.SigningKeys.get -> System.Collections.Generic.List<NATS.Jwt.Models.NatsAccountSigningKey!>!
 NATS.Jwt.Models.NatsAccount.SigningKeys.set -> void
 NATS.Jwt.Models.NatsAccount.Trace.get -> NATS.Jwt.Models.NatsMsgTrace!
 NATS.Jwt.Models.NatsAccount.Trace.set -> void
 NATS.Jwt.Models.NatsAccountClaims
 NATS.Jwt.Models.NatsAccountClaims.Account.get -> NATS.Jwt.Models.NatsAccount!
 NATS.Jwt.Models.NatsAccountClaims.Account.set -> void
+NATS.Jwt.Models.NatsAccountScopedSigningKey
+NATS.Jwt.Models.NatsAccountScopedSigningKey.Key.get -> string!
+NATS.Jwt.Models.NatsAccountScopedSigningKey.Key.set -> void
+NATS.Jwt.Models.NatsAccountScopedSigningKey.Kind.get -> string!
+NATS.Jwt.Models.NatsAccountScopedSigningKey.Kind.set -> void
+NATS.Jwt.Models.NatsAccountScopedSigningKey.Role.get -> string!
+NATS.Jwt.Models.NatsAccountScopedSigningKey.Role.set -> void
+NATS.Jwt.Models.NatsAccountScopedSigningKey.Template.get -> NATS.Jwt.Models.NatsUser!
+NATS.Jwt.Models.NatsAccountScopedSigningKey.Template.set -> void
+NATS.Jwt.Models.NatsAccountSigningKey
 NATS.Jwt.Models.NatsActivation
 NATS.Jwt.Models.NatsActivation.ImportSubject.get -> string!
 NATS.Jwt.Models.NatsActivation.ImportSubject.set -> void
@@ -393,6 +403,9 @@ NATS.Jwt.NatsJwt.NewOperatorClaims(string! subject) -> NATS.Jwt.Models.NatsOpera
 NATS.Jwt.NatsJwt.NewUserClaims(string! subject) -> NATS.Jwt.Models.NatsUserClaims!
 NATS.Jwt.NatsJwtException
 NATS.Jwt.NatsJwtException.NatsJwtException(string! message) -> void
+static readonly NATS.Jwt.NatsJwt.NatsJwtHeader -> NATS.Jwt.Models.JwtHeader!
 static NATS.Jwt.EncodingUtils.FromBase64UrlEncoded(string! encodedString) -> string!
 static NATS.Jwt.EncodingUtils.ToBase64UrlEncoded(byte[]! bytes) -> string!
-static readonly NATS.Jwt.NatsJwt.NatsJwtHeader -> NATS.Jwt.Models.JwtHeader!
+override NATS.Jwt.Models.NatsAccountSigningKey.ToString() -> string!
+static NATS.Jwt.Models.NatsAccountSigningKey.implicit operator NATS.Jwt.Models.NatsAccountSigningKey!(string! value) -> NATS.Jwt.Models.NatsAccountSigningKey!
+static NATS.Jwt.Models.NatsAccountSigningKey.implicit operator string!(NATS.Jwt.Models.NatsAccountSigningKey! sk) -> string!
