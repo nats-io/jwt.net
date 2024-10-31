@@ -336,4 +336,11 @@ public class NatsJwtTests(ITestOutputHelper output)
         string jsonStr = JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
         output.WriteLine(jsonStr);
     }
+
+    [Fact]
+    public void TestDecodeUserClaimWithTamperedJWTThrowsError()
+    {
+        var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJPSk9CUkZDQ0NGNEMzU1JWQzRLNEhTVFNYRlBTSVZBSzJPRUxOMlZXNE9GQ0IzQTVMMkNBIiwiaWF0IjoxNzMwMzk3NTU0LCJpc3MiOiJVQklUR0VSQk9JVEZDWkJHNTNUSkk3M1BHTjdBMzdPTVkyWE5YUU82VUZUSlA1TE5VWVFORUpXSSIsIm5hbWUiOiJVWFgiLCJzdWIiOiJVQklUR0VSQk9JVEZDWkJHNTNUSkk3M1BHTjdBMzdPTVkyWE5YUU82VUZUSlA1TE5VWVFORUpXSSIsIm5hdHMiOnsicHViIjp7ImFsbG93IjpbImFsbG93Llx1MDAzRSJdfSwic3ViIjp7ImFsbG93IjpbInN1YnNjcmliZS5cdTAwM0UiXX0sInN1YnMiOi0xLCJkYXRhIjotMSwicGF5bG9hZCI6LTEsInR5cGUiOiJ1c2VyIiwidmVyc2lvbiI6Mn19.SjIBpWWLNCZmgYZwrFHEJSTkm5M9bik0kgQyG-3V9Nn5sTrfO1Llj3hs7z9R7b1rCyGsFm1RkpZAVAnS5ay2BA";
+        Assert.Throws<NatsJwtException>(() => _natsJwt.DecodeUserClaims(jwt));
+    }
 }
