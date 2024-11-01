@@ -303,14 +303,15 @@ public class NatsJwt
         }
 
         // Verify the signature
-        // var signingInput = $"{parts[0]}.{parts[1]}";
-        // var signature = Encoding.ASCII.GetBytes(EncodingUtils.FromBase64UrlEncoded(parts[2]));
-        // var publicKey = KeyPair.FromPublicKey(claims.Issuer.AsSpan());
-        //
-        // if (!publicKey.Verify(Encoding.ASCII.GetBytes(signingInput), signature))
-        // {
-        //     throw new NatsJwtException("JWT signature verification failed");
-        // }
+        var signingInput = $"{parts[0]}.{parts[1]}";
+        var signature = DecodeSignature(parts[2]);
+        var publicKey = KeyPair.FromPublicKey(claims.Issuer.AsSpan());
+
+        if (!publicKey.Verify(Encoding.ASCII.GetBytes(signingInput), signature))
+        {
+            throw new NatsJwtException("JWT signature verification failed");
+        }
+
         return claims;
     }
 
@@ -446,5 +447,18 @@ public class NatsJwt
         var jsonWriter = new Utf8JsonWriter(writer);
         JsonSerializer.Serialize(jsonWriter, data, typeInfo);
         return EncodingUtils.ToBase64UrlEncoded(writer.WrittenMemory.ToArray());
+    }
+
+    /// <summary>
+    /// Can't use EncodingUtils.FromBase64UrlEncoded as not backward compatible with golang code.
+    /// </summary>
+    /// <param name="signature">JWT signature.</param>
+    /// <returns>base64 decoded JWT signature.</returns>
+    private static byte[] DecodeSignature(string signature)
+    {
+        signature = signature.Replace('-', '+').Replace('_', '/');
+        var pd = signature.Length % 4; // ensure length divisible by 4..pad with ==
+        signature = signature + "====".Substring(0, pd);
+        return Convert.FromBase64String(signature);
     }
 }
