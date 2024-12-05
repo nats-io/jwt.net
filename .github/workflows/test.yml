@@ -74,6 +74,7 @@ jobs:
             token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Test Native AOT
+        working-directory: ./src
         shell: bash
         run: |
             echo ">> Set up for AOT compilation..."
@@ -92,7 +93,7 @@ jobs:
             fi
 
             echo ">> Publishing..."
-            cd ./src/NATS.Jwt.TestNativeAot
+            cd NATS.Jwt.TestNativeAot
             rm -rf bin obj
             dotnet publish -r $dotnet_runtime_id -c Release -o dist | tee output.txt
 
