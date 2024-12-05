@@ -74,7 +74,7 @@ jobs:
             token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Test Native AOT
-        working-directory: ./src
+        working-directory: ./tests
         shell: bash
         run: |
             echo ">> Set up for AOT compilation..."
