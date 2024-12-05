@@ -52,12 +52,15 @@ jobs:
               8.x
 
       - name: Restore
+        working-directory: ./src
         run: dotnet restore
 
       - name: Build
+        working-directory: ./src
         run: dotnet build --no-restore -p:ContinuousIntegrationBuild=true
 
       - name: Test
+        working-directory: ./src
         # Collect code coverage
         # https://github.com/MarcoRossignoli/coverlet/blob/master/Documentation/KnownIssues.md#tests-fail-if-assembly-is-strong-named
         run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings -- RunConfiguration.DisableAppDomain=true
@@ -89,7 +92,7 @@ jobs:
             fi
 
             echo ">> Publishing..."
-            cd NATS.Jwt.TestNativeAot
+            cd ./src/NATS.Jwt.TestNativeAot
             rm -rf bin obj
             dotnet publish -r $dotnet_runtime_id -c Release -o dist | tee output.txt
 
