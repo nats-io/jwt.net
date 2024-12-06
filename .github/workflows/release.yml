@@ -18,6 +18,7 @@ jobs:
 
       - id: tag
         name: Determine tag
+        working-directory: ./src
         run: |
           version="$(head -n 1 version.txt)"
           ref_name="v$version"
