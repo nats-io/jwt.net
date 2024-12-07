@@ -1,0 +1,9 @@
+<Project>
+    <PropertyGroup>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)..\src\NATS.Jwt.snk</AssemblyOriginatorKeyFile>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+</Project>

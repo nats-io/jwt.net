@@ -17,6 +17,7 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Check formatting
+        working-directory: ./src
         run: |
           if dotnet format --verify-no-changes; then
             echo "formatting passed"

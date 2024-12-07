@@ -4,7 +4,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using NATS.Jwt.Models;
 
 namespace NATS.Jwt.Internal;
 

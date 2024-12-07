@@ -52,12 +52,15 @@ jobs:
               8.x
 
       - name: Restore
+        working-directory: ./src
         run: dotnet restore
 
       - name: Build
+        working-directory: ./src
         run: dotnet build --no-restore -p:ContinuousIntegrationBuild=true
 
       - name: Test
+        working-directory: ./src
         # Collect code coverage
         # https://github.com/MarcoRossignoli/coverlet/blob/master/Documentation/KnownIssues.md#tests-fail-if-assembly-is-strong-named
         run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings -- RunConfiguration.DisableAppDomain=true
@@ -71,6 +74,7 @@ jobs:
             token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Test Native AOT
+        working-directory: ./tests
         shell: bash
         run: |
             echo ">> Set up for AOT compilation..."
