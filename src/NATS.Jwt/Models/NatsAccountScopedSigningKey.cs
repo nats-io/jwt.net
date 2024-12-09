@@ -1,9 +1,6 @@
 ﻿// Copyright (c) The NATS Authors.
 // Licensed under the Apache License, Version 2.0.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace NATS.Jwt.Models

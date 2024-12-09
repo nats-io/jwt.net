@@ -11,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\NATS.Jwt\NATS.Jwt.csproj" />
+      <ProjectReference Include="..\..\src\NATS.Jwt\NATS.Jwt.csproj" />
     </ItemGroup>
 
 </Project>
