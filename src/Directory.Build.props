@@ -16,7 +16,7 @@
 
     <PropertyGroup>
         <!-- NuGet Packaging -->
-        <Version>$([System.IO.File]::ReadAllText("$(MSBuildThisFileDirectory)version.txt"))</Version>
+        <Version>$([System.IO.File]::ReadAllText("$(MSBuildThisFileDirectory)..\version.txt"))</Version>
         <PackageVersion>$(Version)</PackageVersion>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Company>CNCF</Company>
