@@ -65,7 +65,7 @@ NATS.Jwt.Models.NatsAccount.InfoUrl.get -> string!
 NATS.Jwt.Models.NatsAccount.InfoUrl.set -> void
 NATS.Jwt.Models.NatsAccount.Limits.get -> NATS.Jwt.Models.NatsOperatorLimits!
 NATS.Jwt.Models.NatsAccount.Limits.set -> void
-NATS.Jwt.Models.NatsAccount.Mappings.get -> System.Collections.Generic.Dictionary<string!, NATS.Jwt.Models.NatsWeightedMapping!>!
+NATS.Jwt.Models.NatsAccount.Mappings.get -> System.Collections.Generic.Dictionary<string!, System.Collections.Generic.List<NATS.Jwt.Models.NatsWeightedMapping!>!>!
 NATS.Jwt.Models.NatsAccount.Mappings.set -> void
 NATS.Jwt.Models.NatsAccount.Revocations.get -> System.Collections.Generic.Dictionary<string!, long>!
 NATS.Jwt.Models.NatsAccount.Revocations.set -> void

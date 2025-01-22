@@ -81,7 +81,7 @@ public record NatsAccount : NatsGenericFields
     /// </value>
     [JsonPropertyName("mappings")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public Dictionary<string, NatsWeightedMapping> Mappings { get; set; }
+    public Dictionary<string, List<NatsWeightedMapping>> Mappings { get; set; }
 
     /// <summary>
     /// Gets or sets the external authorization for the NATS account.
