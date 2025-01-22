@@ -92,11 +92,11 @@ public class NatsAccountClaimsTests
                     },
                 },
                 Mappings =
-                    new Dictionary<string, NatsWeightedMapping>
+                    new Dictionary<string, List<NatsWeightedMapping>>
                     {
                         {
                             "test",
-                            new NatsWeightedMapping { Subject = "test.>", Weight = 100, Cluster = "test_cluster" }
+                            new List<NatsWeightedMapping> {new NatsWeightedMapping { Subject = "test.>", Weight = 100, Cluster = "test_cluster" } }
                         },
                     },
                 DefaultPermissions =
@@ -188,9 +188,9 @@ public class NatsAccountClaimsTests
         Assert.Equal(claims.Account.Exports[0].AllowTrace, deserialized.Account.Exports[0].AllowTrace);
 
         Assert.Single(deserialized.Account.Mappings);
-        Assert.Equal(claims.Account.Mappings["test"].Subject, deserialized.Account.Mappings["test"].Subject);
-        Assert.Equal(claims.Account.Mappings["test"].Weight, deserialized.Account.Mappings["test"].Weight);
-        Assert.Equal(claims.Account.Mappings["test"].Cluster, deserialized.Account.Mappings["test"].Cluster);
+        Assert.Equal(claims.Account.Mappings["test"][0].Subject, deserialized.Account.Mappings["test"][0].Subject);
+        Assert.Equal(claims.Account.Mappings["test"][0].Weight, deserialized.Account.Mappings["test"][0].Weight);
+        Assert.Equal(claims.Account.Mappings["test"][0].Cluster, deserialized.Account.Mappings["test"][0].Cluster);
 
         Assert.Equal(claims.Account.DefaultPermissions.Pub.Allow, deserialized.Account.DefaultPermissions.Pub.Allow);
         Assert.Equal(claims.Account.DefaultPermissions.Pub.Deny, deserialized.Account.DefaultPermissions.Pub.Deny);
