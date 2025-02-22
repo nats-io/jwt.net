@@ -42,6 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\test.yml = ..\.github\workflows\test.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NATS.Jwt.DocsExamples", "..\tests\NATS.Jwt.DocsExamples\NATS.Jwt.DocsExamples.csproj", "{F6EC8BE3-17D7-4857-81B3-C3DAAF9DEF4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E144211D-3549-4E78-BFC4-B5BF7E70AEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6EC8BE3-17D7-4857-81B3-C3DAAF9DEF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6EC8BE3-17D7-4857-81B3-C3DAAF9DEF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6EC8BE3-17D7-4857-81B3-C3DAAF9DEF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6EC8BE3-17D7-4857-81B3-C3DAAF9DEF4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9B613C47-922B-4AA8-82D7-1520A13E0F74} = {F3E7EFAD-B3EA-45F4-907B-F3C2338771CE}
@@ -71,5 +77,6 @@ Global
 		{1EB01F81-8857-4646-B8BF-16024F357506} = {03E5999C-5D20-4EA2-B8C8-53ACE65B221F}
 		{9C98B59B-D0C0-4F2B-8333-2242ED1B5F70} = {03E5999C-5D20-4EA2-B8C8-53ACE65B221F}
 		{03E5999C-5D20-4EA2-B8C8-53ACE65B221F} = {1F24478C-D5CB-4A58-A74E-6371F7F95C01}
+		{F6EC8BE3-17D7-4857-81B3-C3DAAF9DEF4F} = {79B0CD3B-C106-44A2-9A2A-CFDA69A3016A}
 	EndGlobalSection
 EndGlobal
