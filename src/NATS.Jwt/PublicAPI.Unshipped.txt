@@ -379,10 +379,11 @@ NATS.Jwt.Models.TimeRange.End.get -> string!
 NATS.Jwt.Models.TimeRange.End.set -> void
 NATS.Jwt.Models.TimeRange.Start.get -> string!
 NATS.Jwt.Models.TimeRange.Start.set -> void
+NATS.Jwt.ModelValidationExtensions
 NATS.Jwt.NatsJwt
 NATS.Jwt.NatsJwt.DecodeAccountClaims(string! jwt) -> NATS.Jwt.Models.NatsAccountClaims!
 NATS.Jwt.NatsJwt.DecodeActivationClaims(string! jwt) -> NATS.Jwt.Models.NatsActivationClaims!
-NATS.Jwt.NatsJwt.DecodeClaims<T>(string! jwt, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T!>! jsonTypeInfo) -> T!
+NATS.Jwt.NatsJwt.DecodeClaims<T>(string! jwt) -> T!
 NATS.Jwt.NatsJwt.DecodeOperatorClaims(string! jwt) -> NATS.Jwt.Models.NatsOperatorClaims!
 NATS.Jwt.NatsJwt.DecodeUserClaims(string! jwt) -> NATS.Jwt.Models.NatsUserClaims!
 NATS.Jwt.NatsJwt.EncodeAccountClaims(NATS.Jwt.Models.NatsAccountClaims! accountClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
@@ -403,8 +404,10 @@ NATS.Jwt.NatsJwt.NewOperatorClaims(string! subject) -> NATS.Jwt.Models.NatsOpera
 NATS.Jwt.NatsJwt.NewUserClaims(string! subject) -> NATS.Jwt.Models.NatsUserClaims!
 NATS.Jwt.NatsJwtException
 NATS.Jwt.NatsJwtException.NatsJwtException(string! message) -> void
+static NATS.Jwt.EncodingUtils.FromBase64UrlEncoded(string! encodedString) -> byte[]!
+static NATS.Jwt.ModelValidationExtensions.ExpectedPrefixes(this NATS.Jwt.Models.JwtClaimsData! claims) -> NATS.NKeys.PrefixByte[]!
+static NATS.Jwt.ModelValidationExtensions.Validate(this NATS.Jwt.Models.JwtHeader! header) -> void
 static readonly NATS.Jwt.NatsJwt.NatsJwtHeader -> NATS.Jwt.Models.JwtHeader!
-static NATS.Jwt.EncodingUtils.FromBase64UrlEncoded(string! encodedString) -> string!
 static NATS.Jwt.EncodingUtils.ToBase64UrlEncoded(byte[]! bytes) -> string!
 override NATS.Jwt.Models.NatsAccountSigningKey.ToString() -> string!
 static NATS.Jwt.Models.NatsAccountSigningKey.implicit operator NATS.Jwt.Models.NatsAccountSigningKey!(string! value) -> NATS.Jwt.Models.NatsAccountSigningKey!
