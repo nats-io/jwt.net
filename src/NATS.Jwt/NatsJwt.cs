@@ -420,12 +420,7 @@ public class NatsJwt
             throw new NatsJwtException($"Claim type mismatch: requested {typeof(T)} but found {claimType} (for {kind}) in JWT");
         }
 
-        var claims = jsonRoot.Deserialize(jsonTypeInfo);
-
-        if (claims == null)
-        {
-            throw new NatsJwtException("Failed to deserialize JWT payload");
-        }
+        var claims = jsonRoot.Deserialize(jsonTypeInfo)!;
 
         byte[] signature = EncodingUtils.FromBase64UrlEncoded(parts[2]);
 
@@ -442,7 +437,13 @@ public class NatsJwt
 
         static void VerifyClaims(JwtClaimsData claimsData, string payload, byte[] signature)
         {
-            KeyPair kp = KeyPair.FromPublicKey(claimsData.Issuer.AsSpan());
+            string issuer = claimsData.Issuer;
+            if (string.IsNullOrWhiteSpace(issuer))
+            {
+                throw new NatsJwtException("Invalid JWT: can't find issuer");
+            }
+
+            KeyPair kp = KeyPair.FromPublicKey(issuer.AsSpan());
             if (!kp.Verify(Encoding.ASCII.GetBytes(payload), signature))
             {
                 throw new NatsJwtException("JWT signature verification failed");
