@@ -6,7 +6,7 @@
 
 This is a .NET implementation of the JWT library for the NATS ecosystem.
 
-> [!NOTE]
+> [!CAUTION]
 > ### Very Important Disclaimer
 >
 > This repository provides an API to build NATS JWTs using .NET. However, at
