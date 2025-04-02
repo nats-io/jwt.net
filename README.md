@@ -1,5 +1,8 @@
 # NATS JWT .NET
 
+[![License Apache 2.0](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![NuGet](https://img.shields.io/nuget/v/NATS.Jwt.svg?cacheSeconds=3600)](https://www.nuget.org/packages/NATS.Jwt)
+[![Build](https://github.com/nats-io/jwt.net/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/nats-io/jwt.net/actions/workflows/test.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/github/nats-io/jwt.net/graph/badge.svg?token=zXUTHG6L3Q)](https://codecov.io/github/nats-io/jwt.net)
 
 **IMPORTANT**: This is a pre-release version of the library. The API is subject to change.
