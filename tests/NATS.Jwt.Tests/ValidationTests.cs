@@ -16,6 +16,14 @@ public class ValidationTests(ITestOutputHelper output)
         var exception = Assert.Throws<NatsJwtException>(() => jwt.DecodeClaims<NatsAuthorizationRequestClaims>("123"));
         Assert.Equal("Invalid JWT format", exception.Message);
     }
+    
+    [Fact]
+    public void Invalid_jwt_when_there_are_too_few_dots()
+    {
+        var jwt = new NatsJwt();
+        var exception = Assert.Throws<NatsJwtException>(() => jwt.DecodeClaims<NatsAuthorizationRequestClaims>("12.34"));
+        Assert.Equal("Invalid JWT format", exception.Message);
+    }
 
     [Fact]
     public void Invalid_jwt_no_issuer()
