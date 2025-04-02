@@ -110,15 +110,15 @@ public class NatsJwtTests(ITestOutputHelper output)
     [Fact]
     public void TestEncodeUserClaims()
     {
-        var ukp = KeyPair.CreatePair(PrefixByte.User);
-        var upk = ukp.GetPublicKey();
-        var uc = _natsJwt.NewUserClaims(upk);
+        var akp = KeyPair.CreatePair(PrefixByte.Account);
+        var apk = akp.GetPublicKey();
+        var uc = _natsJwt.NewUserClaims(apk);
         uc.Name = "U";
 
         uc.User.Pub.Allow = ["allow.>"];
         uc.User.Sub.Allow = ["subscribe.>"];
 
-        string jwt = _natsJwt.EncodeUserClaims(uc, ukp);
+        string jwt = _natsJwt.EncodeUserClaims(uc, akp);
 
         Assert.NotNull(jwt);
         Assert.NotEmpty(jwt);
@@ -134,8 +134,8 @@ public class NatsJwtTests(ITestOutputHelper output)
         var payloadJson = EncodingUtils.FromBase64UrlEncoded(parts[1]);
         var payload = JsonSerializer.Deserialize<NatsUserClaims>(payloadJson);
         Assert.Equal("U", payload.Name);
-        Assert.Equal(upk, payload.Subject);
-        Assert.Equal(upk, payload.Issuer);
+        Assert.Equal(apk, payload.Subject);
+        Assert.Equal(apk, payload.Issuer);
         Assert.Contains("allow.>", payload.User.Pub.Allow);
         Assert.Contains("subscribe.>", payload.User.Sub.Allow);
         Assert.Equal("user", payload.User.Type);

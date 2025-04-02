@@ -11,7 +11,7 @@ namespace NATS.Jwt.Tests.Models;
 
 public class NatsAccountClaimsTests
 {
-   
+
 
     [Fact]
     public void SerializeDeserialize_FullNatsAccountClaims_ShouldSucceed()
