@@ -50,6 +50,7 @@ jobs:
           dotnet-version: |
               6.x
               8.x
+              9.x
 
       - name: Restore
         working-directory: ./src
