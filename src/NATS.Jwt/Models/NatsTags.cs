@@ -56,7 +56,16 @@ public class NatsTags : IEnumerable<string>
     }
 
     /// <inheritdoc />
-    public override int GetHashCode() => _tags.GetHashCode();
+    public override int GetHashCode()
+    {
+        int hash = 17;
+        foreach (string? tag in _tags)
+        {
+            hash = (hash * 31) + tag.GetHashCode();
+        }
+
+        return hash;
+    }
 
     /// <inheritdoc />
     public override bool Equals(object? obj)
