@@ -12,6 +12,19 @@ namespace NATS.Jwt.Tests.Models;
 public class NatsAuthorizationRequestClaimsTests
 {
     [Fact]
+    public void SerializeDeserialize_NatsTags_ShouldSucceed()
+    {
+        var id = new NatsServerId { Tags = new NatsTags { "Tag1", " tAg2", "taG3 ", " tag4 " } };
+
+        string json = JsonSerializer.Serialize(id);
+        Assert.Equal("{\"tags\":[\"tag1\",\"tag2\",\"tag3\",\"tag4\"]}", json);
+
+        var deserialized = JsonSerializer.Deserialize<NatsServerId>(json);
+        Assert.NotNull(deserialized);
+        Assert.Equal(id, deserialized);
+    }
+
+    [Fact]
     public void SerializeDeserialize_FullNatsAuthorizationRequestClaims_ShouldSucceed()
     {
         var claims = new NatsAuthorizationRequestClaims
@@ -42,7 +55,7 @@ public class NatsAuthorizationRequestClaimsTests
                     Id = 123,
                     User = "test_user",
                     Name = "Test Client",
-                    Tags = new List<string> { "client_tag1", "client_tag2", },
+                    Tags = new NatsTags { "client_tag1", "client_tag2", },
                     NameTag = "client_name_tag",
                     Kind = "client",
                     Type = "test_type",
@@ -76,7 +89,7 @@ public class NatsAuthorizationRequestClaimsTests
                 RequestNonce = "request_nonce",
                 Type = "authorization_request",
                 Version = 2,
-                Tags = new List<string> { "auth_tag1", "auth_tag2", },
+                Tags = new NatsTags { "auth_tag1", "auth_tag2", },
             },
         };
 

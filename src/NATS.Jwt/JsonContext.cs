@@ -45,6 +45,7 @@ namespace NATS.Jwt;
 [JsonSerializable(typeof(NatsGenericFieldsClaims))]
 [JsonSerializable(typeof(NatsAccountSigningKey))]
 [JsonSerializable(typeof(NatsAccountScopedSigningKey))]
+[JsonSerializable(typeof(NatsTags))]
 internal sealed partial class JsonContext : JsonSerializerContext
 {
 }
