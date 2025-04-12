@@ -137,7 +137,7 @@ NATS.Jwt.Models.NatsClientInformation.NameTag.get -> string!
 NATS.Jwt.Models.NatsClientInformation.NameTag.set -> void
 NATS.Jwt.Models.NatsClientInformation.Nonce.get -> string!
 NATS.Jwt.Models.NatsClientInformation.Nonce.set -> void
-NATS.Jwt.Models.NatsClientInformation.Tags.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsClientInformation.Tags.get -> NATS.Jwt.Models.NatsTags!
 NATS.Jwt.Models.NatsClientInformation.Tags.set -> void
 NATS.Jwt.Models.NatsClientInformation.Type.get -> string!
 NATS.Jwt.Models.NatsClientInformation.Type.set -> void
@@ -215,7 +215,7 @@ NATS.Jwt.Models.NatsGenericClaims
 NATS.Jwt.Models.NatsGenericClaims.Data.get -> System.Collections.Generic.Dictionary<string!, System.Text.Json.Nodes.JsonNode!>!
 NATS.Jwt.Models.NatsGenericClaims.Data.set -> void
 NATS.Jwt.Models.NatsGenericFields
-NATS.Jwt.Models.NatsGenericFields.Tags.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsGenericFields.Tags.get -> NATS.Jwt.Models.NatsTags!
 NATS.Jwt.Models.NatsGenericFields.Tags.set -> void
 NATS.Jwt.Models.NatsGenericFields.Type.get -> string!
 NATS.Jwt.Models.NatsGenericFields.Type.set -> void
@@ -327,7 +327,7 @@ NATS.Jwt.Models.NatsServerId.Id.get -> string!
 NATS.Jwt.Models.NatsServerId.Id.set -> void
 NATS.Jwt.Models.NatsServerId.Name.get -> string!
 NATS.Jwt.Models.NatsServerId.Name.set -> void
-NATS.Jwt.Models.NatsServerId.Tags.get -> System.Collections.Generic.List<string!>!
+NATS.Jwt.Models.NatsServerId.Tags.get -> NATS.Jwt.Models.NatsTags!
 NATS.Jwt.Models.NatsServerId.Tags.set -> void
 NATS.Jwt.Models.NatsServerId.Version.get -> string!
 NATS.Jwt.Models.NatsServerId.Version.set -> void
@@ -338,6 +338,11 @@ NATS.Jwt.Models.NatsServiceLatency.Results.get -> string!
 NATS.Jwt.Models.NatsServiceLatency.Results.set -> void
 NATS.Jwt.Models.NatsServiceLatency.Sampling.get -> int
 NATS.Jwt.Models.NatsServiceLatency.Sampling.set -> void
+NATS.Jwt.Models.NatsTags
+NATS.Jwt.Models.NatsTags.Add(string! tag) -> void
+NATS.Jwt.Models.NatsTags.GetEnumerator() -> System.Collections.Generic.IEnumerator<string!>!
+NATS.Jwt.Models.NatsTags.NatsTags() -> void
+NATS.Jwt.Models.NatsTags.Remove(string! tag) -> void
 NATS.Jwt.Models.NatsUser
 NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.get -> System.Collections.Generic.List<string!>!
 NATS.Jwt.Models.NatsUser.AllowedConnectionTypes.set -> void
@@ -404,6 +409,9 @@ NATS.Jwt.NatsJwt.NewOperatorClaims(string! subject) -> NATS.Jwt.Models.NatsOpera
 NATS.Jwt.NatsJwt.NewUserClaims(string! subject) -> NATS.Jwt.Models.NatsUserClaims!
 NATS.Jwt.NatsJwtException
 NATS.Jwt.NatsJwtException.NatsJwtException(string! message) -> void
+override NATS.Jwt.Models.NatsTags.Equals(object? obj) -> bool
+override NATS.Jwt.Models.NatsTags.GetHashCode() -> int
+override NATS.Jwt.Models.NatsTags.ToString() -> string!
 static NATS.Jwt.EncodingUtils.FromBase64UrlEncoded(string! encodedString) -> byte[]!
 static NATS.Jwt.ModelValidationExtensions.ExpectedPrefixes(this NATS.Jwt.Models.JwtClaimsData! claims) -> NATS.NKeys.PrefixByte[]!
 static NATS.Jwt.ModelValidationExtensions.Validate(this NATS.Jwt.Models.JwtHeader! header) -> void

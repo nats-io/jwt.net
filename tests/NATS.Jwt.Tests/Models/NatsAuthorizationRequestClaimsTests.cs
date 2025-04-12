@@ -12,6 +12,57 @@ namespace NATS.Jwt.Tests.Models;
 public class NatsAuthorizationRequestClaimsTests
 {
     [Fact]
+    public void SerializeDeserialize_NatsTags_ShouldSucceed()
+    {
+        var id = new NatsServerId { Tags = new NatsTags { "Tag1", " tAg2", "taG3 ", " tag4 " } };
+
+        string json = JsonSerializer.Serialize(id);
+        Assert.Equal("{\"tags\":[\"tag1\",\"tag2\",\"tag3\",\"tag4\"]}", json);
+
+        var deserialized = JsonSerializer.Deserialize<NatsServerId>(json);
+        Assert.NotNull(deserialized);
+        Assert.Equal(id, deserialized);
+        
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<NatsServerId>("{\"tags\":0}"));
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<NatsServerId>("{\"tags\":[0,\"tag2\",\"tag3\",\"tag4\"]}"));
+    }
+    
+    [Fact]
+    public void NatsTags_Methods_ShouldSucceed()
+    {
+        // Initialize two identical NatsTags instances
+        var tags1 = new NatsTags { "tag1", "Tag2", "Tag3" };
+        var tags2 = new NatsTags { "tag1", "Tag2", "tag3" };
+        var tags3 = new NatsTags { "tag1", "tag2", "tag3" };
+    
+        tags1.Remove("tag3");
+        tags2.Remove("tag3");
+        
+        Assert.True(tags1.Equals(tags2));
+        Assert.False(tags1.Equals(tags3));
+        Assert.False(tags1.Equals(null));
+
+        // ReSharper disable once EqualExpressionComparison
+        Assert.True(tags1.Equals(tags1));
+        
+        // ReSharper disable once SuspiciousTypeConversion.Global
+        Assert.False(tags1.Equals("not-a-tag"));
+        
+        // Verify equality works as expected
+        Assert.Equal(tags1, tags2);
+        Assert.Equal(tags1.GetHashCode(), tags2.GetHashCode());
+    
+        // Verify string normalization
+        Assert.Contains("tag1", tags1);
+        Assert.Contains("tag2", tags2);
+        Assert.DoesNotContain("TAG4", tags1);
+    
+        // Verify ToString behavior
+        var tagsString = tags1.ToString();
+        Assert.Equal("tag1,tag2", tagsString);
+    }
+    
+    [Fact]
     public void SerializeDeserialize_FullNatsAuthorizationRequestClaims_ShouldSucceed()
     {
         var claims = new NatsAuthorizationRequestClaims
@@ -42,7 +93,7 @@ public class NatsAuthorizationRequestClaimsTests
                     Id = 123,
                     User = "test_user",
                     Name = "Test Client",
-                    Tags = new List<string> { "client_tag1", "client_tag2", },
+                    Tags = new NatsTags { "client_tag1", "client_tag2", },
                     NameTag = "client_name_tag",
                     Kind = "client",
                     Type = "test_type",
@@ -76,7 +127,7 @@ public class NatsAuthorizationRequestClaimsTests
                 RequestNonce = "request_nonce",
                 Type = "authorization_request",
                 Version = 2,
-                Tags = new List<string> { "auth_tag1", "auth_tag2", },
+                Tags = new NatsTags { "auth_tag1", "auth_tag2", },
             },
         };
 

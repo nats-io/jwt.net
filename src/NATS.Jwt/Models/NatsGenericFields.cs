@@ -1,7 +1,6 @@
 // Copyright (c) The NATS Authors.
 // Licensed under the Apache License, Version 2.0.
 
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace NATS.Jwt.Models;
@@ -16,7 +15,8 @@ public record NatsGenericFields
     /// </summary>
     [JsonPropertyName("tags")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public List<string> Tags { get; set; }
+    [JsonConverter(typeof(NatsTagsConverter))]
+    public NatsTags Tags { get; set; }
 
     /// <summary>
     /// Gets or sets the value representing a generic field in the NatsGenericFields class.
