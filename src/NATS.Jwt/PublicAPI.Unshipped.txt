@@ -386,27 +386,6 @@ NATS.Jwt.Models.TimeRange.Start.get -> string!
 NATS.Jwt.Models.TimeRange.Start.set -> void
 NATS.Jwt.ModelValidationExtensions
 NATS.Jwt.NatsJwt
-NATS.Jwt.NatsJwt.DecodeAccountClaims(string! jwt) -> NATS.Jwt.Models.NatsAccountClaims!
-NATS.Jwt.NatsJwt.DecodeActivationClaims(string! jwt) -> NATS.Jwt.Models.NatsActivationClaims!
-NATS.Jwt.NatsJwt.DecodeClaims<T>(string! jwt) -> T!
-NATS.Jwt.NatsJwt.DecodeOperatorClaims(string! jwt) -> NATS.Jwt.Models.NatsOperatorClaims!
-NATS.Jwt.NatsJwt.DecodeUserClaims(string! jwt) -> NATS.Jwt.Models.NatsUserClaims!
-NATS.Jwt.NatsJwt.EncodeAccountClaims(NATS.Jwt.Models.NatsAccountClaims! accountClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
-NATS.Jwt.NatsJwt.EncodeActivationClaims(NATS.Jwt.Models.NatsActivationClaims! activationClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
-NATS.Jwt.NatsJwt.EncodeAuthorizationRequestClaims(NATS.Jwt.Models.NatsAuthorizationRequestClaims! authorizationRequestClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
-NATS.Jwt.NatsJwt.EncodeAuthorizationResponseClaims(NATS.Jwt.Models.NatsAuthorizationResponseClaims! authorizationResponseClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
-NATS.Jwt.NatsJwt.EncodeGenericClaims(NATS.Jwt.Models.NatsGenericClaims! genericClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
-NATS.Jwt.NatsJwt.EncodeOperatorClaims(NATS.Jwt.Models.NatsOperatorClaims! operatorClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
-NATS.Jwt.NatsJwt.EncodeUserClaims(NATS.Jwt.Models.NatsUserClaims! userClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
-NATS.Jwt.NatsJwt.FormatUserConfig(string! jwt, string! seed) -> string!
-NATS.Jwt.NatsJwt.NatsJwt() -> void
-NATS.Jwt.NatsJwt.NewAccountClaims(string! subject) -> NATS.Jwt.Models.NatsAccountClaims!
-NATS.Jwt.NatsJwt.NewActivationClaims(string! subject) -> NATS.Jwt.Models.NatsActivationClaims!
-NATS.Jwt.NatsJwt.NewAuthorizationRequestClaims(string! subject) -> NATS.Jwt.Models.NatsAuthorizationRequestClaims!
-NATS.Jwt.NatsJwt.NewAuthorizationResponseClaims(string! subject) -> NATS.Jwt.Models.NatsAuthorizationResponseClaims!
-NATS.Jwt.NatsJwt.NewGenericClaims(string! subject) -> NATS.Jwt.Models.NatsGenericClaims!
-NATS.Jwt.NatsJwt.NewOperatorClaims(string! subject) -> NATS.Jwt.Models.NatsOperatorClaims!
-NATS.Jwt.NatsJwt.NewUserClaims(string! subject) -> NATS.Jwt.Models.NatsUserClaims!
 NATS.Jwt.NatsJwtException
 NATS.Jwt.NatsJwtException.NatsJwtException(string! message) -> void
 override NATS.Jwt.Models.NatsTags.Equals(object? obj) -> bool
@@ -415,6 +394,26 @@ override NATS.Jwt.Models.NatsTags.ToString() -> string!
 static NATS.Jwt.EncodingUtils.FromBase64UrlEncoded(string! encodedString) -> byte[]!
 static NATS.Jwt.ModelValidationExtensions.ExpectedPrefixes(this NATS.Jwt.Models.JwtClaimsData! claims) -> NATS.NKeys.PrefixByte[]!
 static NATS.Jwt.ModelValidationExtensions.Validate(this NATS.Jwt.Models.JwtHeader! header) -> void
+static NATS.Jwt.NatsJwt.DecodeAccountClaims(string! jwt) -> NATS.Jwt.Models.NatsAccountClaims!
+static NATS.Jwt.NatsJwt.DecodeActivationClaims(string! jwt) -> NATS.Jwt.Models.NatsActivationClaims!
+static NATS.Jwt.NatsJwt.DecodeClaims<T>(string! jwt) -> T!
+static NATS.Jwt.NatsJwt.DecodeOperatorClaims(string! jwt) -> NATS.Jwt.Models.NatsOperatorClaims!
+static NATS.Jwt.NatsJwt.DecodeUserClaims(string! jwt) -> NATS.Jwt.Models.NatsUserClaims!
+static NATS.Jwt.NatsJwt.EncodeAccountClaims(NATS.Jwt.Models.NatsAccountClaims! accountClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+static NATS.Jwt.NatsJwt.EncodeActivationClaims(NATS.Jwt.Models.NatsActivationClaims! activationClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+static NATS.Jwt.NatsJwt.EncodeAuthorizationRequestClaims(NATS.Jwt.Models.NatsAuthorizationRequestClaims! authorizationRequestClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+static NATS.Jwt.NatsJwt.EncodeAuthorizationResponseClaims(NATS.Jwt.Models.NatsAuthorizationResponseClaims! authorizationResponseClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+static NATS.Jwt.NatsJwt.EncodeGenericClaims(NATS.Jwt.Models.NatsGenericClaims! genericClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+static NATS.Jwt.NatsJwt.EncodeOperatorClaims(NATS.Jwt.Models.NatsOperatorClaims! operatorClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+static NATS.Jwt.NatsJwt.EncodeUserClaims(NATS.Jwt.Models.NatsUserClaims! userClaims, NATS.NKeys.KeyPair! keyPair, System.DateTimeOffset? issuedAt = null) -> string!
+static NATS.Jwt.NatsJwt.FormatUserConfig(string! jwt, string! seed) -> string!
+static NATS.Jwt.NatsJwt.NewAccountClaims(string! subject) -> NATS.Jwt.Models.NatsAccountClaims!
+static NATS.Jwt.NatsJwt.NewActivationClaims(string! subject) -> NATS.Jwt.Models.NatsActivationClaims!
+static NATS.Jwt.NatsJwt.NewAuthorizationRequestClaims(string! subject) -> NATS.Jwt.Models.NatsAuthorizationRequestClaims!
+static NATS.Jwt.NatsJwt.NewAuthorizationResponseClaims(string! subject) -> NATS.Jwt.Models.NatsAuthorizationResponseClaims!
+static NATS.Jwt.NatsJwt.NewGenericClaims(string! subject) -> NATS.Jwt.Models.NatsGenericClaims!
+static NATS.Jwt.NatsJwt.NewOperatorClaims(string! subject) -> NATS.Jwt.Models.NatsOperatorClaims!
+static NATS.Jwt.NatsJwt.NewUserClaims(string! subject) -> NATS.Jwt.Models.NatsUserClaims!
 static readonly NATS.Jwt.NatsJwt.NatsJwtHeader -> NATS.Jwt.Models.JwtHeader!
 static NATS.Jwt.EncodingUtils.ToBase64UrlEncoded(byte[]! bytes) -> string!
 override NATS.Jwt.Models.NatsAccountSigningKey.ToString() -> string!

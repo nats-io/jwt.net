@@ -20,7 +20,7 @@ namespace NATS.Jwt;
 /// <summary>
 /// Class for managing NATS JWT encoding and decoding.
 /// </summary>
-public class NatsJwt
+public static class NatsJwt
 {
     /// <summary>
     /// Represents the JSON Web Token (JWT) header used for encoding NATS JWT claims.
@@ -106,7 +106,7 @@ public class NatsJwt
     /// <param name="seed">The seed.</param>
     /// <returns>The formatted user configuration.</returns>
     /// <exception cref="NatsJwtException">Thrown when the seed is not an operator, account, or user seed.</exception>
-    public string FormatUserConfig(string jwt, string seed)
+    public static string FormatUserConfig(string jwt, string seed)
     {
         // TODO: Decode JWT and validate
         var parts = jwt.Split('.');
@@ -147,49 +147,49 @@ public class NatsJwt
     /// </summary>
     /// <param name="subject">The subject for the activation claims.</param>
     /// <returns>A new instance of NatsActivationClaims with the specified subject.</returns>
-    public NatsActivationClaims NewActivationClaims(string subject) => new() { Subject = subject };
+    public static NatsActivationClaims NewActivationClaims(string subject) => new() { Subject = subject };
 
     /// <summary>
     /// Creates a new instance of the NatsAuthorizationRequestClaims class with the specified subject.
     /// </summary>
     /// <param name="subject">The subject of the authorization request.</param>
     /// <returns>A new instance of the NatsAuthorizationRequestClaims class.</returns>
-    public NatsAuthorizationRequestClaims NewAuthorizationRequestClaims(string subject) => new() { Subject = subject };
+    public static NatsAuthorizationRequestClaims NewAuthorizationRequestClaims(string subject) => new() { Subject = subject };
 
     /// <summary>
     /// Creates a new instance of NatsAuthorizationResponseClaims with the specified subject.
     /// </summary>
     /// <param name="subject">The subject of the claims.</param>
     /// <returns>A new instance of NatsAuthorizationResponseClaims.</returns>
-    public NatsAuthorizationResponseClaims NewAuthorizationResponseClaims(string subject) => new() { Subject = subject };
+    public static NatsAuthorizationResponseClaims NewAuthorizationResponseClaims(string subject) => new() { Subject = subject };
 
     /// <summary>
     /// Creates a new instance of NatsGenericClaims with the specified subject.
     /// </summary>
     /// <param name="subject">The subject of the claim.</param>
     /// <returns>A new instance of NatsGenericClaims.</returns>
-    public NatsGenericClaims NewGenericClaims(string subject) => new() { Subject = subject };
+    public static NatsGenericClaims NewGenericClaims(string subject) => new() { Subject = subject };
 
     /// <summary>
     /// Creates new operator claims for generating a NATS JWT token.
     /// </summary>
     /// <param name="subject">The subject of the operator claims.</param>
     /// <returns>A new instance of the <see cref="NatsOperatorClaims"/> class.</returns>
-    public NatsOperatorClaims NewOperatorClaims(string subject) => new() { Subject = subject, Issuer = subject };
+    public static NatsOperatorClaims NewOperatorClaims(string subject) => new() { Subject = subject, Issuer = subject };
 
     /// <summary>
     /// Creates a new instance of the NatsUserClaims class with the specified subject.
     /// </summary>
     /// <param name="subject">The subject of the user claims.</param>
     /// <returns>A new instance of the NatsUserClaims class.</returns>
-    public NatsUserClaims NewUserClaims(string subject) => new() { Subject = subject };
+    public static NatsUserClaims NewUserClaims(string subject) => new() { Subject = subject };
 
     /// <summary>
     /// Creates a new instance of the NatsAccountClaims class with the specified subject.
     /// </summary>
     /// <param name="subject">The subject for the account claims.</param>
     /// <returns>A new instance of NatsAccountClaims.</returns>
-    public NatsAccountClaims NewAccountClaims(string subject) => new() { Subject = subject };
+    public static NatsAccountClaims NewAccountClaims(string subject) => new() { Subject = subject };
 
     /// <summary>
     /// Encodes the activation claims into a JWT token.
@@ -198,7 +198,7 @@ public class NatsJwt
     /// <param name="keyPair">The key pair used for signing the JWT token.</param>
     /// <param name="issuedAt">The optional issued at timestamp. If not provided, the current time will be used.</param>
     /// <returns>The encoded JWT token.</returns>
-    public string EncodeActivationClaims(NatsActivationClaims activationClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public static string EncodeActivationClaims(NatsActivationClaims activationClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(activationClaims.Activation, ActivationClaim);
         return DoEncode(NatsJwtHeader, keyPair, activationClaims, JsonContext.Default.NatsActivationClaims, issuedAt);
@@ -211,7 +211,7 @@ public class NatsJwt
     /// <param name="keyPair">The key pair used for signing the token.</param>
     /// <param name="issuedAt">The optional issued At timestamp for the token. If not provided, the current timestamp will be used.</param>
     /// <returns>The encoded JWT token.</returns>
-    public string EncodeAuthorizationRequestClaims(NatsAuthorizationRequestClaims authorizationRequestClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public static string EncodeAuthorizationRequestClaims(NatsAuthorizationRequestClaims authorizationRequestClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(authorizationRequestClaims.AuthorizationRequest, AuthorizationRequestClaim);
         return DoEncode(NatsJwtHeader, keyPair, authorizationRequestClaims, JsonContext.Default.NatsAuthorizationRequestClaims, issuedAt);
@@ -224,7 +224,7 @@ public class NatsJwt
     /// <param name="keyPair">The key pair to use for encryption.</param>
     /// <param name="issuedAt">The optional issued at date and time.</param>
     /// <returns>The encoded string representation of the authorization response claims.</returns>
-    public string EncodeAuthorizationResponseClaims(NatsAuthorizationResponseClaims authorizationResponseClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public static string EncodeAuthorizationResponseClaims(NatsAuthorizationResponseClaims authorizationResponseClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(authorizationResponseClaims.AuthorizationResponse, AuthorizationResponseClaim);
         return DoEncode(NatsJwtHeader, keyPair, authorizationResponseClaims, JsonContext.Default.NatsAuthorizationResponseClaims, issuedAt);
@@ -237,7 +237,7 @@ public class NatsJwt
     /// <param name="keyPair">The key pair used for encoding.</param>
     /// <param name="issuedAt">The optional issued at datetime offset.</param>
     /// <returns>The encoded JWT token.</returns>
-    public string EncodeGenericClaims(NatsGenericClaims genericClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public static string EncodeGenericClaims(NatsGenericClaims genericClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         return DoEncode(NatsJwtHeader, keyPair, genericClaims, JsonContext.Default.NatsGenericClaims, issuedAt);
     }
@@ -249,7 +249,7 @@ public class NatsJwt
     /// <param name="keyPair">The key pair used for signing the token.</param>
     /// <param name="issuedAt">The optional issued at timestamp.</param>
     /// <returns>The encoded JWT token.</returns>
-    public string EncodeOperatorClaims(NatsOperatorClaims operatorClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public static string EncodeOperatorClaims(NatsOperatorClaims operatorClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(operatorClaims.Operator, OperatorClaim);
         return DoEncode(NatsJwtHeader, keyPair, operatorClaims, JsonContext.Default.NatsOperatorClaims, issuedAt);
@@ -262,7 +262,7 @@ public class NatsJwt
     /// <param name="keyPair">The key pair to sign the JWT token.</param>
     /// <param name="issuedAt">The optional issued at datetime offset.</param>
     /// <returns>The encoded JWT token.</returns>
-    public string EncodeUserClaims(NatsUserClaims userClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public static string EncodeUserClaims(NatsUserClaims userClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(userClaims.User, UserClaim);
         return DoEncode(NatsJwtHeader, keyPair, userClaims, JsonContext.Default.NatsUserClaims, issuedAt);
@@ -275,7 +275,7 @@ public class NatsJwt
     /// <param name="keyPair">The key pair used for signing the token.</param>
     /// <param name="issuedAt">The optional time when the token was issued. If not specified, the current time will be used.</param>
     /// <returns>The encoded JWT token.</returns>
-    public string EncodeAccountClaims(NatsAccountClaims accountClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
+    public static string EncodeAccountClaims(NatsAccountClaims accountClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
         SetVersion(accountClaims.Account, AccountClaim);
         accountClaims.Account.Imports?.Sort(ImportComparer);
@@ -295,7 +295,7 @@ public class NatsJwt
     /// The payload is base64-encoded JSON representing the claims data.
     /// The method verifies the signature by comparing it against the signing input generated from the header and payload.
     /// </remarks>
-    public T DecodeClaims<T>(string jwt)
+    public static T DecodeClaims<T>(string jwt)
         where T : JwtClaimsData
     {
         return DecodeClaims(jwt, (JsonTypeInfo<T>)JsonContext.Default.GetTypeInfo(typeof(T))!);
@@ -307,7 +307,7 @@ public class NatsJwt
     /// <param name="jwt">The JWT token to decode.</param>
     /// <returns>The decoded operator claims.</returns>
     /// <exception cref="NatsJwtException">Thrown when the operator claim type is invalid.</exception>
-    public NatsOperatorClaims DecodeOperatorClaims(string jwt)
+    public static NatsOperatorClaims DecodeOperatorClaims(string jwt)
     {
         var claims = DecodeClaims(jwt, JsonContext.Default.NatsOperatorClaims);
         if (claims.Operator.Type != OperatorClaim)
@@ -324,7 +324,7 @@ public class NatsJwt
     /// <param name="jwt">The JWT token.</param>
     /// <returns>The decoded account claims.</returns>
     /// <exception cref="NatsJwtException">Thrown when the account claims type is not as expected.</exception>
-    public NatsAccountClaims DecodeAccountClaims(string jwt)
+    public static NatsAccountClaims DecodeAccountClaims(string jwt)
     {
         var claims = DecodeClaims(jwt, JsonContext.Default.NatsAccountClaims);
         if (claims.Account.Type != AccountClaim)
@@ -341,7 +341,7 @@ public class NatsJwt
     /// <param name="jwt">The JWT token.</param>
     /// <returns>The decoded user claims.</returns>
     /// <exception cref="NatsJwtException">Thrown when the user claim is not found or has an invalid type.</exception>
-    public NatsUserClaims DecodeUserClaims(string jwt)
+    public static NatsUserClaims DecodeUserClaims(string jwt)
     {
         var claims = DecodeClaims(jwt, JsonContext.Default.NatsUserClaims);
         if (claims.User.Type != UserClaim)
@@ -358,7 +358,7 @@ public class NatsJwt
     /// <param name="jwt">The JWT token.</param>
     /// <returns>The decoded activation claims.</returns>
     /// <exception cref="NatsJwtException">Thrown when the activation type in the claims is not as expected.</exception>
-    public NatsActivationClaims DecodeActivationClaims(string jwt)
+    public static NatsActivationClaims DecodeActivationClaims(string jwt)
     {
         var claims = DecodeClaims(jwt, JsonContext.Default.NatsActivationClaims);
         if (claims.Activation.Type != ActivationClaim)
@@ -382,7 +382,7 @@ public class NatsJwt
     /// The payload is base64-encoded JSON representing the claims data.
     /// The method verifies the signature by comparing it against the signing input generated from the header and payload.
     /// </remarks>
-    private T DecodeClaims<T>(string jwt, JsonTypeInfo<T> jsonTypeInfo)
+    private static T DecodeClaims<T>(string jwt, JsonTypeInfo<T> jsonTypeInfo)
         where T : JwtClaimsData
     {
         string[] parts = jwt.Split('.');
@@ -451,14 +451,14 @@ public class NatsJwt
         }
     }
 
-    private void SetVersion<T>(T claims, string type)
+    private static void SetVersion<T>(T claims, string type)
         where T : NatsGenericFields
     {
         claims.Type = type;
         claims.Version = LibraryVersion;
     }
 
-    private string DoEncode<T>(JwtHeader jwtHeader, KeyPair keyPair, T claim, JsonTypeInfo<T> typeInfo, DateTimeOffset? now)
+    private static string DoEncode<T>(JwtHeader jwtHeader, KeyPair keyPair, T claim, JsonTypeInfo<T> typeInfo, DateTimeOffset? now)
         where T : JwtClaimsData
     {
         using var writer = new NatsBufferWriter<byte>();
@@ -494,7 +494,7 @@ public class NatsJwt
         return $"{toSign}.{eSig}";
     }
 
-    private string Hash<T>(T c, JsonTypeInfo<T> typeInfo)
+    private static string Hash<T>(T c, JsonTypeInfo<T> typeInfo)
     {
         using var writer = new NatsBufferWriter<byte>();
         var jsonWriter = new Utf8JsonWriter(writer);
