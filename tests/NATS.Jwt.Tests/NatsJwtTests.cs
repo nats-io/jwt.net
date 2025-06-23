@@ -9,15 +9,13 @@ namespace NATS.Jwt.Tests;
 
 public class NatsJwtTests(ITestOutputHelper output)
 {
-    private readonly NatsJwt _natsJwt = new();
-
     [Fact]
     public void TestEncodeOperatorClaims()
     {
         // Setup
         var okp = KeyPair.CreatePair(PrefixByte.Operator);
         var opk = okp.GetPublicKey();
-        var oc = _natsJwt.NewOperatorClaims(opk);
+        var oc = NatsJwt.NewOperatorClaims(opk);
         oc.Name = "O";
 
         var oskp = KeyPair.CreatePair(PrefixByte.Operator);
@@ -26,7 +24,7 @@ public class NatsJwtTests(ITestOutputHelper output)
         oc.Operator.SigningKeys = [ospk];
 
         // Encode the claims
-        string jwt = _natsJwt.EncodeOperatorClaims(oc, okp);
+        string jwt = NatsJwt.EncodeOperatorClaims(oc, okp);
 
         // Verify the JWT
         Assert.NotNull(jwt);
@@ -56,7 +54,7 @@ public class NatsJwtTests(ITestOutputHelper output)
         Assert.NotEmpty(parts[2]);
 
         // Verify the JWT can be decoded and validated
-        var decodedClaims = _natsJwt.DecodeOperatorClaims(jwt);
+        var decodedClaims = NatsJwt.DecodeOperatorClaims(jwt);
         Assert.NotNull(decodedClaims);
         Assert.Equal(oc.Name, decodedClaims.Name);
         Assert.Equal(oc.Subject, decodedClaims.Subject);
@@ -68,13 +66,13 @@ public class NatsJwtTests(ITestOutputHelper output)
     {
         var akp = KeyPair.CreatePair(PrefixByte.Account);
         var apk = akp.GetPublicKey();
-        var ac = _natsJwt.NewAccountClaims(apk);
+        var ac = NatsJwt.NewAccountClaims(apk);
         ac.Name = "A";
 
         ac.Account.Imports = [new NatsImport { Name = "Import1", Subject = "import.subject" }];
         ac.Account.Exports = [new NatsExport { Name = "Export1", Subject = "export.subject" }];
 
-        string jwt = _natsJwt.EncodeAccountClaims(ac, akp);
+        string jwt = NatsJwt.EncodeAccountClaims(ac, akp);
 
         Assert.NotNull(jwt);
         Assert.NotEmpty(jwt);
@@ -99,7 +97,7 @@ public class NatsJwtTests(ITestOutputHelper output)
 
         Assert.NotEmpty(parts[2]);
 
-        var decodedClaims = _natsJwt.DecodeAccountClaims(jwt);
+        var decodedClaims = NatsJwt.DecodeAccountClaims(jwt);
         Assert.NotNull(decodedClaims);
         Assert.Equal(ac.Name, decodedClaims.Name);
         Assert.Equal(ac.Subject, decodedClaims.Subject);
@@ -112,13 +110,13 @@ public class NatsJwtTests(ITestOutputHelper output)
     {
         var akp = KeyPair.CreatePair(PrefixByte.Account);
         var apk = akp.GetPublicKey();
-        var uc = _natsJwt.NewUserClaims(apk);
+        var uc = NatsJwt.NewUserClaims(apk);
         uc.Name = "U";
 
         uc.User.Pub.Allow = ["allow.>"];
         uc.User.Sub.Allow = ["subscribe.>"];
 
-        string jwt = _natsJwt.EncodeUserClaims(uc, akp);
+        string jwt = NatsJwt.EncodeUserClaims(uc, akp);
 
         Assert.NotNull(jwt);
         Assert.NotEmpty(jwt);
@@ -143,7 +141,7 @@ public class NatsJwtTests(ITestOutputHelper output)
 
         Assert.NotEmpty(parts[2]);
 
-        var decodedClaims = _natsJwt.DecodeUserClaims(jwt);
+        var decodedClaims = NatsJwt.DecodeUserClaims(jwt);
         Assert.NotNull(decodedClaims);
         Assert.Equal(uc.Name, decodedClaims.Name);
         Assert.Equal(uc.Subject, decodedClaims.Subject);
@@ -156,13 +154,13 @@ public class NatsJwtTests(ITestOutputHelper output)
     {
         var akp = KeyPair.CreatePair(PrefixByte.Account);
         var apk = akp.GetPublicKey();
-        var ac = _natsJwt.NewActivationClaims(apk);
+        var ac = NatsJwt.NewActivationClaims(apk);
         ac.Name = "Activation";
 
         ac.Activation.ImportSubject = "import.subject";
         ac.Activation.ImportType = 1;
 
-        string jwt = _natsJwt.EncodeActivationClaims(ac, akp);
+        string jwt = NatsJwt.EncodeActivationClaims(ac, akp);
 
         Assert.NotNull(jwt);
         Assert.NotEmpty(jwt);
@@ -187,7 +185,7 @@ public class NatsJwtTests(ITestOutputHelper output)
 
         Assert.NotEmpty(parts[2]);
 
-        var decodedClaims = _natsJwt.DecodeActivationClaims(jwt);
+        var decodedClaims = NatsJwt.DecodeActivationClaims(jwt);
         Assert.NotNull(decodedClaims);
         Assert.Equal(ac.Name, decodedClaims.Name);
         Assert.Equal(ac.Subject, decodedClaims.Subject);
@@ -199,7 +197,7 @@ public class NatsJwtTests(ITestOutputHelper output)
     public void TestNewActivationClaims()
     {
         string subject = "test.subject";
-        var claims = _natsJwt.NewActivationClaims(subject);
+        var claims = NatsJwt.NewActivationClaims(subject);
 
         Assert.NotNull(claims);
         Assert.Equal(subject, claims.Subject);
@@ -210,7 +208,7 @@ public class NatsJwtTests(ITestOutputHelper output)
     public void TestNewAuthorizationRequestClaims()
     {
         string subject = "auth.request";
-        var claims = _natsJwt.NewAuthorizationRequestClaims(subject);
+        var claims = NatsJwt.NewAuthorizationRequestClaims(subject);
 
         Assert.NotNull(claims);
         Assert.Equal(subject, claims.Subject);
@@ -221,7 +219,7 @@ public class NatsJwtTests(ITestOutputHelper output)
     public void TestNewAuthorizationResponseClaims()
     {
         string subject = "auth.response";
-        var claims = _natsJwt.NewAuthorizationResponseClaims(subject);
+        var claims = NatsJwt.NewAuthorizationResponseClaims(subject);
 
         Assert.NotNull(claims);
         Assert.Equal(subject, claims.Subject);
@@ -232,7 +230,7 @@ public class NatsJwtTests(ITestOutputHelper output)
     public void TestNewGenericClaims()
     {
         string subject = "generic.subject";
-        var claims = _natsJwt.NewGenericClaims(subject);
+        var claims = NatsJwt.NewGenericClaims(subject);
 
         Assert.NotNull(claims);
         Assert.Equal(subject, claims.Subject);
@@ -242,7 +240,7 @@ public class NatsJwtTests(ITestOutputHelper output)
     public void TestNewOperatorClaims()
     {
         string subject = "operator.subject";
-        var claims = _natsJwt.NewOperatorClaims(subject);
+        var claims = NatsJwt.NewOperatorClaims(subject);
 
         Assert.NotNull(claims);
         Assert.Equal(subject, claims.Subject);
@@ -254,7 +252,7 @@ public class NatsJwtTests(ITestOutputHelper output)
     public void TestNewUserClaims()
     {
         string subject = "user.subject";
-        var claims = _natsJwt.NewUserClaims(subject);
+        var claims = NatsJwt.NewUserClaims(subject);
 
         Assert.NotNull(claims);
         Assert.Equal(subject, claims.Subject);
@@ -265,7 +263,7 @@ public class NatsJwtTests(ITestOutputHelper output)
     public void TestNewAccountClaims()
     {
         string subject = "account.subject";
-        var claims = _natsJwt.NewAccountClaims(subject);
+        var claims = NatsJwt.NewAccountClaims(subject);
 
         Assert.NotNull(claims);
         Assert.Equal(subject, claims.Subject);
@@ -275,13 +273,11 @@ public class NatsJwtTests(ITestOutputHelper output)
     [Fact]
     public void TestMultipleExports()
     {
-        var jwtUtils = new NatsJwt();
-
         var operatorSigningKey = KeyPair.CreatePair(PrefixByte.Operator);
         var systemAccountKeyPair = KeyPair.CreatePair(PrefixByte.Account);
 
         // Create System Account
-        var systemAccountClaims = jwtUtils.NewAccountClaims(systemAccountKeyPair.GetPublicKey());
+        var systemAccountClaims = NatsJwt.NewAccountClaims(systemAccountKeyPair.GetPublicKey());
         systemAccountClaims.Name = "SYS";
         systemAccountClaims.Account.Exports =
         [
@@ -325,7 +321,7 @@ public class NatsJwtTests(ITestOutputHelper output)
             },
         ];
 
-        var jwt = jwtUtils.EncodeAccountClaims(systemAccountClaims, operatorSigningKey);
+        var jwt = NatsJwt.EncodeAccountClaims(systemAccountClaims, operatorSigningKey);
         var payload = EncodingUtils.FromBase64UrlEncoded(jwt.Split('.')[1]);
         var json = JsonSerializer.Deserialize<JsonNode>(payload);
 
@@ -341,6 +337,6 @@ public class NatsJwtTests(ITestOutputHelper output)
     public void TestDecodeUserClaimWithTamperedJWTThrowsError()
     {
         var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJPSk9CUkZDQ0NGNEMzU1JWQzRLNEhTVFNYRlBTSVZBSzJPRUxOMlZXNE9GQ0IzQTVMMkNBIiwiaWF0IjoxNzMwMzk3NTU0LCJpc3MiOiJVQklUR0VSQk9JVEZDWkJHNTNUSkk3M1BHTjdBMzdPTVkyWE5YUU82VUZUSlA1TE5VWVFORUpXSSIsIm5hbWUiOiJVWFgiLCJzdWIiOiJVQklUR0VSQk9JVEZDWkJHNTNUSkk3M1BHTjdBMzdPTVkyWE5YUU82VUZUSlA1TE5VWVFORUpXSSIsIm5hdHMiOnsicHViIjp7ImFsbG93IjpbImFsbG93Llx1MDAzRSJdfSwic3ViIjp7ImFsbG93IjpbInN1YnNjcmliZS5cdTAwM0UiXX0sInN1YnMiOi0xLCJkYXRhIjotMSwicGF5bG9hZCI6LTEsInR5cGUiOiJ1c2VyIiwidmVyc2lvbiI6Mn19.SjIBpWWLNCZmgYZwrFHEJSTkm5M9bik0kgQyG-3V9Nn5sTrfO1Llj3hs7z9R7b1rCyGsFm1RkpZAVAnS5ay2BA";
-        Assert.Throws<NatsJwtException>(() => _natsJwt.DecodeUserClaims(jwt));
+        Assert.Throws<NatsJwtException>(() => NatsJwt.DecodeUserClaims(jwt));
     }
 }
