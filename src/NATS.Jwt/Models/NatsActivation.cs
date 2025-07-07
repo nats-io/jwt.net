@@ -31,6 +31,6 @@ public record NatsActivation : NatsGenericFields
     /// When set, the claim was issued by a signing key.
     /// </summary>
     [JsonPropertyName("issuer_account")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string IssuerAccount { get; set; }
 }
