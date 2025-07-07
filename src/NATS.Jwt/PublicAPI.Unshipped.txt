@@ -89,7 +89,7 @@ NATS.Jwt.Models.NatsAccountSigningKey
 NATS.Jwt.Models.NatsActivation
 NATS.Jwt.Models.NatsActivation.ImportSubject.get -> string!
 NATS.Jwt.Models.NatsActivation.ImportSubject.set -> void
-NATS.Jwt.Models.NatsActivation.ImportType.get -> int
+NATS.Jwt.Models.NatsActivation.ImportType.get -> NATS.Jwt.Models.NatsExportType
 NATS.Jwt.Models.NatsActivation.ImportType.set -> void
 NATS.Jwt.Models.NatsActivation.IssuerAccount.get -> string!
 NATS.Jwt.Models.NatsActivation.IssuerAccount.set -> void

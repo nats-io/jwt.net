@@ -26,7 +26,7 @@ public class NatsActivationClaimsTests
             Activation = new NatsActivation
             {
                 ImportSubject = "import.>",
-                ImportType = 1,
+                ImportType = NatsExportType.Stream,
                 IssuerAccount = "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
                 Type = "activation",
                 Version = 2,
@@ -69,7 +69,7 @@ public class NatsActivationClaimsTests
             Activation = new NatsActivation
             {
                 ImportSubject = "import.>",
-                ImportType = 1,
+                ImportType = NatsExportType.Stream,
                 IssuerAccount = "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
             },
         };
@@ -107,7 +107,7 @@ public class NatsActivationClaimsTests
         Assert.Equal("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII", deserialized.Issuer);
         Assert.NotNull(deserialized.Activation);
         Assert.Equal("import.>", deserialized.Activation.ImportSubject);
-        Assert.Equal(1, deserialized.Activation.ImportType);
+        Assert.Equal(NatsExportType.Stream, deserialized.Activation.ImportType);
         Assert.Equal("ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC", deserialized.Activation.IssuerAccount);
     }
 
@@ -121,7 +121,7 @@ public class NatsActivationClaimsTests
             Activation = new NatsActivation
             {
                 ImportSubject = "import.>",
-                ImportType = 1,
+                ImportType = NatsExportType.Stream,
                 IssuerAccount = "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
             },
         };
