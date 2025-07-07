@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install nats-server
         shell: bash
@@ -45,11 +45,12 @@ jobs:
         run: nats-server -v
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
               6.x
               8.x
+              9.x
 
       - name: Restore
         working-directory: ./src

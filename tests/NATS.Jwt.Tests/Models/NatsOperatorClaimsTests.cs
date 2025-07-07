@@ -42,7 +42,7 @@ public class NatsOperatorClaimsTests
                 SystemAccount = "SAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                 AssertServerVersion = "2.2.0",
                 StrictSigningKeyUsage = true,
-                Tags = new List<string> { "tag1", "tag2", },
+                Tags = new NatsTags { "tag1", "tag2", },
             },
         };
 

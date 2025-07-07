@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0.
 
 using System;
-using System.Text;
 
 namespace NATS.Jwt
 {
@@ -33,26 +32,16 @@ namespace NATS.Jwt
         /// </summary>
         /// <param name="encodedString">The base64 URL-encoded string to decode.</param>
         /// <returns>The decoded string.</returns>
-        public static string FromBase64UrlEncoded(string encodedString)
+        public static byte[] FromBase64UrlEncoded(string encodedString)
         {
-            string replace = encodedString.Replace("_", "/").Replace("-", "+");
-            try
+            string base64 = encodedString.Replace("_", "/").Replace("-", "+");
+            switch (base64.Length % 4)
             {
-                return Encoding.ASCII.GetString(Convert.FromBase64String(replace));
+                case 2: base64 += "=="; break;
+                case 3: base64 += "="; break;
             }
-            catch (FormatException)
-            {
-                // maybe wasn't padded correctly?
-                try
-                {
-                    return Encoding.ASCII.GetString(Convert.FromBase64String(replace + "="));
-                }
-                catch (FormatException)
-                {
-                    // maybe wasn't padded correctly?
-                    return Encoding.ASCII.GetString(Convert.FromBase64String(replace + "=="));
-                }
-            }
+
+            return Convert.FromBase64String(base64);
         }
     }
 }

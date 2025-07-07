@@ -11,7 +11,7 @@ namespace NATS.Jwt.Tests.Models;
 
 public class NatsAccountClaimsTests
 {
-   
+
 
     [Fact]
     public void SerializeDeserialize_FullNatsAccountClaims_ShouldSucceed()
@@ -117,7 +117,7 @@ public class NatsAccountClaimsTests
                     },
                 Revocations =
                     new Dictionary<string, long> { { "RKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 1609459200 } },
-                Tags = new List<string> { "tag1", "tag2", },
+                Tags = new NatsTags { "tag1", "tag2", },
                 Authorization = new NatsExternalAuthorization
                 {
                     AuthUsers = new List<string> { "user1", "user2", },
