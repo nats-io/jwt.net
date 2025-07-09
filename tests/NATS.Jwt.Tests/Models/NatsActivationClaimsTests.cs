@@ -94,7 +94,7 @@ public class NatsActivationClaimsTests
             "iss": "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
             "nats": {
                 "subject": "import.>",
-                "kind": 1,
+                "kind": "stream",
                 "issuer_account": "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
             },
             "extra_field": "should be ignored"
@@ -132,7 +132,7 @@ public class NatsActivationClaimsTests
         Assert.Contains("\"iss\":\"IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII\"", json);
         Assert.Contains("\"nats\":{", json);
         Assert.Contains("\"subject\":\"import.\\u003E\"", json);
-        Assert.Contains("\"kind\":1", json);
+        Assert.Contains("\"kind\":\"stream\"", json);
         Assert.Contains("\"issuer_account\":\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC\"", json);
         Assert.DoesNotContain("\"aud\"", json);
         Assert.DoesNotContain("\"exp\"", json);
