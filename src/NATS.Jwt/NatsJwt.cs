@@ -475,7 +475,7 @@ public static class NatsJwt
 
         string issuer = keyPair.GetPublicKey();
         PrefixByte[] expectedPrefixes = c.ExpectedPrefixes();
-        if (!expectedPrefixes.Any(p => KeyPair.IsValidPublicKey(p, issuer.AsSpan())))
+        if (expectedPrefixes.Length > 0 && !expectedPrefixes.Any(p => KeyPair.IsValidPublicKey(p, issuer.AsSpan())))
         {
             throw new NatsJwtException($"Invalid signing key of '{keyPair.Prefix}': expected one of '{string.Join(",", expectedPrefixes)}'");
         }
