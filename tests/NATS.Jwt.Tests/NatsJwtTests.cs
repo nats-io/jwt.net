@@ -158,7 +158,7 @@ public class NatsJwtTests(ITestOutputHelper output)
         ac.Name = "Activation";
 
         ac.Activation.ImportSubject = "import.subject";
-        ac.Activation.ImportType = 1;
+        ac.Activation.ImportType = NatsExportType.Stream;
 
         string jwt = NatsJwt.EncodeActivationClaims(ac, akp);
 
@@ -179,7 +179,7 @@ public class NatsJwtTests(ITestOutputHelper output)
         Assert.Equal(apk, payload.Subject);
         Assert.Equal(apk, payload.Issuer);
         Assert.Equal("import.subject", payload.Activation.ImportSubject);
-        Assert.Equal(1, payload.Activation.ImportType);
+        Assert.Equal(NatsExportType.Stream, payload.Activation.ImportType);
         Assert.Equal("activation", payload.Activation.Type);
         Assert.Equal(2, payload.Activation.Version);
 

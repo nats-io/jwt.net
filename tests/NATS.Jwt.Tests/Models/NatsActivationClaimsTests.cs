@@ -26,7 +26,7 @@ public class NatsActivationClaimsTests
             Activation = new NatsActivation
             {
                 ImportSubject = "import.>",
-                ImportType = 1,
+                ImportType = NatsExportType.Stream,
                 IssuerAccount = "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
                 Type = "activation",
                 Version = 2,
@@ -69,7 +69,7 @@ public class NatsActivationClaimsTests
             Activation = new NatsActivation
             {
                 ImportSubject = "import.>",
-                ImportType = 1,
+                ImportType = NatsExportType.Stream,
                 IssuerAccount = "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
             },
         };
@@ -94,7 +94,7 @@ public class NatsActivationClaimsTests
             "iss": "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
             "nats": {
                 "subject": "import.>",
-                "kind": 1,
+                "kind": "stream",
                 "issuer_account": "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
             },
             "extra_field": "should be ignored"
@@ -107,7 +107,7 @@ public class NatsActivationClaimsTests
         Assert.Equal("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII", deserialized.Issuer);
         Assert.NotNull(deserialized.Activation);
         Assert.Equal("import.>", deserialized.Activation.ImportSubject);
-        Assert.Equal(1, deserialized.Activation.ImportType);
+        Assert.Equal(NatsExportType.Stream, deserialized.Activation.ImportType);
         Assert.Equal("ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC", deserialized.Activation.IssuerAccount);
     }
 
@@ -121,7 +121,7 @@ public class NatsActivationClaimsTests
             Activation = new NatsActivation
             {
                 ImportSubject = "import.>",
-                ImportType = 1,
+                ImportType = NatsExportType.Stream,
                 IssuerAccount = "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
             },
         };
@@ -132,7 +132,7 @@ public class NatsActivationClaimsTests
         Assert.Contains("\"iss\":\"IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII\"", json);
         Assert.Contains("\"nats\":{", json);
         Assert.Contains("\"subject\":\"import.\\u003E\"", json);
-        Assert.Contains("\"kind\":1", json);
+        Assert.Contains("\"kind\":\"stream\"", json);
         Assert.Contains("\"issuer_account\":\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC\"", json);
         Assert.DoesNotContain("\"aud\"", json);
         Assert.DoesNotContain("\"exp\"", json);

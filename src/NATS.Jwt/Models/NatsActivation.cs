@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0.
 
 using System.Text.Json.Serialization;
+using NATS.Jwt.Internal;
 
 namespace NATS.Jwt.Models;
 
@@ -22,13 +23,14 @@ public record NatsActivation : NatsGenericFields
     /// </summary>
     [JsonPropertyName("kind")]
     [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public int ImportType { get; set; }
+    [JsonConverter(typeof(NatsJsonStringEnumConverter<NatsExportType>))]
+    public NatsExportType ImportType { get; set; }
 
     /// <summary>
     /// Gets or sets issuerAccount stores the public key for the account the issuer represents.
     /// When set, the claim was issued by a signing key.
     /// </summary>
     [JsonPropertyName("issuer_account")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string IssuerAccount { get; set; }
 }
