@@ -97,6 +97,8 @@ public static class NatsJwt
         { AccountClaim, typeof(NatsAccountClaims) },
         { ActivationClaim, typeof(NatsActivationClaims) },
         { AuthorizationRequestClaim, typeof(NatsAuthorizationRequestClaims) },
+        { AuthorizationResponseClaim, typeof(NatsAuthorizationResponseClaims) },
+        { GenericClaim, typeof(NatsGenericClaims) },
     };
 
     /// <summary>
@@ -239,6 +241,8 @@ public static class NatsJwt
     /// <returns>The encoded JWT token.</returns>
     public static string EncodeGenericClaims(NatsGenericClaims genericClaims, KeyPair keyPair, DateTimeOffset? issuedAt = null)
     {
+        genericClaims.Data["type"] = GenericClaim;
+        genericClaims.Data["version"] = LibraryVersion;
         return DoEncode(NatsJwtHeader, keyPair, genericClaims, JsonContext.Default.NatsGenericClaims, issuedAt);
     }
 
