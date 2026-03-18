@@ -5,8 +5,6 @@
 [![Build](https://github.com/nats-io/jwt.net/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/nats-io/jwt.net/actions/workflows/test.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/github/nats-io/jwt.net/graph/badge.svg?token=zXUTHG6L3Q)](https://codecov.io/github/nats-io/jwt.net)
 
-**IMPORTANT**: This is a pre-release version of the library. The API is subject to change.
-
 This is a .NET implementation of the JWT library for the NATS ecosystem.
 
 ### Important Disclaimer
@@ -28,21 +26,12 @@ Under that context, the ultimate validity of the JWT is delegated to tools or
 servers that use the [NATS JWT Go library](github.com/nats-io/jwt). Use of this
 library implies an agreement with the above disclaimer.
 
-## TODO
-
-- [x] Add public API analyzer
-- [x] Remove No-warnings from build
-- [x] Add more tests
-- [x] Enable code coverage
-- [ ] Add examples
-- [ ] Add documentation
-
 ## Installation
 
 You can install the package via NuGet:
 
 ```bash
-dotnet add package NATS.Jwt --prerelease
+dotnet add package NATS.Jwt
 ```
 
 ## Usage
