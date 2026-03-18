@@ -16,30 +16,26 @@ jobs:
         - ubuntu-latest
         - windows-latest
         - macos-latest
+        nats-server:
+        - main
+        - latest
+        - v2.11
+        - v2.10
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install nats-server
-        shell: bash
-        run: |
-            mkdir tools && cd tools
-            branch="main"
-            for i in 1 2 3
-            do
-              curl -sf https://binaries.nats.dev/nats-io/nats-server/v2@$branch | PREFIX=. sh && break || sleep 30
-            done
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          check-latest: true
 
-            case "${{ matrix.os }}" in
-                ubuntu-latest|macos-latest)
-                    sudo mv nats-server /usr/local/bin
-                    ;;
-                windows-latest)
-                    mv nats-server nats-server.exe
-                    cygpath -w "$(pwd)" | tee -a "$GITHUB_PATH"
-                    ;;
-            esac
+      - name: Install nats-server
+        env:
+          NATS_SERVER_VERSION: ${{ matrix.nats-server }}
+        run: go install github.com/nats-io/nats-server/v2@$NATS_SERVER_VERSION
 
       - name: Check nats-server
         run: nats-server -v
@@ -53,15 +49,12 @@ jobs:
               9.x
 
       - name: Restore
-        working-directory: ./src
         run: dotnet restore
 
       - name: Build
-        working-directory: ./src
         run: dotnet build --no-restore -p:ContinuousIntegrationBuild=true
 
       - name: Test
-        working-directory: ./src
         # Collect code coverage
         # https://github.com/MarcoRossignoli/coverlet/blob/master/Documentation/KnownIssues.md#tests-fail-if-assembly-is-strong-named
         run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings -- RunConfiguration.DisableAppDomain=true
@@ -75,8 +68,9 @@ jobs:
             token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Test Native AOT
-        working-directory: ./tests
         shell: bash
+        env:
+          MATRIX_OS: ${{ matrix.os }}
         run: |
             echo ">> Set up for AOT compilation..."
             export exe_file=NATS.Jwt.TestNativeAot
@@ -84,17 +78,17 @@ jobs:
             export dotnet_runtime_id=linux-x64
 
             echo ">> Checking OS..."
-            if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            if [ "$MATRIX_OS" = "windows-latest" ]; then
               export exe_file=NATS.Jwt.TestNativeAot.exe
               export exe_type=PE32
               export dotnet_runtime_id=win-x64
-            elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+            elif [ "$MATRIX_OS" = "macos-latest" ]; then
               export dotnet_runtime_id=osx-x64
               export exe_type=Mach-O
             fi
 
             echo ">> Publishing..."
-            cd NATS.Jwt.TestNativeAot
+            cd tests/NATS.Jwt.TestNativeAot
             rm -rf bin obj
             dotnet publish -r $dotnet_runtime_id -c Release -o dist | tee output.txt
 
@@ -116,11 +110,11 @@ jobs:
             # happened correctly.
             export filesize=0
 
-            if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            if [ "$MATRIX_OS" = "windows-latest" ]; then
               export filesize=$(stat -c %s $exe_file)
-            elif [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+            elif [ "$MATRIX_OS" = "ubuntu-latest" ]; then
               export filesize=$(stat -c %s $exe_file)
-            elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+            elif [ "$MATRIX_OS" = "macos-latest" ]; then
               export filesize=$(stat -f %z $exe_file)
             fi
 
