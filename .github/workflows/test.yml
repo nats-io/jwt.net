@@ -33,6 +33,7 @@ jobs:
           check-latest: true
 
       - name: Install nats-server
+        shell: bash
         env:
           NATS_SERVER_VERSION: ${{ matrix.nats-server }}
         run: go install github.com/nats-io/nats-server/v2@$NATS_SERVER_VERSION
@@ -49,15 +50,15 @@ jobs:
               9.x
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore -c Release
 
       - name: Build
-        run: dotnet build --no-restore -p:ContinuousIntegrationBuild=true
+        run: dotnet build -c Release --no-restore -p:ContinuousIntegrationBuild=true
 
       - name: Test
         # Collect code coverage
         # https://github.com/MarcoRossignoli/coverlet/blob/master/Documentation/KnownIssues.md#tests-fail-if-assembly-is-strong-named
-        run: dotnet test --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings -- RunConfiguration.DisableAppDomain=true
+        run: dotnet test -c Release --no-build --logger:"console;verbosity=normal" --collect:"XPlat Code Coverage" --settings Default.runsettings -- RunConfiguration.DisableAppDomain=true
 
       - name: Upload coverage reports to Codecov
         # PRs from external contributors fail: https://github.com/codecov/feedback/issues/301
@@ -110,12 +111,10 @@ jobs:
             # happened correctly.
             export filesize=0
 
-            if [ "$MATRIX_OS" = "windows-latest" ]; then
-              export filesize=$(stat -c %s $exe_file)
-            elif [ "$MATRIX_OS" = "ubuntu-latest" ]; then
-              export filesize=$(stat -c %s $exe_file)
-            elif [ "$MATRIX_OS" = "macos-latest" ]; then
+            if [ "$MATRIX_OS" = "macos-latest" ]; then
               export filesize=$(stat -f %z $exe_file)
+            else
+              export filesize=$(stat -c %s $exe_file)
             fi
 
             echo ">> File size: $filesize bytes"
