@@ -114,9 +114,9 @@ public class ValidationTests(ITestOutputHelper output)
     [InlineData("""{"type":"","iss":"@@PublicKey@@","X":{}}""", "Failed to get nats element")]
     [InlineData("""{"type":"","iss":"@@PublicKey@@","nats":{"X":2}}""", "Failed to get nats.version element")]
     [InlineData("""{"type":"","iss":"@@PublicKey@@","nats":{"version":2.2}}""", "Failed to get nats.version as integer")]
-    [InlineData("""{"type":"","iss":"@@PublicKey@@","nats":{"version":2, "X":"X"}}""", "Failed to get nats.type element")]
-    [InlineData("""{"type":"","iss":"@@PublicKey@@","nats":{"version":2, "type":""}}""", "Failed to get nats.type element as non-empty string")]
-    [InlineData("""{"type":"","iss":"@@PublicKey@@","nats":{"version":2, "type":" "}}""", "Failed to get nats.type element as non-empty string")]
+    [InlineData("""{"type":"","iss":"@@PublicKey@@","nats":{"version":2, "X":"X"}}""", "Claim type mismatch: requested NATS.Jwt.Models.NatsAuthorizationRequestClaims but found NATS.Jwt.Models.NatsGenericClaims (for generic) in JWT")]
+    [InlineData("""{"type":"","iss":"@@PublicKey@@","nats":{"version":2, "type":""}}""", "Claim type mismatch: requested NATS.Jwt.Models.NatsAuthorizationRequestClaims but found NATS.Jwt.Models.NatsGenericClaims (for generic) in JWT")]
+    [InlineData("""{"type":"","iss":"@@PublicKey@@","nats":{"version":2, "type":" "}}""", "Claim type mismatch: requested NATS.Jwt.Models.NatsAuthorizationRequestClaims but found NATS.Jwt.Models.NatsGenericClaims (for generic) in JWT")]
     public void Verify_version_and_type_check(string json, string error)
     {
         var kp = KeyPair.CreatePair(PrefixByte.Server);

@@ -553,14 +553,14 @@ public static class NatsJwt
 
         if (!natsElement.TryGetProperty("type", out var natsTypeElement))
         {
-            throw new NatsJwtException("Failed to get nats.type element");
+            return (GenericClaim, version);
         }
 
         string? natsType = natsTypeElement.GetString();
 
         if (string.IsNullOrWhiteSpace(natsType))
         {
-            throw new NatsJwtException("Failed to get nats.type element as non-empty string");
+            return (GenericClaim, version);
         }
 
         return (natsType!, version);
