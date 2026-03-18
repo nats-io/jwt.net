@@ -34,18 +34,16 @@ jobs:
         name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.x'
+          dotnet-version: '10.x'
 
       - if: ${{ fromJSON(steps.tag.outputs.create) }}
         name: Pack
-        working-directory: ./src
         # https://learn.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg
         # https://devblogs.microsoft.com/dotnet/producing-packages-with-source-link/
         run: dotnet pack -c Release -o dist -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true
 
       - if: ${{ fromJSON(steps.tag.outputs.create) }}
         name: Push
-        working-directory: ./src
         run: |
           cd dist
           ls -lh
