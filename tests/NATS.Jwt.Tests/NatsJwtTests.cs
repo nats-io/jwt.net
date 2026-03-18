@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using NATS.Jwt.Models;
@@ -331,6 +332,87 @@ public class NatsJwtTests(ITestOutputHelper output)
 
         string jsonStr = JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
         output.WriteLine(jsonStr);
+    }
+
+    [Fact]
+    public void TestEncodeDecodeAuthorizationRequestClaims()
+    {
+        var skp = KeyPair.CreatePair(PrefixByte.Server);
+        var spk = skp.GetPublicKey();
+        var ukp = KeyPair.CreatePair(PrefixByte.User);
+        var upk = ukp.GetPublicKey();
+
+        var arc = NatsJwt.NewAuthorizationRequestClaims(spk);
+        arc.Name = "AuthRequest";
+        arc.AuthorizationRequest.UserNKey = upk;
+        arc.AuthorizationRequest.NatsServer = new NatsServerId { Name = "server1", Host = "localhost", Id = "NABC" };
+        arc.AuthorizationRequest.NatsClientInformation = new NatsClientInformation { Host = "127.0.0.1", User = "testuser" };
+        arc.AuthorizationRequest.NatsConnectOptions = new NatsConnectOptions { Username = "testuser", Protocol = 1 };
+
+        string jwt = NatsJwt.EncodeAuthorizationRequestClaims(arc, skp);
+
+        Assert.NotNull(jwt);
+        Assert.NotEmpty(jwt);
+
+        var decodedClaims = NatsJwt.DecodeClaims<NatsAuthorizationRequestClaims>(jwt);
+        Assert.NotNull(decodedClaims);
+        Assert.Equal("AuthRequest", decodedClaims.Name);
+        Assert.Equal(spk, decodedClaims.Subject);
+        Assert.Equal(upk, decodedClaims.AuthorizationRequest.UserNKey);
+        Assert.Equal("server1", decodedClaims.AuthorizationRequest.NatsServer.Name);
+        Assert.Equal("127.0.0.1", decodedClaims.AuthorizationRequest.NatsClientInformation.Host);
+        Assert.Equal("testuser", decodedClaims.AuthorizationRequest.NatsConnectOptions.Username);
+    }
+
+    [Fact]
+    public void TestEncodeDecodeAuthorizationResponseClaims()
+    {
+        var akp = KeyPair.CreatePair(PrefixByte.Account);
+        var apk = akp.GetPublicKey();
+
+        var arc = NatsJwt.NewAuthorizationResponseClaims(apk);
+        arc.Name = "AuthResponse";
+        arc.AuthorizationResponse.Jwt = "some.jwt.token";
+        arc.AuthorizationResponse.IssuerAccount = apk;
+
+        string jwt = NatsJwt.EncodeAuthorizationResponseClaims(arc, akp);
+
+        Assert.NotNull(jwt);
+        Assert.NotEmpty(jwt);
+
+        var decodedClaims = NatsJwt.DecodeClaims<NatsAuthorizationResponseClaims>(jwt);
+        Assert.NotNull(decodedClaims);
+        Assert.Equal("AuthResponse", decodedClaims.Name);
+        Assert.Equal(apk, decodedClaims.Subject);
+        Assert.Equal("some.jwt.token", decodedClaims.AuthorizationResponse.Jwt);
+        Assert.Equal(apk, decodedClaims.AuthorizationResponse.IssuerAccount);
+    }
+
+    [Fact]
+    public void TestEncodeDecodeGenericClaims()
+    {
+        var akp = KeyPair.CreatePair(PrefixByte.Account);
+        var apk = akp.GetPublicKey();
+
+        var gc = NatsJwt.NewGenericClaims(apk);
+        gc.Name = "Generic";
+        gc.Data = new Dictionary<string, JsonNode>
+        {
+            { "key1", JsonValue.Create("value1") },
+            { "key2", JsonValue.Create(42) },
+        };
+
+        string jwt = NatsJwt.EncodeGenericClaims(gc, akp);
+
+        Assert.NotNull(jwt);
+        Assert.NotEmpty(jwt);
+
+        var decodedClaims = NatsJwt.DecodeClaims<NatsGenericClaims>(jwt);
+        Assert.NotNull(decodedClaims);
+        Assert.Equal("Generic", decodedClaims.Name);
+        Assert.Equal(apk, decodedClaims.Subject);
+        Assert.Equal("value1", decodedClaims.Data["key1"].GetValue<string>());
+        Assert.Equal(42, decodedClaims.Data["key2"].GetValue<int>());
     }
 
     [Fact]
