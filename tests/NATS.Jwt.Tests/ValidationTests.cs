@@ -257,4 +257,92 @@ public class ValidationTests(ITestOutputHelper output)
         var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.DecodeAccountClaims(forgedJwt));
         Assert.Equal("Invalid issuer key for NatsAccountClaims: expected one of 'Account,Operator'", ex.Message);
     }
+
+    [Fact]
+    public void Decode_null_jwt_throws()
+    {
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.DecodeUserClaims(null!));
+        Assert.Equal("JWT is null", ex.Message);
+    }
+
+    [Fact]
+    public void Decode_oversized_jwt_throws()
+    {
+        var jwt = new string('A', NatsJwt.MaxTokenSize + 1);
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.DecodeUserClaims(jwt));
+        Assert.Contains("exceeds maximum allowed size", ex.Message);
+    }
+
+    [Fact]
+    public void Decode_malformed_base64_wraps_in_NatsJwtException()
+    {
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.DecodeUserClaims("!@#.!@#.!@#"));
+        Assert.NotNull(ex.InnerException);
+    }
+
+    [Fact]
+    public void Decode_invalid_json_wraps_in_NatsJwtException()
+    {
+        var header = EncodingUtils.ToBase64UrlEncoded(
+            Encoding.UTF8.GetBytes("{\"typ\":\"JWT\",\"alg\":\"ed25519-nkey\"}"));
+        var payload = EncodingUtils.ToBase64UrlEncoded(
+            Encoding.UTF8.GetBytes("not json"));
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.DecodeUserClaims($"{header}.{payload}.AAAA"));
+        Assert.NotNull(ex.InnerException);
+    }
+
+    [Fact]
+    public void FormatUserConfig_null_jwt_throws()
+    {
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.FormatUserConfig(null!, "SUAAA"));
+        Assert.Equal("JWT is null", ex.Message);
+    }
+
+    [Fact]
+    public void FormatUserConfig_null_seed_throws()
+    {
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.FormatUserConfig("a.b.c", null!));
+        Assert.Equal("Seed is null", ex.Message);
+    }
+
+    [Fact]
+    public void FormatUserConfig_oversized_jwt_throws()
+    {
+        var jwt = new string('A', NatsJwt.MaxTokenSize + 1);
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.FormatUserConfig(jwt, "SUAAA"));
+        Assert.Contains("exceeds maximum allowed size", ex.Message);
+    }
+
+    [Fact]
+    public void FormatUserConfig_malformed_jwt_throws()
+    {
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.FormatUserConfig("no-dots", "SUAAA"));
+        Assert.Equal("Invalid JWT format", ex.Message);
+    }
+
+    [Fact]
+    public void FormatUserConfig_invalid_seed_throws()
+    {
+        var ukp = KeyPair.CreatePair(PrefixByte.User);
+        var akp = KeyPair.CreatePair(PrefixByte.Account);
+        var claims = new NatsUserClaims { Subject = ukp.GetPublicKey() };
+        var jwt = NatsJwt.EncodeUserClaims(claims, akp);
+
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.FormatUserConfig(jwt, "SUBAD_SEED_WITH_NEWLINES\nINJECTED"));
+        Assert.Contains("Invalid seed", ex.Message);
+        Assert.NotNull(ex.InnerException);
+    }
+
+    [Fact]
+    public void FormatUserConfig_server_seed_throws()
+    {
+        var ukp = KeyPair.CreatePair(PrefixByte.User);
+        var akp = KeyPair.CreatePair(PrefixByte.Account);
+        var skp = KeyPair.CreatePair(PrefixByte.Server);
+        var claims = new NatsUserClaims { Subject = ukp.GetPublicKey() };
+        var jwt = NatsJwt.EncodeUserClaims(claims, akp);
+
+        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.FormatUserConfig(jwt, skp.GetSeed()));
+        Assert.Equal("Seed is not an operator, account or user seed", ex.Message);
+    }
 }
