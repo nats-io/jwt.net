@@ -113,16 +113,11 @@ public static class NatsJwt
     /// <param name="seed">The seed.</param>
     /// <returns>The formatted user configuration.</returns>
     /// <exception cref="NatsJwtException">Thrown when the seed is not an operator, account, or user seed.</exception>
-    public static string FormatUserConfig(string jwt, string seed)
+    public static string FormatUserConfig(string jwt, string? seed = null)
     {
         if (jwt == null)
         {
             throw new NatsJwtException("JWT is null");
-        }
-
-        if (seed == null)
-        {
-            throw new NatsJwtException("Seed is null");
         }
 
         if (jwt.Length > MaxTokenSize)
@@ -134,6 +129,25 @@ public static class NatsJwt
         if (parts.Length != 3)
         {
             throw new NatsJwtException("Invalid JWT format");
+        }
+
+        var json = EncodingUtils.FromBase64UrlEncoded(parts[1]);
+        var fields = JsonSerializer.Deserialize(json, JsonContext.Default.NatsGenericFieldsClaims);
+        var type = fields!.GenericFields.Type;
+        if (type != UserClaim)
+        {
+            throw new NatsJwtException($"{type} can't be serialized as a user config");
+        }
+
+        var jwtKind = type.ToUpperInvariant();
+
+        if (seed == null)
+        {
+            return $"""
+                    -----BEGIN NATS {jwtKind} JWT-----
+                    {jwt}
+                    ------END NATS {jwtKind} JWT------
+                    """;
         }
 
         KeyPair kp;
@@ -153,16 +167,6 @@ public static class NatsJwt
             PrefixByte.Operator => "OPERATOR",
             _ => throw new NatsJwtException("Seed is not an operator, account or user seed"),
         };
-
-        var json = EncodingUtils.FromBase64UrlEncoded(parts[1]);
-        var fields = JsonSerializer.Deserialize(json, JsonContext.Default.NatsGenericFieldsClaims);
-        var type = fields!.GenericFields.Type;
-        if (type != UserClaim)
-        {
-            throw new NatsJwtException($"{type} can't be serialized as a user config");
-        }
-
-        var jwtKind = type.ToUpperInvariant();
 
         return $"""
                 -----BEGIN NATS {jwtKind} JWT-----

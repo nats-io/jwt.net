@@ -299,10 +299,16 @@ public class ValidationTests(ITestOutputHelper output)
     }
 
     [Fact]
-    public void FormatUserConfig_null_seed_throws()
+    public void FormatUserConfig_null_seed_returns_jwt_only()
     {
-        var ex = Assert.Throws<NatsJwtException>(() => NatsJwt.FormatUserConfig("a.b.c", null!));
-        Assert.Equal("Seed is null", ex.Message);
+        var ukp = KeyPair.CreatePair(PrefixByte.User);
+        var akp = KeyPair.CreatePair(PrefixByte.Account);
+        var claims = new NatsUserClaims { Subject = ukp.GetPublicKey() };
+        var jwt = NatsJwt.EncodeUserClaims(claims, akp);
+
+        var config = NatsJwt.FormatUserConfig(jwt);
+        Assert.Contains("BEGIN NATS USER JWT", config);
+        Assert.DoesNotContain("NKEY SEED", config);
     }
 
     [Fact]
