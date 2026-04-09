@@ -6,6 +6,7 @@ const NATS.Jwt.NatsJwt.AnyAccount = "*" -> string!
 const NATS.Jwt.NatsJwt.AuthorizationRequestClaim = "authorization_request" -> string!
 const NATS.Jwt.NatsJwt.AuthorizationResponseClaim = "authorization_response" -> string!
 const NATS.Jwt.NatsJwt.GenericClaim = "generic" -> string!
+const NATS.Jwt.NatsJwt.MaxTokenSize = 1048576 -> int
 const NATS.Jwt.NatsJwt.NoLimit = -1 -> long
 const NATS.Jwt.NatsJwt.OperatorClaim = "operator" -> string!
 const NATS.Jwt.NatsJwt.TokenTypeJwt = "JWT" -> string!
@@ -388,6 +389,7 @@ NATS.Jwt.ModelValidationExtensions
 NATS.Jwt.NatsJwt
 NATS.Jwt.NatsJwtException
 NATS.Jwt.NatsJwtException.NatsJwtException(string! message) -> void
+NATS.Jwt.NatsJwtException.NatsJwtException(string! message, System.Exception! innerException) -> void
 override NATS.Jwt.Models.NatsTags.Equals(object? obj) -> bool
 override NATS.Jwt.Models.NatsTags.GetHashCode() -> int
 override NATS.Jwt.Models.NatsTags.ToString() -> string!
