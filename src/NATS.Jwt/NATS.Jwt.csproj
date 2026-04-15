@@ -7,8 +7,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- NuGet Packaging -->
-    <PackageTags>nats;jwt</PackageTags>
-    <Description>NATS JWT for .NET</Description>
+    <PackageTags>nats;jwt;authentication;authorization;nkeys;security;claims;tokens;messaging</PackageTags>
+    <Description>JWT token library for the NATS messaging ecosystem. Create and encode operator, account, and user JWTs signed with NKeys for NATS decentralized authentication and authorization.</Description>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
