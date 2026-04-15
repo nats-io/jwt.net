@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NATS.NKeys" Version="1.0.0" />
+    <PackageReference Include="NATS.NKeys" Version="1.0.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.4" ExcludeAssets="Compile" PrivateAssets="All"/>
   </ItemGroup>
 
