@@ -17,9 +17,16 @@ public class GoCompatTests(ITestOutputHelper output)
     private const string GoEncodeAuthRequest = "go_encode_auth_request";
     private const string GoEncodeAuthResponse = "go_encode_auth_response";
     private const string GoEncodeGeneric = "go_encode_generic";
+    private const string GoEncodeOperator = "go_encode_operator";
+    private const string GoEncodeAccount = "go_encode_account";
+    private const string GoEncodeUser = "go_encode_user";
     private const string GoDecodeAuthRequest = "go_decode_auth_request";
     private const string GoDecodeAuthResponse = "go_decode_auth_response";
     private const string GoDecodeGeneric = "go_decode_generic";
+    private const string GoDecodeOperator = "go_decode_operator";
+    private const string GoDecodeAccount = "go_decode_account";
+    private const string GoDecodeUser = "go_decode_user";
+    private const string GoDecodeRaw = "go_decode_raw";
     private const string Done = "done";
 
     private static readonly string[] GoModules =
@@ -146,6 +153,67 @@ public class GoCompatTests(ITestOutputHelper output)
                             }
                         }
                         writeLine(Msg{Type: "result", OK: true, Name: name, Subject: subject, CustomKey: customKey, CustomNum: customNum})
+                    }
+
+                case "{{GoEncodeOperator}}":
+                    okp, _ := nkeys.CreateOperator()
+                    oPub, _ := okp.PublicKey()
+                    oc := jwt.NewOperatorClaims(oPub)
+                    oc.Name = "GoOperator"
+                    oc.Operator.AccountServerURL = "https://acct.example.com"
+                    token, _ := oc.Encode(okp)
+                    writeLine(Msg{Type: "operator", JWT: token, AccountPub: oPub})
+
+                case "{{GoEncodeAccount}}":
+                    okp, _ := nkeys.CreateOperator()
+                    akp, _ := nkeys.CreateAccount()
+                    aPub, _ := akp.PublicKey()
+                    ac := jwt.NewAccountClaims(aPub)
+                    ac.Name = "GoAccount"
+                    token, _ := ac.Encode(okp)
+                    writeLine(Msg{Type: "account", JWT: token, AccountPub: aPub})
+
+                case "{{GoEncodeUser}}":
+                    akp, _ := nkeys.CreateAccount()
+                    aPub, _ := akp.PublicKey()
+                    ukp, _ := nkeys.CreateUser()
+                    uPub, _ := ukp.PublicKey()
+                    uc := jwt.NewUserClaims(uPub)
+                    uc.Name = "GoUser"
+                    uc.IssuerAccount = aPub
+                    token, _ := uc.Encode(akp)
+                    writeLine(Msg{Type: "user", JWT: token, AccountPub: aPub, UserPub: uPub})
+
+                case "{{GoDecodeOperator}}":
+                    oc, err := jwt.DecodeOperatorClaims(msg.JWT)
+                    if err != nil {
+                        writeLine(Msg{Type: "result", OK: false, Error: err.Error()})
+                    } else {
+                        writeLine(Msg{Type: "result", OK: true, Name: oc.Name, Subject: oc.Subject})
+                    }
+
+                case "{{GoDecodeAccount}}":
+                    ac, err := jwt.DecodeAccountClaims(msg.JWT)
+                    if err != nil {
+                        writeLine(Msg{Type: "result", OK: false, Error: err.Error()})
+                    } else {
+                        writeLine(Msg{Type: "result", OK: true, Name: ac.Name, Subject: ac.Subject})
+                    }
+
+                case "{{GoDecodeUser}}":
+                    uc, err := jwt.DecodeUserClaims(msg.JWT)
+                    if err != nil {
+                        writeLine(Msg{Type: "result", OK: false, Error: err.Error()})
+                    } else {
+                        writeLine(Msg{Type: "result", OK: true, Name: uc.Name, Subject: uc.Subject})
+                    }
+
+                case "{{GoDecodeRaw}}":
+                    _, err := jwt.Decode(msg.JWT)
+                    if err != nil {
+                        writeLine(Msg{Type: "result", OK: false, Error: err.Error()})
+                    } else {
+                        writeLine(Msg{Type: "result", OK: true})
                     }
 
                 case "{{Done}}":
@@ -310,6 +378,178 @@ public class GoCompatTests(ITestOutputHelper output)
         Assert.Equal(apk, result["subject"].GetValue<string>());
         Assert.Equal("dotnet_value", result["custom_key"].GetValue<string>());
         Assert.Equal(99, result["custom_number"].GetValue<int>());
+
+        await SendDone(go);
+    }
+
+    [Fact]
+    public async Task Decode_Go_encoded_OperatorClaims()
+    {
+        await using var go = await GoProcess.RunCodeAsync(GoCode, output.WriteLine, GoModules);
+
+        var msg = await Send(go, new { type = GoEncodeOperator });
+
+        var jwt = msg["jwt"].GetValue<string>();
+        var operatorPub = msg["account_pub"].GetValue<string>();
+
+        var claims = NatsJwt.DecodeOperatorClaims(jwt);
+
+        Assert.Equal("GoOperator", claims.Name);
+        Assert.Equal(operatorPub, claims.Subject);
+        Assert.Equal("https://acct.example.com", claims.Operator.AccountServerUrl);
+
+        await SendDone(go);
+    }
+
+    [Fact]
+    public async Task Decode_Go_encoded_AccountClaims()
+    {
+        await using var go = await GoProcess.RunCodeAsync(GoCode, output.WriteLine, GoModules);
+
+        var msg = await Send(go, new { type = GoEncodeAccount });
+
+        var jwt = msg["jwt"].GetValue<string>();
+        var accountPub = msg["account_pub"].GetValue<string>();
+
+        var claims = NatsJwt.DecodeAccountClaims(jwt);
+
+        Assert.Equal("GoAccount", claims.Name);
+        Assert.Equal(accountPub, claims.Subject);
+
+        await SendDone(go);
+    }
+
+    [Fact]
+    public async Task Decode_Go_encoded_UserClaims()
+    {
+        await using var go = await GoProcess.RunCodeAsync(GoCode, output.WriteLine, GoModules);
+
+        var msg = await Send(go, new { type = GoEncodeUser });
+
+        var jwt = msg["jwt"].GetValue<string>();
+        var userPub = msg["user_pub"].GetValue<string>();
+        var accountPub = msg["account_pub"].GetValue<string>();
+
+        var claims = NatsJwt.DecodeUserClaims(jwt);
+
+        Assert.Equal("GoUser", claims.Name);
+        Assert.Equal(userPub, claims.Subject);
+        Assert.Equal(accountPub, claims.User.IssuerAccount);
+
+        await SendDone(go);
+    }
+
+    [Fact]
+    public async Task Go_decodes_DotNet_encoded_OperatorClaims()
+    {
+        await using var go = await GoProcess.RunCodeAsync(GoCode, output.WriteLine, GoModules);
+
+        var okp = KeyPair.CreatePair(PrefixByte.Operator);
+        var opk = okp.GetPublicKey();
+
+        var oc = NatsJwt.NewOperatorClaims(opk);
+        oc.Name = "DotNetOperator";
+
+        var jwt = NatsJwt.EncodeOperatorClaims(oc, okp);
+
+        var result = await Send(go, new { type = GoDecodeOperator, jwt });
+
+        Assert.True(result["ok"].GetValue<bool>(), result["error"]?.GetValue<string>() ?? "unknown error");
+        Assert.Equal("DotNetOperator", result["name"].GetValue<string>());
+        Assert.Equal(opk, result["subject"].GetValue<string>());
+
+        await SendDone(go);
+    }
+
+    [Fact]
+    public async Task Go_decodes_DotNet_encoded_AccountClaims()
+    {
+        await using var go = await GoProcess.RunCodeAsync(GoCode, output.WriteLine, GoModules);
+
+        var okp = KeyPair.CreatePair(PrefixByte.Operator);
+        var akp = KeyPair.CreatePair(PrefixByte.Account);
+        var apk = akp.GetPublicKey();
+
+        var ac = NatsJwt.NewAccountClaims(apk);
+        ac.Name = "DotNetAccount";
+
+        var jwt = NatsJwt.EncodeAccountClaims(ac, okp);
+
+        var result = await Send(go, new { type = GoDecodeAccount, jwt });
+
+        Assert.True(result["ok"].GetValue<bool>(), result["error"]?.GetValue<string>() ?? "unknown error");
+        Assert.Equal("DotNetAccount", result["name"].GetValue<string>());
+        Assert.Equal(apk, result["subject"].GetValue<string>());
+
+        await SendDone(go);
+    }
+
+    [Fact]
+    public async Task Go_decodes_DotNet_encoded_UserClaims()
+    {
+        await using var go = await GoProcess.RunCodeAsync(GoCode, output.WriteLine, GoModules);
+
+        var akp = KeyPair.CreatePair(PrefixByte.Account);
+        var apk = akp.GetPublicKey();
+        var ukp = KeyPair.CreatePair(PrefixByte.User);
+        var upk = ukp.GetPublicKey();
+
+        var uc = NatsJwt.NewUserClaims(upk);
+        uc.Name = "DotNetUser";
+        uc.User.IssuerAccount = apk;
+
+        var jwt = NatsJwt.EncodeUserClaims(uc, akp);
+
+        var result = await Send(go, new { type = GoDecodeUser, jwt });
+
+        Assert.True(result["ok"].GetValue<bool>(), result["error"]?.GetValue<string>() ?? "unknown error");
+        Assert.Equal("DotNetUser", result["name"].GetValue<string>());
+        Assert.Equal(upk, result["subject"].GetValue<string>());
+
+        await SendDone(go);
+    }
+
+    [Fact]
+    public async Task Go_rejects_account_jwt_signed_by_user_key()
+    {
+        await using var go = await GoProcess.RunCodeAsync(GoCode, output.WriteLine, GoModules);
+
+        // Hand-craft an account JWT signed by a user key (bypassing
+        // the .NET encode-side prefix check). Both .NET and Go should
+        // reject this on decode.
+        var ukp = KeyPair.CreatePair(PrefixByte.User);
+        var upk = ukp.GetPublicKey();
+        var targetSubject = KeyPair.CreatePair(PrefixByte.Account).GetPublicKey();
+
+        var payloadJson =
+            "{\"jti\":\"forged\"," +
+            "\"iat\":1700000000," +
+            "\"iss\":\"" + upk + "\"," +
+            "\"sub\":\"" + targetSubject + "\"," +
+            "\"nats\":{" +
+            "\"limits\":{\"subs\":-1,\"data\":-1,\"payload\":-1}," +
+            "\"default_permissions\":{}," +
+            "\"type\":\"account\"," +
+            "\"version\":2}}";
+        var headerJson = "{\"typ\":\"JWT\",\"alg\":\"ed25519-nkey\"}";
+
+        var h = EncodingUtils.ToBase64UrlEncoded(System.Text.Encoding.UTF8.GetBytes(headerJson));
+        var p = EncodingUtils.ToBase64UrlEncoded(System.Text.Encoding.UTF8.GetBytes(payloadJson));
+
+        var toSign = System.Text.Encoding.ASCII.GetBytes(h + "." + p);
+        var signature = new byte[64];
+        ukp.Sign(toSign, signature);
+        var sig = EncodingUtils.ToBase64UrlEncoded(signature);
+
+        var forgedJwt = h + "." + p + "." + sig;
+
+        // .NET rejects it
+        Assert.Throws<NatsJwtException>(() => NatsJwt.DecodeAccountClaims(forgedJwt));
+
+        // Go also rejects it
+        var result = await Send(go, new { type = GoDecodeRaw, jwt = forgedJwt });
+        Assert.NotNull(result["error"]);
+        output.WriteLine($"Go rejection: {result["error"]?.GetValue<string>()}");
 
         await SendDone(go);
     }
