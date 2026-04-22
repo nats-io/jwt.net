@@ -18,7 +18,7 @@ dotnet add package NATS.Jwt --prerelease
 
 ## Usage
 
-[!code-csharp[](../tests/NATS.Jwt.DocsExamples/IntroPage.cs#nats-jwt)]
+[!code-csharp[](../../../tests/NATS.Jwt.DocsExamples/IntroPage.cs#nats-jwt)]
 
 
 ## What's Next
