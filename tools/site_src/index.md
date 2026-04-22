@@ -9,11 +9,11 @@ See also https://github.com/nats-io/jwt
 
 ## Installation
 
-Reference [Jwt.net NuGet package](https://www.nuget.org/packages/jwt.net) in your project:
+Reference [NATS.Jwt NuGet package](https://www.nuget.org/packages/NATS.Jwt) in your project:
 You can install the package via NuGet:
 
 ```bash
-dotnet add package NATS.Jwt --prerelease
+dotnet add package NATS.Jwt
 ```
 
 ## Usage
