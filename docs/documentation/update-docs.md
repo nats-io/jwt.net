@@ -5,7 +5,7 @@ view locally and submit a Pull Request to be included in this documentation site
 
 ## Running DocFX locally
 
-You mush have [DocFX installed](https://dotnet.github.io/docfx/):
+You must have [DocFX installed](https://dotnet.github.io/docfx/):
 Clone the jwt.net ([nats-io/jwt.net](https://github.com/nats-io/jwt.net)) repository, then `cd docs` and run local server (`docfx --serve`) to view this documentation site.
 
 ```

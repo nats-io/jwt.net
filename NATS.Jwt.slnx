@@ -1,0 +1,33 @@
+<Solution>
+  <Folder Name="/Solution Items/github/workflows/">
+    <File Path=".github/workflows/docs.yml" />
+    <File Path=".github/workflows/format.yml" />
+    <File Path=".github/workflows/release.yml" />
+    <File Path=".github/workflows/test.yml" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <Project Path="src/NATS.Jwt/NATS.Jwt.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NATS.Jwt.DocsExamples/NATS.Jwt.DocsExamples.csproj" />
+    <Project Path="tests/NATS.Jwt.Tests/NATS.Jwt.Tests.csproj" />
+    <Project Path="tests/NATS.Jwt.TestNativeAot/NATS.Jwt.TestNativeAot.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+    <File Path="LICENSE" />
+    <File Path="Icon.png" />
+    <File Path="version.txt" />
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Default.runsettings" />
+  </Folder>
+  <Folder Name="/Solution Items/github/" />
+  <Folder Name="/Solution Items/github/ISSUE_TEMPLATE/">
+    <File Path=".github/ISSUE_TEMPLATE/config.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/defect.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/proposal.yml" />
+  </Folder>
+</Solution>

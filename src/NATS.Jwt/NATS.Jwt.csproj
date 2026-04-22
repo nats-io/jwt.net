@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- NuGet Packaging -->
-    <PackageTags>nats;jwt</PackageTags>
-    <Description>NATS JWT for .NET</Description>
+    <PackageTags>nats;jwt;authentication;authorization;nkeys;security;claims;tokens;messaging</PackageTags>
+    <Description>JWT token library for the NATS messaging ecosystem. Create and encode operator, account, and user JWTs signed with NKeys for NATS decentralized authentication and authorization.</Description>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
@@ -17,17 +17,15 @@
   </PropertyGroup>
 
   <!--  Dependencies for netstandard only  -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="Nullable" Version="1.3.1"/>
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Nullable" Version="1.3.1"/>
     <PackageReference Include="System.Memory" Version="4.6.0" />
     <PackageReference Include="System.Buffers" Version="4.6.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.5"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NATS.NKeys" Version="1.0.0-preview.3" />
+    <PackageReference Include="NATS.NKeys" Version="1.0.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.4" ExcludeAssets="Compile" PrivateAssets="All"/>
   </ItemGroup>
 
