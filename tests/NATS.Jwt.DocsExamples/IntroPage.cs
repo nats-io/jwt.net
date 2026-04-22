@@ -57,13 +57,13 @@ public class IntroPage
                          """;
 
             // generate a creds formatted file that can be used by a NATS client
-            const string credsPath = "example_user.creds";
+            string credsPath = Path.Combine(Path.GetTempPath(), "example_user.creds");
             await File.WriteAllTextAsync(credsPath, NatsJwt.FormatUserConfig(userJwt, userSeed));
 
             // now we are going to put it together into something that can be run
             // we create a file to store the server configuration, the creds
             // file and a small program that uses the creds file
-            const string confPath = "example_server.conf";
+            string confPath = Path.Combine(Path.GetTempPath(), "example_server.conf");
             await File.WriteAllTextAsync(confPath, conf);
 
             // run the server:
